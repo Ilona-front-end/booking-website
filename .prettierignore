@@ -1,0 +1,6 @@
+/node modules
+/build
+/coverage
+/public 
+/package-lock.json
+/package.json
