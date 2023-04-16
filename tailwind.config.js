@@ -2,8 +2,10 @@
 module.exports = {
   content: ['./src/**/*.{js, jsx}'],
   theme: {
-    extend: {},
+    fontFamily: {
+      sans: ['Montserrat', 'sans-serif'],
+      serif: ['Roboto Condensed', 'serif'],
+    },
   },
   plugins: [],
 }
-
