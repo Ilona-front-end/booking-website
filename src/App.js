@@ -4,10 +4,12 @@ import Header from './components/shared/Header'
 
 function App() {
   return (
-    <div>
-      <Header />
-      <Router />
-    </div>
+    <>
+      <div>
+        <Header />
+        <Router />
+      </div>
+    </>
   );
 }
 
