@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { FaRegMeh } from 'react-icons/fa';
 
 const VENUES_URL = 'https://api.noroff.dev/api/v1/holidaze/venues';
 
 function Venues() {
   const [venues, setVenues] = useState([]);
+  const [ error , setError ] = useState(null);
 
   // The useEffect will run once when the component first mounts
   useEffect(() => {
     async function fetchVenues() {
-      // Display to user that we are loading data, but can not show anything yet
-
       try {
         // Function that gets our posts from the API
         const response = await fetch(VENUES_URL);
@@ -20,12 +20,37 @@ function Venues() {
         const json = await response.json();
         // We received API data, setting our venues state
         setVenues(json);
-      } catch (err) {
-        console.error(err);
+        setError(null);
+      } catch (error) {
+        // We received an error, setting our error state
+        setError(error.message);
+        console.error('Error message: ', error);
       } 
     }
     fetchVenues();
   }, []);
+
+  if (error) {
+    return (
+      <>
+        <div className="rounded-md bg-red-50 p-4">
+          <div className="flex">
+            <div className="flex-shrink-0">
+            <FaRegMeh size={20} color='red' />
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-red-800">Caution! Something went wrong:</h3>
+              <div className="mt-2 text-sm text-red-700">
+                <div className="list-disc space-y-1 pl-5">
+                  <p>{error}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    )
+  }
 
   return (
     <div>
