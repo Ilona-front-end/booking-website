@@ -17,6 +17,24 @@ export default function SignUp() {
     },
   });
 
+  const onSubmitCreateUser = async (data) => {
+    try {
+      const url =
+        'https://nf-api.onrender.com/api/v1/holidaze/auth/register';
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      const json = await response.json();
+      console.log('Success:', json);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -32,9 +50,7 @@ export default function SignUp() {
             {/* FORM */}
             <form
               className="space-y-6"
-              onSubmit={handleSubmit((data) => {
-                console.log('form validation success', data);
-              })}
+              onSubmit={handleSubmit(onSubmitCreateUser)}
             >
               {/* NAME INPUT */}
               <div>
@@ -58,9 +74,11 @@ export default function SignUp() {
                     className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
+                {errors.name && (
                 <p className="mt-2 text-xs text-red-600">
-                  {errors.name?.message}
+                  {errors.name.message}
                 </p>
+                )}
               </div>
 
               {/* EMAIL INPUT */}
@@ -82,13 +100,14 @@ export default function SignUp() {
                     })}
                     id="email"
                     type="email"
-                    // autoComplete="email"
                     className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
+                {errors.email && (
                 <p className="mt-2 text-xs text-red-600">
-                  {errors.email?.message}
+                  {errors.email.message}
                 </p>
+                )}
               </div>
 
               {/* PASSWORD INPUT */}
@@ -114,9 +133,11 @@ export default function SignUp() {
                     className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
+                {errors.password && (
                 <p className="mt-2 text-xs text-red-600">
-                  {errors.password?.message}
+                  {errors.password.message}
                 </p>
+                )}
               </div>
 
               {/* AVATAR INPUT */}
@@ -141,9 +162,11 @@ export default function SignUp() {
                     className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
+                {errors.avatar && (
                 <p className="mt-2 text-xs text-red-600">
-                  {errors.avatar?.message}
+                  {errors.avatar.message}
                 </p>
+                )}
               </div>
 
               {/* VENUE MANAGER INPUT */}
@@ -162,9 +185,6 @@ export default function SignUp() {
                     className="block rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
-                {/* <p className="mt-2 text-xs text-red-600">
-                  {errors.checkbox?.message}
-                </p> */}
               </div>
 
               {/* SUBMIT BUTTON */}
