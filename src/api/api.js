@@ -1,0 +1,1 @@
+export const CREATE_USER_URL = 'https://nf-api.onrender.com/api/v1/holidaze/auth/register';

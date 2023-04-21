@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { CREATE_USER_URL } from '../../api/api';
 
 export default function SignUp() {
+  
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const {
     register,
     handleSubmit,
@@ -19,19 +23,26 @@ export default function SignUp() {
 
   const onSubmitCreateUser = async (data) => {
     try {
-      const url =
-        'https://nf-api.onrender.com/api/v1/holidaze/auth/register';
-      const response = await fetch(url, {
+      const response = await fetch(CREATE_USER_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       });
+
       const json = await response.json();
-      console.log('Success:', json);
+      // console.log('Response called json:', json);
+
+      if(json.status === 'Bad Request') {
+        throw new Error(json.errors[0].message);
+      } else {
+        setErrorMessage(null);
+        window.location.replace('/login');
+      }
     } catch (error) {
-      console.error('Error:', error);
+      // console.log('Catch errors while signing up: ', error);
+      setErrorMessage(error.message);
     }
   };
 
@@ -44,6 +55,27 @@ export default function SignUp() {
             Sign Up
           </h2>
         </div>
+
+        {/* ERROR MESSAGE */}
+        {errorMessage && (
+          <div className="sm:mx-auto sm:w-full sm:max-w-md mt-4 p-4 rounded-md bg-red-50">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-red-800">Did not create a user account:</h3>
+                <div className="mt-2 text-sm text-red-700">
+                  <div className="list-disc space-y-1 pl-5">
+                    <div>{errorMessage}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-gray-100 py-8 px-4 shadow sm:rounded-lg sm:px-10">
