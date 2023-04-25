@@ -33,7 +33,7 @@ function Venues() {
   if (error) {
     return (
       <>
-        <div className="rounded-md bg-red-50 p-4">
+        <div className="rounded-md bg-red-50 p-4 max-w-screen-xl mx-auto">
           <div className="flex">
             <div className="flex-shrink-0">
             <FaRegMeh size={20} color='red' />
@@ -53,7 +53,7 @@ function Venues() {
   }
 
   return (
-    <div>
+    <div className="max-w-screen-xl mx-auto">
       {venues.map((venue) => (
         <div key={venue.id}>
           <h2>{venue.name}</h2>

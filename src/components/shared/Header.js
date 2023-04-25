@@ -6,7 +6,7 @@ function Header({ isLoggedIn }) {
   isLoggedIn = false;
 
   return (
-    <header className="font-serif flex flex-col md:flex-row items-center justify-between bg-gray-800 p-4">
+    <header className="font-serif flex flex-col md:flex-row items-center justify-between bg-gray-800 p-4 max-w-screen-xl mx-auto">
       <div className="flex items-center mb-4 md:mb-0">
         <Link to="/" className="text-white text-xl font-bold">Holidaze</Link>
       </div>
