@@ -40,7 +40,8 @@ export default function LogIn() {
         setErrorMessage(null);
 
         // localStorage.setItem(key, JSON.stringify(value));
-        localStorage.setItem('user', json.email);
+        localStorage.setItem('user', json.name);
+        localStorage.setItem('email', json.email);
         localStorage.setItem('token', json.accessToken);
         window.location.replace('/');
       }
