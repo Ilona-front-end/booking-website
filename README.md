@@ -1,86 +1,144 @@
-# Goal
+<!-- Exam 2, Noroff Year 2 -->
 
-To take the skills learned over the last two years and take on an extensive project where the finished product should reflect the candidate’s general development capabilities, in addition to visual and technical skills.
+# $\textcolor{#0969da}{\text{Booking website - Holidaze}}$
 
-# Brief
-A newly launched accommodation booking site called Holidaze has approached you to develop a brand new front end for their application. While they have a list of required features, the design and user experience has not been specified. Working with the official API documentation, plan, design and build a modern front end accommodation booking application.
+### Goal
 
-There are two aspects to this brief: the customer-facing side of the website where users can book holidays at a venue, and an admin-facing side of the website where users can register and manage venues and bookings at those venues.
+Present skills learned over the last two years - plan, design and build a modern front end accommodation booking application.
 
-# API
-The API you are using for this project can be found under Holidaze in the API documentation.
+### Brief
+A new accommodation booking site 'Holidaze' required to develop a new front end for their application. Design and user experience has not been specified, only API documentation is provided.
 
-# Resources
-API Guide [link](https://docs.noroff.dev/)
+There are two aspects to this brief: 
+- customer side of the website where users can book holidays at a venue; 
+- admin side of the website where users can register and manage venues and bookings at those venues;
 
-API Documentation [link](https://nf-api.onrender.com/docs/static/index.html)
-
-
-# User Stories
+### User Stories
 The client has specified the following requirements in the form of User Stories:
 
-- A user may view a list of Venues
-- A user may search for a specific Venue
-- A user may view a specific Venue page by id
-- A user may view a calendar with available dates for a Venue
-- A user with a stud.noroff.no email may register as a customer
-- A registered customer may create a booking at a Venue
-- A registered customer may view their upcoming bookings
-- A user with a stud.noroff.no email may register as a Venue manager
-- A registered Venue manager may create a Venue
-- A registered Venue manager may update a Venue they manage
-- A registered Venue manager may delete a Venue they manage
-- A registered Venue manager may view bookings for a Venue they manage
-- A registered user may login
-- A registered user may update their avatar
-- A registered user may logout
+- [x] A user may view a list of Venues
+- [x] A user may search for a specific Venue
+- [x] A user may view a specific Venue page by id
+- [x] A user may view a calendar with available dates for a Venue
+- [x] A user with a stud.noroff.no email may register as a customer
+- [x] A registered customer may create a booking at a Venue
+- [x] A registered customer may view their upcoming bookings
+- [x] A user with a stud.noroff.no email may register as a Venue manager
+- [x] A registered Venue manager may create a Venue
+- [x] A registered Venue manager may update a Venue they manage
+- [x] A registered Venue manager may delete a Venue they manage
+- [x] A registered Venue manager may view bookings for a Venue they manage
+- [x] A registered user may login
+- [x] A registered user may update their avatar
+- [x] A registered user may logout
 
-# Technical Restrictions
+### API
+In API documentation is a section called Holidaze. 
+
+### Resources
+API Documentation [link](https://docs.noroff.dev/holidaze/authentication)
+
+API Guide [link](https://nf-api.onrender.com/docs/static/index.html#/holidaze-auth/post_api_v1_holidaze_auth_register)
+
+### Technical Restrictions
 The company CTO has set the following technical restrictions:
 
-- Must use an approved JavaScript Framework
-- Must use an approved CSS Framework
-- Must be hosted on an approved Static Host
-- Must use an approved Design Application
-- Must use an approved Planning Application
+- [x] Must use an approved JavaScript Framework
+- [x] Must use an approved CSS Framework
+- [x] Must be hosted on an approved Static Host
+- [x] Must use an approved Design Application
+- [x] Must use an approved Planning Application
 
-# Required Links
+### Required Links
 The Product Owner has requested links to the following:
 
-- A Gantt chart for project timing
-- A design prototype
-- A style guide
-- A kanban project board
-- A repository link
-- A hosted application demo link
+- [x] A Gantt chart for project timing
+- [x] A design prototype
+- [x] A style guide
+- [x] A kanban project board
+- [x] A repository link
+- [x] A hosted application demo link
 
-# Approved Resources
+### Approved Resources
 This list covers libraries and services that have been vetted by the company and approved for use.
 
-## JavaScript Frameworks
-- React (>16)
+### JavaScript Frameworks
+- [x] React (>16)
 
-## CSS Frameworks
+### CSS Frameworks
 - Bootstrap (>5)
-- Tailwind (>3)
+- [x] Tailwind (>3)
 - MUI (>5)
 - Styled Components
 - CSS Modules
 
-## Hosting Services
+### Hosting Services
 - GitHub Pages
-- Netlify
+- [x] Netlify
 
-## Design Applications
+### Design Applications
 - Adobe XD
-- Figma
+- [x] Figma
 - Sketch
 
-## Planning Applications
-- Trello
+### Planning Applications
+- [x] Trello, Jira
 - GitHub Projects
 
-# Delivery
+---
+
+## $\textcolor{#0969da}{\text{Where to start?}}$
+
+> **Warning**
+
+Node.js has to be installed in your computer. If not get [Node.js](https://nodejs.org/en/download/) so you could use [npm](http://npmjs.com).
+
+### $\textcolor{#0969da}{\text{How to run the current project?}}$
+
+1. Fork this repo to your GitHub account.
+
+2. Clone repository
+
+```bash
+git clone git@github.com:Your-Github-Account-Name/booking-website.git
+```
+
+3. Install dependencies with NPM
+
+```bash
+npm install
+```
+
+4. Build project
+
+```bash
+npm run build
+```
+
+5. View project in browser - Development mode
+
+```bash
+npm run start
+```
+
+Go to this url `http://localhost:` and you will see the website running.
+
+
+---
+
+> **Note**
+
+#### This project is deployed on Netlify. Click [here](https://holidaze-booking-site.netlify.app) to see website in your browser now.
+
+---
+
+### Built with
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat-&logo=React&logoColor=white&color=3c4b64)
+
+---
+
+<!-- ### Delivery
 Include the required links in the Moodle delivery window using this template format.
 
 All final changes must be merged into the default branch main or master. Other branches will not be checked.
@@ -139,3 +197,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+-->
