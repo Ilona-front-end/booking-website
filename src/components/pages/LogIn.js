@@ -38,6 +38,10 @@ export default function LogIn() {
       } else {
         console.log('User logged in successfully');
         setErrorMessage(null);
+
+        // localStorage.setItem(key, JSON.stringify(value));
+        localStorage.setItem('user', json.email);
+        localStorage.setItem('token', json.accessToken);
         window.location.replace('/');
       }
     } catch (error) {
