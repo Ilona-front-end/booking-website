@@ -4,7 +4,6 @@ import { USER_LOG_IN_URL } from '../../api/api';
 import { Link } from 'react-router-dom';
 
 export default function LogIn() {
-
   const [errorMessage, setErrorMessage] = useState(null);
 
   const {
@@ -32,7 +31,7 @@ export default function LogIn() {
       const json = await response.json();
       console.log('response json', json);
 
-      if(json.status === 'Unauthorized') {
+      if (json.status === 'Unauthorized') {
         console.log('Unauthorized log in');
         throw new Error(json.errors[0].message);
       } else {
@@ -46,10 +45,10 @@ export default function LogIn() {
         window.location.replace('/');
       }
     } catch (error) {
-    console.log('json error',error);
-    setErrorMessage(error.message);
-    } 
-  } 
+      console.log('json error', error);
+      setErrorMessage(error.message);
+    }
+  };
 
   return (
     <>
@@ -66,12 +65,23 @@ export default function LogIn() {
           <div className="sm:mx-auto sm:w-full sm:max-w-md mt-4 p-4 rounded-md bg-red-50">
             <div className="flex">
               <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clipRule="evenodd" />
+                <svg
+                  className="h-5 w-5 text-red-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800">Did not managed to log in to account:</h3>
+                <h3 className="text-sm font-medium text-red-800">
+                  Did not managed to log in to account:
+                </h3>
                 <div className="mt-2 text-sm text-red-700">
                   <div className="list-disc space-y-1 pl-5">
                     <div>{errorMessage}</div>
@@ -89,7 +99,6 @@ export default function LogIn() {
               className="space-y-6"
               onSubmit={handleSubmit(onSubmitLogInUser)}
             >
-
               {/* EMAIL INPUT */}
               <div>
                 <label
@@ -101,11 +110,11 @@ export default function LogIn() {
                 <div className="mt-2">
                   <input
                     {...register('email', {
-                        required: 'Please provide your email',
-                        pattern: {
-                          value: /^[\w-.]+@stud\.noroff\.no$/,
-                          message: 'Required emails with "stud.noroff.no"',
-                        },
+                      required: 'Please provide your email',
+                      pattern: {
+                        value: /^[\w-.]+@stud\.noroff\.no$/,
+                        message: 'Required emails with "stud.noroff.no"',
+                      },
                     })}
                     id="email"
                     type="email"
@@ -113,15 +122,15 @@ export default function LogIn() {
                   />
                 </div>
                 {errors.email && (
-                <p className="mt-2 text-xs text-red-600">
-                  {errors.email.message}
-                </p>
+                  <p className="mt-2 text-xs text-red-600">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
 
               {/* PASSWORD INPUT */}
               <div>
-                <label                   
+                <label
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
@@ -134,7 +143,7 @@ export default function LogIn() {
                       pattern: {
                         value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
                         message:
-                          "Password must contain at least 8 characters, one uppercase, one lowercase, and one number",
+                          'Password must contain at least 8 characters, one uppercase, one lowercase, and one number',
                       },
                     })}
                     id="password"
@@ -143,9 +152,9 @@ export default function LogIn() {
                   />
                 </div>
                 {errors.password && (
-                <p className="mt-2 text-xs text-red-600">
-                  {errors.password.message}
-                </p>
+                  <p className="mt-2 text-xs text-red-600">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
 
@@ -175,7 +184,8 @@ export default function LogIn() {
 
               <div className="mt-6 grid grid-cols-2 gap-4">
                 <div>
-                  <Link to="/"
+                  <Link
+                    to="/"
                     className="inline-flex w-full justify-center rounded-md bg-white py-2 px-4 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
                   >
                     <span className="sr-only">Sign in with Facebook</span>
@@ -195,7 +205,8 @@ export default function LogIn() {
                 </div>
 
                 <div>
-                  <Link to="/"
+                  <Link
+                    to="/"
                     className="inline-flex w-full justify-center rounded-md bg-white py-2 px-4 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0"
                   >
                     <span className="sr-only">Sign in with Twitter</span>
@@ -209,13 +220,11 @@ export default function LogIn() {
                     </svg>
                   </Link>
                 </div>
-
               </div>
             </div>
           </div>
         </div>
       </div>
     </>
-
-  )
+  );
 }

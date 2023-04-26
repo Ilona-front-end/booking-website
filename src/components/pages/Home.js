@@ -6,7 +6,7 @@ function Homepage() {
       <h1>Homepage</h1>
       <p>Information is accessible</p>
     </div>
-  )
+  );
 }
 
 export default Homepage;

@@ -6,7 +6,7 @@ function NotFound() {
       <h1>Not Found</h1>
       <p>Information is not accessible</p>
     </div>
-  )
+  );
 }
 
 export default NotFound;

@@ -16,7 +16,7 @@ function SpinnerFallback() {
       {/* https://chantastic.github.io/react-svg-spinner */}
       <Spinner size="80px" color="green" thickness={3} gap={5} speed="slow" />
     </div>
-  )
+  );
 }
 
 function Router() {
@@ -24,17 +24,17 @@ function Router() {
     <>
       <Suspense fallback={<SpinnerFallback />}>
         <Routes>
-          <Route exact path='/' element={<Home />} />
-          <Route path='/venues' element={<Venues />} />
-          <Route path='/venues/:id' element={<Venue />} />
-          <Route path='/login' element={<LogIn />} />
-          <Route path='/signup' element={<SignUp />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='*' element={<NotFound />} />
+          <Route exact path="/" element={<Home />} />
+          <Route path="/venues" element={<Venues />} />
+          <Route path="/venues/:id" element={<Venue />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </>
-  )
+  );
 }
 
 export default Router;
