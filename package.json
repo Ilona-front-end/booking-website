@@ -14,15 +14,16 @@
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "react-svg-spinner": "^1.0.4",
-    "redux": "^4.2.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "format": "npx prettier --write ."
+    "format": "npx prettier --write src/**/*",
+    "lint": "eslint --ignore-path .gitignore .",
+    "lint:fix": "eslint --fix --ignore-path .gitignore .",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -43,7 +44,16 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^8.39.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-react-app": "^7.0.1",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.2.1",
     "prettier": "^2.8.7",
     "tailwindcss": "^3.3.1"
+  },
+  "lint-staged": {
+    "src/**/*.{js, jsx}": "eslint",
+    "**/*": "prettier --write --ignore-unknown"
   }
 }

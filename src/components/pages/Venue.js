@@ -6,7 +6,7 @@ function Venue() {
       <h1>Venue</h1>
       <p>Venue Details</p>
     </div>
-  )
+  );
 }
 
 export default Venue;

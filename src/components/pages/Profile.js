@@ -7,7 +7,8 @@ function Profile() {
 
   const [userProfile, setProfile] = useState(null);
   const [newAvatarUrl, setNewAvatarUrl] = useState('');
-  const [showOptionToChangeAvatar, setShowOptionToChangeAvatar] = useState(false);  // showOptionToChangeAvatar has 2 options: weather update btn visible; weather input and save btn visible
+  const [showOptionToChangeAvatar, setShowOptionToChangeAvatar] =
+    useState(false); // showOptionToChangeAvatar has 2 options: weather update btn visible; weather input and save btn visible
 
   useEffect(() => {
     async function getUserProfile() {
@@ -22,7 +23,7 @@ function Profile() {
         const json = await response.json();
         setProfile(json);
         // POSSIBLE: json.status could be 'Not Found', json.errors[0].message could be 'No profile with this name'
-        
+
         // switch (json.status) {
         //   case 'ok':
         //     setErrorMessage(null);
@@ -44,7 +45,6 @@ function Profile() {
         //     // throw new Error('An error occured');
         //     break;
         // }
-
       } catch {
         console.log('error');
       }
@@ -75,8 +75,8 @@ function Profile() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ 
-          avatar: newAvatarUrl 
+        body: JSON.stringify({
+          avatar: newAvatarUrl,
         }),
       });
       const json = await response.json();
@@ -91,89 +91,103 @@ function Profile() {
     <>
       {/*   Profile details  */}
       <div className="mt-6 pt-6 mx-auto max-w-xl px-5 lg:px-8">
-        {token ? 
-        (<>
-          <div>
-            <p className="mt-6 mb-8 max-w-xl text-center text-3xl font-bold tracking-tight text-gray-900">
-              Personal details of your account
-            </p>
-          </div>
-          <div className="mt-5 mb-8 border-t border-gray-200">
-            <dl className="divide-y divide-gray-200">
-              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                <dt className="text-sm font-medium text-gray-500">
-                  <img src={userProfile?.avatar} alt={userProfile?.name} className="h-24 w-24 rounded-full"/>
-                </dt>
-                <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                  <span className="flex-grow"></span>
-                  <span className="ml-4 flex-shrink-0">
-                    <span className="rounded-md bg-white font-medium text-red-700"></span>
-                  </span>
-                </dd>
-              </div>
-              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                <dt className="text-sm font-medium text-gray-500">User name</dt>
-                <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                  <span className="flex-grow">{userProfile?.name}</span>
-                  <span className="ml-4 flex-shrink-0">
-                    <span className="rounded-md bg-white font-medium text-red-700">Admin</span>
-                  </span>
-                </dd>
-              </div>
-              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                <dt className="text-sm font-medium text-gray-500">Email address</dt>
-                <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                  <span
-                    className="flex-grow">{userProfile?.email}
-                  </span>
-                  <span className="ml-4 flex-shrink-0">
-                    <span className="rounded-md bg-white font-medium text-red-700">Admin</span>
-                  </span>
-                </dd>
-              </div>
-              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                <dt className="text-sm font-medium text-gray-500">Venue manager</dt>
-                <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                  <span className="flex-grow">{userProfile?.venueManager === true ? 'Yes' : 'No'}</span>
-                  <span className="ml-4 flex-shrink-0"></span>
-                </dd>
-              </div>
-              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                <dt className="text-sm font-medium text-gray-500">
-                  Profile picture
-                </dt>
-                <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                  <span className="flex-grow"></span>
-                  {showOptionToChangeAvatar ? (
-                    <>
-                    {/* step 2: show input field and save button */}
-                      <span className="flex-grow">
-                        <label htmlFor="avatarInput">
-                          <input
-                            type="text"
-                            name="avatarInput"
-                            className="block w-full rounded-md bg-slate-200 py-2 px-2 border-gray-600 shadow-sm focus:border-indigo-800 focus:ring-indigo-700 sm:text-sm"
-                            value={newAvatarUrl}
-                            onChange={(e) => setNewAvatarUrl(e.target.value)}
-                          />
-                        </label>
+        {token ? (
+          <>
+            <div>
+              <p className="mt-6 mb-8 max-w-xl text-center text-3xl font-bold tracking-tight text-gray-900">
+                Personal details of your account
+              </p>
+            </div>
+            <div className="mt-5 mb-8 border-t border-gray-200">
+              <dl className="divide-y divide-gray-200">
+                <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
+                  <dt className="text-sm font-medium text-gray-500">
+                    <img
+                      src={userProfile?.avatar}
+                      alt={userProfile?.name}
+                      className="h-24 w-24 rounded-full"
+                    />
+                  </dt>
+                  <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                    <span className="flex-grow"></span>
+                    <span className="ml-4 flex-shrink-0">
+                      <span className="rounded-md bg-white font-medium text-red-700"></span>
+                    </span>
+                  </dd>
+                </div>
+                <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
+                  <dt className="text-sm font-medium text-gray-500">
+                    User name
+                  </dt>
+                  <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                    <span className="flex-grow">{userProfile?.name}</span>
+                    <span className="ml-4 flex-shrink-0">
+                      <span className="rounded-md bg-white font-medium text-red-700">
+                        Admin
                       </span>
-                      <button 
-                        type="button" 
-                        className="rounded-md bg-white ml-3 py-2 px-2 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" 
-                        onClick={handleAvatarSubmit}
-                      >
-                        Save
-                      </button>
-                      {/* cancel button */}
-                      <button 
-                        type="button" 
-                        className="rounded-md ml-3 py-2 px-2 bg-white font-medium text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2" 
-                        onClick={handleAvatarCancelBtn}
-                      >
-                        Cancel
-                      </button>
-                      {/* <span className="flex-grow">
+                    </span>
+                  </dd>
+                </div>
+                <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
+                  <dt className="text-sm font-medium text-gray-500">
+                    Email address
+                  </dt>
+                  <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                    <span className="flex-grow">{userProfile?.email}</span>
+                    <span className="ml-4 flex-shrink-0">
+                      <span className="rounded-md bg-white font-medium text-red-700">
+                        Admin
+                      </span>
+                    </span>
+                  </dd>
+                </div>
+                <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
+                  <dt className="text-sm font-medium text-gray-500">
+                    Venue manager
+                  </dt>
+                  <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                    <span className="flex-grow">
+                      {userProfile?.venueManager === true ? 'Yes' : 'No'}
+                    </span>
+                    <span className="ml-4 flex-shrink-0"></span>
+                  </dd>
+                </div>
+                <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
+                  <dt className="text-sm font-medium text-gray-500">
+                    Profile picture
+                  </dt>
+                  <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                    <span className="flex-grow"></span>
+                    {showOptionToChangeAvatar ? (
+                      <>
+                        {/* step 2: show input field and save button */}
+                        <span className="flex-grow">
+                          <label htmlFor="avatarInput">
+                            <input
+                              type="text"
+                              name="avatarInput"
+                              className="block w-full rounded-md bg-slate-200 py-2 px-2 border-gray-600 shadow-sm focus:border-indigo-800 focus:ring-indigo-700 sm:text-sm"
+                              value={newAvatarUrl}
+                              onChange={(e) => setNewAvatarUrl(e.target.value)}
+                            />
+                          </label>
+                        </span>
+                        <button
+                          type="button"
+                          className="rounded-md bg-white ml-3 py-2 px-2 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                          onClick={handleAvatarSubmit}
+                        >
+                          Save
+                        </button>
+                        {/* cancel button */}
+                        <button
+                          type="button"
+                          className="rounded-md ml-3 py-2 px-2 bg-white font-medium text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                          onClick={handleAvatarCancelBtn}
+                        >
+                          Cancel
+                        </button>
+                        {/* <span className="flex-grow">
                         <label htmlFor="avatarInput">
                           <input
                             type="text"
@@ -184,26 +198,25 @@ function Profile() {
                           />
                         </label>
                       </span> */}
-                    </>
-                  ) : (
-                    // step 1 - show button update
-                    <button
-                      type="button"
-                      className="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                      onClick={handleAvatarUpdateBtn}
-                    >
-                      Update
-                    </button>
-                  )
-                  }
-                  {/* <span className="ml-4 flex-shrink-0">
+                      </>
+                    ) : (
+                      // step 1 - show button update
+                      <button
+                        type="button"
+                        className="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        onClick={handleAvatarUpdateBtn}
+                      >
+                        Update
+                      </button>
+                    )}
+                    {/* <span className="ml-4 flex-shrink-0">
                     <button
                       type="button"
                       className="rounded-md bg-white font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                       Update
                     </button>
                   </span> */}
-                  {/* <div className="hidden flex-grow">
+                    {/* <div className="hidden flex-grow">
                     <label htmlFor="avatar1">
                       <input
                         type="text"
@@ -213,7 +226,7 @@ function Profile() {
                       />
                     </label>
                   </div> */}
-                  {/* <span
+                    {/* <span
                     className="hidden ml-4 flex-shrink-0"
                   >
                     <button
@@ -223,29 +236,37 @@ function Profile() {
                       Change
                     </button>
                   </span> */}
-                </dd>
-              </div>
-              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                <dt className="text-sm font-medium text-gray-500">Bookings</dt>
-                <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                  <span className="flex-grow">{userProfile?._count?.bookings}</span>
-                  <span className="ml-4 flex-shrink-0"></span>
-                </dd>
-              </div>
-              <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                <dt className="text-sm font-medium text-gray-500">Venues</dt>
-                <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                  <span className="flex-grow">{userProfile?._count?.venues}</span>
-                  <span className="ml-4 flex-shrink-0"></span>
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </>) 
-        : (<div>Log in to see your Profile Details</div>)}
+                  </dd>
+                </div>
+                <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
+                  <dt className="text-sm font-medium text-gray-500">
+                    Bookings
+                  </dt>
+                  <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                    <span className="flex-grow">
+                      {userProfile?._count?.bookings}
+                    </span>
+                    <span className="ml-4 flex-shrink-0"></span>
+                  </dd>
+                </div>
+                <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
+                  <dt className="text-sm font-medium text-gray-500">Venues</dt>
+                  <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                    <span className="flex-grow">
+                      {userProfile?._count?.venues}
+                    </span>
+                    <span className="ml-4 flex-shrink-0"></span>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </>
+        ) : (
+          <div>Log in to see your Profile Details</div>
+        )}
       </div>
     </>
-  )
+  );
 }
 
 export default Profile;

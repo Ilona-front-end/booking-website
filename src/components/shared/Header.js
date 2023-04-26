@@ -8,7 +8,7 @@ function Header() {
 
   // get from localStorage
   const token = localStorage.getItem('token');
-  if(token) {
+  if (token) {
     isLoggedIn = true;
   } else {
     isLoggedIn = false;
@@ -17,7 +17,9 @@ function Header() {
   return (
     <header className="font-serif flex flex-col sm:flex-row items-center justify-between bg-gray-800 p-4 max-w-screen-xl mx-auto">
       <div className="flex items-center mb-4 sm:mb-0">
-        <Link to="/" className="text-white text-xl font-bold">Holidaze</Link>
+        <Link to="/" className="text-white text-xl font-bold">
+          Holidaze
+        </Link>
       </div>
       <div className="flex items-center">
         {isLoggedIn ? (
@@ -25,12 +27,27 @@ function Header() {
             <Link to="/profile" className="text-white mr-4">
               <FaUser size={20} />
             </Link>
-            <button onClick={handleLogOut} className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded">Log out</button>
+            <button
+              onClick={handleLogOut}
+              className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded"
+            >
+              Log out
+            </button>
           </>
         ) : (
           <>
-        <Link to="/login" className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded mr-4">Log in</Link>
-        <Link to="/signup" className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded">Sign up</Link>
+            <Link
+              to="/login"
+              className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded mr-4"
+            >
+              Log in
+            </Link>
+            <Link
+              to="/signup"
+              className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded"
+            >
+              Sign up
+            </Link>
           </>
         )}
       </div>
