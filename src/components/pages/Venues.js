@@ -26,7 +26,7 @@ function Venues() {
       } catch (error) {
         // We received an error, setting our error state
         setError(error.message);
-        console.error('Error message: ', error);
+        console.error('Error message here: ', error);
       }
     }
     fetchVenues();
