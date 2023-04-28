@@ -1,70 +1,11 @@
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-// import { FaUser } from 'react-icons/fa';
-// import handleLogOut from '../../utils/handleLogOut';
-
-// function Header() {
-//   let isLoggedIn;
-
-//   // get from localStorage
-//   const token = localStorage.getItem('token');
-//   if (token) {
-//     isLoggedIn = true;
-//   } else {
-//     isLoggedIn = false;
-//   }
-
-//   return (
-//     <header className="font-serif flex flex-col sm:flex-row items-center justify-between bg-gray-800 p-4 max-w-screen-xl mx-auto">
-//       <div className="flex items-center mb-4 sm:mb-0">
-//         <Link to="/" className="text-white text-xl font-bold">
-//           Holidaze
-//         </Link>
-//       </div>
-//       <div className="flex items-center">
-//         {isLoggedIn ? (
-//           <>
-//             <Link to="/profile" className="text-white mr-4">
-//               <FaUser size={20} />
-//             </Link>
-//             <button
-//               onClick={handleLogOut}
-//               className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded"
-//             >
-//               Log out
-//             </button>
-//           </>
-//         ) : (
-//           <>
-//             <Link
-//               to="/login"
-//               className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded mr-4"
-//             >
-//               Log in
-//             </Link>
-//             <Link
-//               to="/signup"
-//               className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded"
-//             >
-//               Sign up
-//             </Link>
-//           </>
-//         )}
-//       </div>
-//     </header>
-//   );
-// }
-
-// export default Header;
-
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { Dialog } from '@headlessui/react';
 import { AiOutlineMenu, AiOutlineClose, AiOutlineLogin } from 'react-icons/ai';
-import { FaUser } from 'react-icons/fa';
+import { FaUser, FaRegPaperPlane } from 'react-icons/fa';
 import handleLogOut from '../../utils/handleLogOut';
 
-const navigationHeader = [
+const navigationHeaderLinks = [
   { name: 'All Venues', href: '/venues' },
   { name: 'My Venues', href: '/' },
   { name: 'Create Venue', href: '/' },
@@ -87,7 +28,7 @@ export default function Header() {
   return (
     <header>
       {/* Header */}
-      <nav className="font-serif flex flex-row xs:flex-col items-center justify-between bg-gray-800 p-4 max-w-screen-xl mx-auto">
+      <nav className="font-serif flex flex-row xs:flex-col items-center justify-between bg-gray-800 p-4 wrapper">
         {/* Holidaze logo */}
         <div className="flex lg:flex-1">
           <Link
@@ -112,23 +53,23 @@ export default function Header() {
         {/* Desktop navigation */}
         <div className="hidden lg:flex lg:gap-x-12">
           {isLoggedIn ? (
-            navigationHeader.map((item) => (
-              <a
+            navigationHeaderLinks.map((item) => (
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 className="hover:bg-gray-700 text-white font-semibold text-sm py-2 px-4 rounded"
               >
                 {item.name}
-              </a>
+              </Link>
             ))
           ) : (
-            <a
+            <Link
               key="venues"
-              href="/venues"
+              to="/venues"
               className="text-sm font-semibold hover:bg-gray-700 py-2 px-4 rounded text-white"
             >
               Venues
-            </a>
+            </Link>
           )}
         </div>
         {/* Desktop navigation - last link */}
@@ -195,32 +136,60 @@ export default function Header() {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                {navigationHeader.map((item) => (
-                  <a
+                {navigationHeaderLinks.map((item) => (
+                  <Link
                     key={item.name}
-                    href={item.href}
+                    to={item.href}
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
-              <div className="py-6 flex flex-col">
-                <Link
-                  to="/login"
-                  className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  <AiOutlineLogin className="mr-3 h-6 w-6" aria-hidden="true" />
-                  Log in
-                </Link>
-                <Link
-                  to="/signup"
-                  className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  <AiOutlineLogin className="mr-3 h-6 w-6" aria-hidden="true" />
-                  Sign up
-                </Link>
-              </div>
+              {isLoggedIn ? (
+                <div className="py-6 flex flex-col">
+                  <Link
+                    to="/profile"
+                    className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    <FaUser className="mr-3 h-5 w-5" aria-hidden="true" />
+                    Profile
+                  </Link>
+                  <button
+                    onClick={handleLogOut}
+                    className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    <FaRegPaperPlane
+                      className="mr-3 h-5 w-5"
+                      aria-hidden="true"
+                    />
+                    Log out
+                  </button>
+                </div>
+              ) : (
+                <div className="py-6 flex flex-col">
+                  <Link
+                    to="/login"
+                    className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    <AiOutlineLogin
+                      className="mr-3 h-6 w-6"
+                      aria-hidden="true"
+                    />
+                    Log in
+                  </Link>
+                  <Link
+                    to="/signup"
+                    className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  >
+                    <AiOutlineLogin
+                      className="mr-3 h-6 w-6"
+                      aria-hidden="true"
+                    />
+                    Sign up
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </Dialog.Panel>
