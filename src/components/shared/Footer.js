@@ -33,7 +33,7 @@ export default function Footer() {
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
-      <div className="bg-gray-900 wrapper px-8 py-16">
+      <div className="bg-gray-900 wrapper-max-width py-16 wrapper-padding-x">
         <div className="grid grid-cols-2 gap-8">
           <div className="md:grid md:grid-cols-2 md:gap-8 lg:grid lg:grid-cols-2 lg:gap-8">
             <div>

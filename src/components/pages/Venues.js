@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FaRegMeh } from 'react-icons/fa';
+import { VENUES_BASE_URL } from '../../api/api';
 
-const VENUES_URL = 'https://api.noroff.dev/api/v1/holidaze/venues';
+// const VENUES_URL = 'https://api.noroff.dev/api/v1/holidaze/venues';
 
 function Venues() {
   const [venues, setVenues] = useState([]);
@@ -12,7 +13,7 @@ function Venues() {
     async function fetchVenues() {
       try {
         // Function that gets our posts from the API
-        const response = await fetch(VENUES_URL);
+        const response = await fetch(VENUES_BASE_URL);
         if (!response.ok) {
           throw new Error(
             'Failed to get information about venues from the API'
@@ -35,7 +36,7 @@ function Venues() {
   if (error) {
     return (
       <>
-        <div className="rounded-md bg-red-50 p-4 max-w-screen-xl mx-auto">
+        <div className="rounded-md bg-red-50 p-4 wrapper-max-width wrapper-padding-x">
           <div className="flex">
             <div className="flex-shrink-0">
               <FaRegMeh size={20} color="red" />
@@ -57,10 +58,10 @@ function Venues() {
   }
 
   return (
-    <div className="max-w-screen-xl mx-auto">
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 wrapper-max-width wrapper-padding-x">
       {venues.map((venue) => (
         <div key={venue.id}>
-          <h2>{venue.name}</h2>
+          {/* <h2>{venue.name}</h2> */}
           {/* {venue.media.length > 0 && <img src={venue.media[0]} alt={venue.name} />} */}
           {/* <img src={venue.media[0]} alt={venue.name} /> */}
           <img
@@ -73,7 +74,13 @@ function Venues() {
             }}
           />
           {/* <img src={venue.media[0]} alt={venue.title} onError={(e) => { console.log(`Error loading image: ${venue.media}`, e); }} /> */}
+          <h2>{venue.name}</h2>
           <p>{venue.description}</p>
+          <p>
+            {venue.price}
+            <span> NOK</span>
+          </p>
+          <p>Max guests: {venue.maxGuests}</p>
         </div>
       ))}
     </div>

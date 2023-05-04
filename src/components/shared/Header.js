@@ -28,13 +28,10 @@ export default function Header() {
   return (
     <header>
       {/* Header */}
-      <nav className="font-serif flex flex-row xs:flex-col items-center justify-between bg-gray-800 p-4 wrapper">
+      <nav className="font-serif flex flex-row xs:flex-col items-center justify-between bg-gray-800 py-4 wrapper-max-width wrapper-padding-x">
         {/* Holidaze logo */}
         <div className="flex lg:flex-1">
-          <Link
-            to="/"
-            className="text-white text-xl font-bold hover:bg-gray-700 py-2 px-4 rounded"
-          >
+          <Link to="/" className="text-white text-xl font-bold ">
             Holidaze
           </Link>
         </div>

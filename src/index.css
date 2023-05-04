@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 @layer components {
-  .wrapper {
-    @apply mx-auto max-w-[1536px];
+  .wrapper-max-width {
+    @apply mx-auto max-w-[1110px];
+  }
+  .wrapper-padding-x {
+    @apply px-4 lg:px-8;
   }
 }
