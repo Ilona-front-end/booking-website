@@ -130,7 +130,7 @@ function Profile() {
                 </div>
                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
                   <dt className="text-sm font-medium text-gray-500">
-                    Email address
+                    {window.innerWidth < 640 ? 'Email' : 'Email address'}
                   </dt>
                   <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     <span className="flex-grow">{userProfile?.email}</span>
