@@ -9,13 +9,18 @@ import { Link } from 'react-router-dom';
 function Venues() {
   const [venues, setVenues] = useState([]);
   const [error, setError] = useState(null);
+  const [venueNumTotalPerPage, setVenueNumTotalPerPage] = useState(20); // Create a new state variable limit to keep track of how many items to fetch from the API
 
-  // The useEffect will run once when the component first mounts
+  // The useEffect will run:
+  // once when the component first mounts
+  // then every time the venueNumPerPage state variable changes
   useEffect(() => {
     async function fetchVenues() {
       try {
-        // Function that gets our posts from the API
-        const response = await fetch(VENUES_BASE_URL);
+        // Function that gets our venues from the API
+        const response = await fetch(
+          `${VENUES_BASE_URL}?limit=${venueNumTotalPerPage}`
+        ); // Fetch API that is modified to use the limit variable ( in query string )
         if (!response.ok) {
           throw new Error(
             'Failed to get information about venues from the API'
@@ -33,7 +38,7 @@ function Venues() {
       }
     }
     fetchVenues();
-  }, []);
+  }, [venueNumTotalPerPage]); // useEffect will run when the venueNumPerPage state variable changes, here is set a default value of 20 in the initial state
 
   // ERROR HANDLING
   if (error) {
@@ -60,15 +65,20 @@ function Venues() {
     );
   }
 
+  // GET MORE VENUES PER PAGE
+  function getMoreVenues() {
+    setVenueNumTotalPerPage(venueNumTotalPerPage + 20);
+  }
+
   return (
     <div className="wrapper-max-width wrapper-padding-x">
-      <h2 class="py-6 text-3xl font-bold text-gray-900 md:text-4xl lg:text-4xl">
+      <h2 className="py-6 text-3xl font-bold text-gray-900 md:text-4xl lg:text-4xl">
         All Venues
       </h2>
       <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {venues.map((venue) => (
-          <Link to={`/venues/${venue.id}`}>
-            <div key={venue.id}>
+        {venues.map((venue, index) => (
+          <Link to={`/venues/${venue.id}`} key={index}>
+            <div>
               {/* <h2>{venue.name}</h2> */}
               {/* {venue.media.length > 0 && <img src={venue.media[0]} alt={venue.name} />} */}
               {/* <img src={venue.media[0]} alt={venue.name} /> */}
@@ -138,9 +148,18 @@ function Venues() {
               <div className="text-sm text-gray-700">
                 Posted: {mapTime(venue.created)} ago
               </div>
+              <div>{index}</div>
             </div>
           </Link>
         ))}
+      </div>
+      <div className="flex justify-center mt-8">
+        <button
+          className="rounded-md bg-indigo-50 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-100 mb-8"
+          onClick={getMoreVenues}
+        >
+          Load more
+        </button>
       </div>
     </div>
   );
