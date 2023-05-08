@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { FaRegMeh } from 'react-icons/fa';
 import { VENUES_BASE_URL } from '../../api/api';
-import { AiTwotoneStar } from 'react-icons/ai';
+// import { AiTwotoneStar } from 'react-icons/ai';
+import getRatingStars from '../../utils/ratingStars';
+import { mapTime } from '../../utils/mapTime';
 import { Link } from 'react-router-dom';
 
 function Venues() {
@@ -56,17 +58,6 @@ function Venues() {
         </div>
       </>
     );
-  }
-
-  // RATING STARS FUNCTION
-  function getRatingStars(rating) {
-    const stars = Math.round(rating);
-    const starsToShow = [];
-
-    for (let i = 0; i < stars; i++) {
-      starsToShow.push(<AiTwotoneStar size={20} color="orange" />);
-    }
-    return <span className="flex">{starsToShow}</span>;
   }
 
   return (
@@ -127,6 +118,9 @@ function Venues() {
             <div>{getRatingStars(venue.rating)}</div>
             <div className="text-sm text-gray-700">
               Max guests: {venue.maxGuests}
+            </div>
+            <div className="text-sm text-gray-700">
+              Posted: {mapTime(venue.created)} ago
             </div>
           </div>
         </Link>
