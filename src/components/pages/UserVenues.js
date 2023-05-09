@@ -82,51 +82,56 @@ export default function UserProfileVenues() {
   }, [activeTab, fetchUserProfileVenues, fetchProfileBookings]);
 
   return (
-    <div className="wrapper-max-width wrapper-padding-x">
-      <div>
+    <>
+      <div className="wrapper-max-width wrapper-padding-x bg-gray-300">
         <button
-          className="text-gray-600 hover:text-gray-800 rounded-md pr-3 py-2 text-sm font-medium"
+          className={`font-serif text-gray-600 hover:text-gray-800 shadow-sm hover:ring-1 hover:ring-inset hover:ring-gray-300 rounded-md px-3 py-2 m-4 text-sm font-medium ${
+            activeTab === 'venues' ? 'bg-white' : 'bg-gray-200'
+          }`}
           onClick={() => handleTabClick('venues')}
         >
           My Venues
         </button>
         <button
-          className="text-gray-600 hover:text-gray-800 rounded-md pr-3 py-2 text-sm font-medium"
+          className={`font-serif text-gray-600 hover:text-gray-800 shadow-sm hover:ring-1 hover:ring-inset hover:ring-gray-300 rounded-md px-3 py-2 m-4 text-sm font-medium ${
+            activeTab === 'bookings' ? 'bg-white' : 'bg-gray-200'
+          }`}
           onClick={() => handleTabClick('bookings')}
         >
           My Bookings
         </button>
       </div>
-
-      {activeTab === 'venues' && (
-        <div className="wrapper-max-width wrapper-padding-x">
-          <div className="grid grid-cols-2 gap-4">
-            {userProfileVenues.map((venue) => (
-              <div
-                key={venue.id}
-                className="bg-white shadow overflow-hidden sm:rounded-lg"
-              >
-                <p>{venue.name}</p>
-              </div>
-            ))}
+      <div className="wrapper-max-width wrapper-padding-x">
+        {activeTab === 'venues' && (
+          <div className="wrapper-max-width wrapper-padding-x">
+            <div className="grid grid-cols-2 gap-4">
+              {userProfileVenues.map((venue) => (
+                <div
+                  key={venue.id}
+                  className="bg-white shadow overflow-hidden sm:rounded-lg"
+                >
+                  <p>{venue.name}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {activeTab === 'bookings' && (
-        <div className="wrapper-max-width wrapper-padding-x">
-          <div className="grid grid-cols-2 gap-4">
-            {userProfileBookings.map((booking) => (
-              <div
-                key={booking.id}
-                className="bg-white shadow overflow-hidden sm:rounded-lg"
-              >
-                <p>{booking.name}</p>
-              </div>
-            ))}
+        {activeTab === 'bookings' && (
+          <div className="wrapper-max-width wrapper-padding-x">
+            <div className="grid grid-cols-2 gap-4">
+              {userProfileBookings.map((booking) => (
+                <div
+                  key={booking.id}
+                  className="bg-white shadow overflow-hidden sm:rounded-lg"
+                >
+                  <p>{booking.name}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 }
