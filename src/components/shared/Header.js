@@ -7,7 +7,7 @@ import handleLogOut from '../../utils/handleLogOut';
 
 const navigationHeaderLinks = [
   { name: 'All Venues', href: '/venues' },
-  { name: 'My Venues', href: '/' },
+  { name: 'My Activity', href: '/user-venues' },
   { name: 'Create Venue', href: '/' },
   { name: '??', href: '/' },
 ];

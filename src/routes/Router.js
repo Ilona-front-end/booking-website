@@ -9,6 +9,7 @@ const Venues = lazy(() => import('../components/pages/Venues'));
 const Venue = lazy(() => import('../components/pages/Venue'));
 const Profile = lazy(() => import('../components/pages/Profile'));
 const SignUp = lazy(() => import('../components/pages/SignUp'));
+const UserVenues = lazy(() => import('../components/pages/UserVenues'));
 
 function SpinnerFallback() {
   return (
@@ -27,6 +28,7 @@ function Router() {
           <Route exact path="/" element={<Home />} />
           <Route path="/venues" element={<Venues />} />
           <Route path="/venues/:id" element={<Venue />} />
+          <Route path="/user-venues" element={<UserVenues />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
