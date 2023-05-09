@@ -10,6 +10,7 @@ function Venues() {
   const [venues, setVenues] = useState([]);
   const [error, setError] = useState(null);
   const [displayedVenuesCount, setDisplayedVenuesCount] = useState(20);
+  const [showScrollToTopButton, setShowScrollToTopButton] = useState(false);
 
   async function fetchVenues() {
     try {
@@ -31,15 +32,32 @@ function Venues() {
     fetchVenues();
   }, []);
 
+  // The useEffect will run when the displayedVenuesCount state changes and will check if the button should be shown or not
+  useEffect(() => {
+    if (displayedVenuesCount >= 40) {
+      setShowScrollToTopButton(true);
+    } else {
+      setShowScrollToTopButton(false);
+    }
+  }, [displayedVenuesCount]);
+
+  // Function used to get more venues when clicking the button
   function getMoreVenues() {
     setDisplayedVenuesCount(displayedVenuesCount + 20);
+  }
+
+  function handleScrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }
 
   if (venues.length === 0) {
     return <div>No venues available</div>;
   }
 
-  // ERROR HANDLING
+  // Error message
   if (error) {
     return (
       <>
@@ -171,6 +189,16 @@ function Venues() {
           </button>
         </div>
       )}
+      {showScrollToTopButton ? (
+        <div className="flex justify-center mt-8">
+          <button
+            className="rounded-md bg-indigo-50 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-100 mb-8"
+            onClick={handleScrollToTop}
+          >
+            Scroll to top
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
