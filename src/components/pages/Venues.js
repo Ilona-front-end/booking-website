@@ -4,6 +4,7 @@ import { VENUES_BASE_URL } from '../../api/api';
 import getRatingStars from '../../utils/ratingStars';
 import { mapTime } from '../../utils/mapTime';
 import { Link } from 'react-router-dom';
+import defaultVenueImg from '../../assets/default-venue-img.jpg';
 
 function Venues() {
   const [venues, setVenues] = useState([]);
@@ -83,16 +84,23 @@ function Venues() {
                   {/* {venue.media.length > 0 && <img src={venue.media[0]} alt={venue.name} />} */}
                   {/* <img src={venue.media[0]} alt={venue.name} /> */}
                   <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg shadow-lg bg-gray-200">
-                    <img
-                      className="object-cover w-full h-full"
-                      src={media[0]}
-                      alt={name}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src =
-                          'https://images.unsplash.com/photo-1634655377962-e6e7b446e7e9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1364&q=80';
-                      }}
-                    />
+                    {media && media.length > 0 ? (
+                      <img
+                        className="object-cover w-full h-full"
+                        src={media[0]}
+                        alt={name}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = defaultVenueImg;
+                        }}
+                      />
+                    ) : (
+                      <img
+                        className="object-cover w-full h-full"
+                        src={defaultVenueImg}
+                        alt="Default"
+                      />
+                    )}
                   </div>
                   {/* <img src={venue.media[0]} alt={venue.name} onError={(e) => { console.log(`Error loading image: ${venue.media}`, e); }} /> */}
                   <div className="mt-2 flex flex-col md:flex-row md:items-center md:justify-between lg:flex-row lg:items-center lg:justify-between">
