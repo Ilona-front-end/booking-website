@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FaRegMeh } from 'react-icons/fa';
 import { VENUES_BASE_URL } from '../../api/api';
-// import { AiTwotoneStar } from 'react-icons/ai';
 import getRatingStars from '../../utils/ratingStars';
 import { mapTime } from '../../utils/mapTime';
 import { Link } from 'react-router-dom';
@@ -9,36 +8,37 @@ import { Link } from 'react-router-dom';
 function Venues() {
   const [venues, setVenues] = useState([]);
   const [error, setError] = useState(null);
-  const [venueNumTotalPerPage, setVenueNumTotalPerPage] = useState(20); // Create a new state variable limit to keep track of how many items to fetch from the API
+  const [displayedVenuesCount, setDisplayedVenuesCount] = useState(20);
 
   // The useEffect will run:
   // once when the component first mounts
-  // then every time the venueNumPerPage state variable changes
   useEffect(() => {
     async function fetchVenues() {
       try {
-        // Function that gets our venues from the API
-        const response = await fetch(
-          `${VENUES_BASE_URL}?limit=${venueNumTotalPerPage}`
-        ); // Fetch API that is modified to use the limit variable ( in query string )
+        const response = await fetch(`${VENUES_BASE_URL}`); // Fetch API data
         if (!response.ok) {
           throw new Error(
             'Failed to get information about venues from the API'
           );
         }
-        // Wait for the response to be converted to JSON
-        const json = await response.json();
-        // We received API data, setting our venues state
-        setVenues(json);
+        const json = await response.json(); // Wait for the response to be converted to JSON
+        setVenues(json); // We received API data, setting our venues state
         setError(null);
       } catch (error) {
-        // We received an error, setting our error state
-        setError(error.message);
+        setError(error.message); // We received an error, setting our error state
         console.error('Error message here: ', error);
       }
     }
     fetchVenues();
-  }, [venueNumTotalPerPage]); // useEffect will run when the venueNumPerPage state variable changes, here is set a default value of 20 in the initial state
+  }, []);
+
+  function getMoreVenues() {
+    setDisplayedVenuesCount(displayedVenuesCount + 20);
+  }
+
+  if (venues.length === 0) {
+    return <div>No venues available</div>;
+  }
 
   // ERROR HANDLING
   if (error) {
@@ -65,18 +65,13 @@ function Venues() {
     );
   }
 
-  // GET MORE VENUES PER PAGE
-  function getMoreVenues() {
-    setVenueNumTotalPerPage(venueNumTotalPerPage + 20);
-  }
-
   return (
     <div className="wrapper-max-width wrapper-padding-x">
       <h2 className="py-6 text-3xl font-bold text-gray-900 md:text-4xl lg:text-4xl">
         All Venues
       </h2>
       <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {venues.map((venue, index) => (
+        {venues.slice(0, displayedVenuesCount).map((venue, index) => (
           <Link to={`/venues/${venue.id}`} key={index}>
             <div>
               {/* <h2>{venue.name}</h2> */}
@@ -153,14 +148,16 @@ function Venues() {
           </Link>
         ))}
       </div>
-      <div className="flex justify-center mt-8">
-        <button
-          className="rounded-md bg-indigo-50 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-100 mb-8"
-          onClick={getMoreVenues}
-        >
-          Load more
-        </button>
-      </div>
+      {displayedVenuesCount < venues.length && (
+        <div className="flex justify-center mt-8">
+          <button
+            className="rounded-md bg-indigo-50 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-100 mb-8"
+            onClick={getMoreVenues}
+          >
+            Load more
+          </button>
+        </div>
+      )}
     </div>
   );
 }
