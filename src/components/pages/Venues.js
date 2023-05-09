@@ -13,7 +13,7 @@ function Venues() {
 
   async function fetchVenues() {
     try {
-      const response = await fetch(`${VENUES_BASE_URL}`); // Fetch API data
+      const response = await fetch(`${VENUES_BASE_URL}?sort=created`); // Fetch API data and show newest venues first
       if (!response.ok) {
         throw new Error('Failed to get information about venues from the API');
       }
@@ -26,8 +26,7 @@ function Venues() {
     }
   }
 
-  // The useEffect will run:
-  // once when the component first mounts
+  // The useEffect will run once when the component first mounts
   useEffect(() => {
     fetchVenues();
   }, []);
