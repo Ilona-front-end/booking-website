@@ -91,91 +91,95 @@ function Venues() {
         {venues
           .slice(0, displayedVenuesCount)
           .map(
-            (
-              { id, name, media, price, location, rating, maxGuests, created },
-              index
-            ) => (
-              <Link to={`/venues/${id}`} key={index}>
-                <div>
-                  {/* <h2>{venue.name}</h2> */}
-                  {/* {venue.media.length > 0 && <img src={venue.media[0]} alt={venue.name} />} */}
-                  {/* <img src={venue.media[0]} alt={venue.name} /> */}
-                  <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg shadow-lg bg-gray-200">
-                    {media && media.length > 0 ? (
-                      <img
-                        className="object-cover w-full h-full"
-                        src={media[0]}
-                        alt={name}
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = defaultVenueImg;
-                        }}
-                      />
-                    ) : (
-                      <img
-                        className="object-cover w-full h-full"
-                        src={defaultVenueImg}
-                        alt="Default"
-                      />
-                    )}
-                  </div>
-                  {/* <img src={venue.media[0]} alt={venue.name} onError={(e) => { console.log(`Error loading image: ${venue.media}`, e); }} /> */}
-                  <div className="mt-2 flex flex-col md:flex-row md:items-center md:justify-between lg:flex-row lg:items-center lg:justify-between">
-                    <h2 className="text-base font-medium text-gray-900">
-                      {[
-                        'test',
-                        'tes',
-                        'Testing',
-                        'tester',
-                        'some test house',
-                        'string',
-                        'Test post',
-                        'testingtesting',
-                      ].includes(name)
-                        ? 'Accommodation'
-                        : name}
-                    </h2>
-                    <p className="text-base font-medium text-blue-800">
-                      {price}
-                      <span> NOK</span>
-                    </p>
-                  </div>
+            ({
+              id,
+              name,
+              media,
+              price,
+              location,
+              rating,
+              maxGuests,
+              created,
+            }) => (
+              <div key={id}>
+                <Link to={`/venues/${id}`}>
                   <div>
-                    {location.city !== 'Unknown' &&
-                      location.city !== 'string' &&
-                      location.city !== '' &&
-                      location.city !== 'test' && (
-                        <span className="text-sm text-gray-700">
-                          {location.city}
-                        </span>
+                    <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg shadow-lg bg-gray-200">
+                      {media && media.length > 0 ? (
+                        <img
+                          className="object-cover w-full h-full"
+                          src={media[0]}
+                          alt={name}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = defaultVenueImg;
+                          }}
+                        />
+                      ) : (
+                        <img
+                          className="object-cover w-full h-full"
+                          src={defaultVenueImg}
+                          alt="Default"
+                        />
                       )}
-                    {location.city !== 'Unknown' &&
-                      location.city !== 'string' &&
-                      location.city !== '' &&
-                      location.city !== 'test' &&
-                      location.country !== 'Unknown' &&
-                      location.country !== 'string' &&
-                      location.country !== '' &&
-                      location.country !== 'test' && <span>, </span>}
-                    {location.country !== 'Unknown' &&
-                      location.country !== 'string' &&
-                      location.country !== '' &&
-                      location.country !== 'test' && (
-                        <span className="text-sm text-gray-700">
-                          {location.country}
-                        </span>
-                      )}
+                    </div>
+                    {/* <img src={venue.media[0]} alt={venue.name} onError={(e) => { console.log(`Error loading image: ${venue.media}`, e); }} /> */}
+                    <div className="mt-2 flex flex-col md:flex-row md:items-center md:justify-between lg:flex-row lg:items-center lg:justify-between">
+                      <h2 className="text-base font-medium text-gray-900">
+                        {[
+                          'test',
+                          'tes',
+                          'Testing',
+                          'tester',
+                          'some test house',
+                          'string',
+                          'Test post',
+                          'testingtesting',
+                        ].includes(name)
+                          ? 'Accommodation'
+                          : name}
+                      </h2>
+                      <p className="text-base font-medium text-blue-800">
+                        {price}
+                        <span> NOK</span>
+                      </p>
+                    </div>
+                    <div>
+                      {location.city !== 'Unknown' &&
+                        location.city !== 'string' &&
+                        location.city !== '' &&
+                        location.city !== 'test' && (
+                          <span className="text-sm text-gray-700">
+                            {location.city}
+                          </span>
+                        )}
+                      {location.city !== 'Unknown' &&
+                        location.city !== 'string' &&
+                        location.city !== '' &&
+                        location.city !== 'test' &&
+                        location.country !== 'Unknown' &&
+                        location.country !== 'string' &&
+                        location.country !== '' &&
+                        location.country !== 'test' && <span>, </span>}
+                      {location.country !== 'Unknown' &&
+                        location.country !== 'string' &&
+                        location.country !== '' &&
+                        location.country !== 'test' && (
+                          <span className="text-sm text-gray-700">
+                            {location.country}
+                          </span>
+                        )}
+                    </div>
+                    <div>{getRatingStars(rating)}</div>
+                    <div className="text-sm text-gray-700">
+                      Max guests: {maxGuests}
+                    </div>
+                    <div className="text-sm text-gray-700">
+                      Posted: {mapTime(created)} ago
+                    </div>
                   </div>
-                  <div>{getRatingStars(rating)}</div>
-                  <div className="text-sm text-gray-700">
-                    Max guests: {maxGuests}
-                  </div>
-                  <div className="text-sm text-gray-700">
-                    Posted: {mapTime(created)} ago
-                  </div>
-                  <div>{index}</div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             )
           )}
       </div>

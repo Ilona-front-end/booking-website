@@ -22,29 +22,6 @@ function Profile() {
         });
         const json = await response.json();
         setProfile(json);
-        // POSSIBLE: json.status could be 'Not Found', json.errors[0].message could be 'No profile with this name'
-
-        // switch (json.status) {
-        //   case 'ok':
-        //     setErrorMessage(null);
-        //     setProfile(json);
-        //     break;
-        //   case 'Not Found':
-        //     setErrorMessage(json.errors[0].message); // No profile with this name
-        //     setProfile(null);
-        //     // throw new Error(json.errors[0].message);
-        //     break;
-        //   case 'Internal Server Error':
-        //     setErrorMessage(json.errors[0].message); // Internal Server Error
-        //     setProfile(null);
-        //     // throw new Error(json.errors[0].message);
-        //     break;
-        //   default:
-        //     setErrorMessage('An error occured');
-        //     setProfile(null);
-        //     // throw new Error('An error occured');
-        //     break;
-        // }
       } catch {
         console.log('error');
       }
@@ -69,7 +46,7 @@ function Profile() {
   // user put new url and clicks on button save avatar, now sending new avatar to API
   const handleAvatarSubmit = async () => {
     try {
-      const response = await fetch(PROFILE_BASE_URL + userName + '/media', {
+      const response = await fetch(`${PROFILE_BASE_URL}${userName}/media`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

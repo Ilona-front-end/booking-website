@@ -77,6 +77,7 @@ export default function Header() {
                 <Link
                   to="/profile"
                   className="hover:bg-gray-700 text-white font-semibold text-sm py-2 px-4 rounded"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   <FaUser size={18} />
                 </Link>
@@ -138,6 +139,7 @@ export default function Header() {
                     key={item.name}
                     to={item.href}
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}
                   </Link>
@@ -148,6 +150,7 @@ export default function Header() {
                   <Link
                     to="/profile"
                     className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     <FaUser className="mr-3 h-5 w-5" aria-hidden="true" />
                     Profile
