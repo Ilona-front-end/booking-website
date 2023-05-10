@@ -33,7 +33,7 @@ export default function LogIn() {
 
       if (json.status === 'Unauthorized') {
         console.log('Unauthorized log in');
-        throw new Error(json.errors[0].message);
+        throw new Error(json.errors[0].message); // throw new Error() will trigger the catch block and handle the error
       } else {
         console.log('User logged in successfully');
         setErrorMessage(null);

@@ -34,7 +34,7 @@ export default function SignUp() {
       // console.log('Response called json:', json);
 
       if (json.status === 'Bad Request') {
-        throw new Error(json.errors[0].message);
+        throw new Error(json.errors[0].message); // throw new Error() will trigger the catch block and handle the error
       } else {
         setErrorMessage(null);
         window.location.replace('/login');

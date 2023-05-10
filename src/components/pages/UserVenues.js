@@ -29,7 +29,7 @@ export default function UserProfileVenues() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get information about venues from the API');
+        throw new Error('Failed to get information about venues from the API'); // throw new Error() will trigger the catch block and handle the error
       }
 
       const json = await response.json();
@@ -52,7 +52,7 @@ export default function UserProfileVenues() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get information about venues from the API');
+        throw new Error('Failed to get information about venues from the API'); // throw new Error() will trigger the catch block and handle the error
       }
 
       const json = await response.json();
@@ -161,8 +161,15 @@ export default function UserProfileVenues() {
                       Update
                     </button>
                     <button
-                      className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700 ring-1 ring-inset ring-red-600 hover:ring-gray-200 w-[180px] mx-auto"
-                      onClick={() => deleteData(VENUES_BASE_URL, id, token)}
+                      className="rounded-md bg-red-600 px-3 py-2 mt-4 md:mt-0 lg:mt-0 text-sm font-semibold text-white shadow-sm hover:bg-red-700 ring-1 ring-inset ring-red-600 hover:ring-gray-200 w-[180px] mx-auto"
+                      onClick={() =>
+                        deleteData(
+                          VENUES_BASE_URL,
+                          id,
+                          token,
+                          setUserProfileVenues
+                        )
+                      }
                     >
                       Delete
                     </button>

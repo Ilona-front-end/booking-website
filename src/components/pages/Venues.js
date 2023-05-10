@@ -16,7 +16,7 @@ function Venues() {
     try {
       const response = await fetch(`${VENUES_BASE_URL}?sort=created`); // Fetch API data and show newest venues first
       if (!response.ok) {
-        throw new Error('Failed to get information about venues from the API');
+        throw new Error('Failed to get information about venues from the API'); // throw new Error() will trigger the catch block and handle the error
       }
       const json = await response.json(); // Wait for the response to be converted to JSON
       setVenues(json); // We received API data, setting our venues state
