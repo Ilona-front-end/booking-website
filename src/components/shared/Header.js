@@ -132,13 +132,13 @@ export default function Header() {
             </button>
           </div>
           <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/10">
+            <div className="font-serif -my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 {navigationHeaderLinks.map((item) => (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}
@@ -149,7 +149,7 @@ export default function Header() {
                 <div className="py-6 flex flex-col">
                   <Link
                     to="/profile"
-                    className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <FaUser className="mr-3 h-5 w-5" aria-hidden="true" />
@@ -157,7 +157,7 @@ export default function Header() {
                   </Link>
                   <button
                     onClick={handleLogOut}
-                    className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-red-300"
                   >
                     <FaRegPaperPlane
                       className="mr-3 h-5 w-5"
@@ -170,7 +170,7 @@ export default function Header() {
                 <div className="py-6 flex flex-col">
                   <Link
                     to="/login"
-                    className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
                   >
                     <AiOutlineLogin
                       className="mr-3 h-6 w-6"
@@ -180,7 +180,7 @@ export default function Header() {
                   </Link>
                   <Link
                     to="/signup"
-                    className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
                   >
                     <AiOutlineLogin
                       className="mr-3 h-6 w-6"

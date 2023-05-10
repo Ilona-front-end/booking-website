@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { PROFILE_BASE_URL } from '../../api/api';
+import defaultVenueImg from '../../assets/default-venue-img.jpg';
+import getRatingStars from '../../utils/ratingStars';
+import { mapTime } from '../../utils/mapTime';
 
 // React functional component that renders user's venues or bookings according to the tab that is active
 export default function UserProfileVenues() {
@@ -103,32 +106,70 @@ export default function UserProfileVenues() {
       </div>
       <div className="wrapper-max-width wrapper-padding-x">
         {activeTab === 'venues' && (
-          <div className="wrapper-max-width wrapper-padding-x">
-            <div className="grid grid-cols-2 gap-4">
-              {userProfileVenues.map((venue) => (
-                <div
-                  key={venue.id}
-                  className="bg-white shadow overflow-hidden sm:rounded-lg"
-                >
-                  <p>{venue.name}</p>
+          <div className="mx-auto my-20 grid max-w-[1000px] grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:mx-0 lg:grid-cols-2">
+            {userProfileVenues.map(
+              ({
+                id,
+                media,
+                name,
+                rating,
+                description,
+                location,
+                maxGuests,
+                created,
+              }) => (
+                <div key={id}>
+                  {media && media.length > 0 ? (
+                    <img
+                      className="aspect-[3/2] w-full rounded-2xl object-cover"
+                      src={media[0]}
+                      alt={name}
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = defaultVenueImg;
+                      }}
+                    />
+                  ) : (
+                    <img
+                      className="aspect-[3/2] w-full rounded-2xl object-cover"
+                      src={defaultVenueImg}
+                      alt="Default"
+                    />
+                  )}
+                  <h2 className="mt-2 text-base leading-6 text-gray-900">
+                    {name}
+                  </h2>
+                  <p className="mt-1 text-sm leading-6 text-gray-900">
+                    {getRatingStars(rating)}
+                  </p>
+                  <p className="mt-1 text-sm leading-6 text-gray-500">
+                    {description}
+                  </p>
+                  <p className="mt-1 text-sm leading-6 text-gray-900">
+                    City: {location.city}
+                  </p>
+                  <p className="mt-1 text-sm leading-6 text-gray-900">
+                    Max guests: {maxGuests}
+                  </p>
+                  <p className="mt-1 text-sm leading-6 text-gray-900">
+                    Posted: {mapTime(created)} ago
+                  </p>
                 </div>
-              ))}
-            </div>
+              )
+            )}
           </div>
         )}
 
         {activeTab === 'bookings' && (
-          <div className="wrapper-max-width wrapper-padding-x">
-            <div className="grid grid-cols-2 gap-4">
-              {userProfileBookings.map((booking) => (
-                <div
-                  key={booking.id}
-                  className="bg-white shadow overflow-hidden sm:rounded-lg"
-                >
-                  <p>{booking.name}</p>
-                </div>
-              ))}
-            </div>
+          <div className="mx-auto mt-20 grid max-w-[1000px] grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:mx-0 lg:grid-cols-2">
+            {userProfileBookings.map((booking) => (
+              <div
+                key={booking.id}
+                className="bg-white shadow overflow-hidden sm:rounded-lg"
+              >
+                <p>{booking.name}</p>
+              </div>
+            ))}
           </div>
         )}
       </div>
