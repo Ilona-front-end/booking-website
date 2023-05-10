@@ -171,6 +171,7 @@ export default function Header() {
                   <Link
                     to="/login"
                     className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     <AiOutlineLogin
                       className="mr-3 h-6 w-6"
@@ -181,6 +182,7 @@ export default function Header() {
                   <Link
                     to="/signup"
                     className="flex items-center -mx-3 rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     <AiOutlineLogin
                       className="mr-3 h-6 w-6"

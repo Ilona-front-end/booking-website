@@ -3,6 +3,8 @@ import { PROFILE_BASE_URL } from '../../api/api';
 import defaultVenueImg from '../../assets/default-venue-img.jpg';
 import getRatingStars from '../../utils/ratingStars';
 import { mapTime } from '../../utils/mapTime';
+import { deleteData } from '../../utils/deleteData';
+import { VENUES_BASE_URL } from '../../api/api';
 
 // React functional component that renders user's venues or bookings according to the tab that is active
 export default function UserProfileVenues() {
@@ -154,6 +156,17 @@ export default function UserProfileVenues() {
                   <p className="mt-1 text-sm leading-6 text-gray-900">
                     Posted: {mapTime(created)} ago
                   </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mt-6">
+                    <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto">
+                      Update
+                    </button>
+                    <button
+                      className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-700 ring-1 ring-inset ring-red-600 hover:ring-gray-200 w-[180px] mx-auto"
+                      onClick={() => deleteData(VENUES_BASE_URL, id, token)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               )
             )}
