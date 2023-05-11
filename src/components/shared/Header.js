@@ -6,10 +6,10 @@ import { FaUser, FaRegPaperPlane } from 'react-icons/fa';
 import handleLogOut from '../../utils/handleLogOut';
 
 const navigationHeaderLinks = [
-  { name: 'All Venues', href: '/venues' },
-  { name: 'My Activity', href: '/user-venues' },
-  { name: 'Create Venue', href: '/' },
-  { name: '??', href: '/' },
+  { name: 'All Venues', to: '/venues' },
+  { name: 'My Activity', to: '/user-venues' },
+  { name: 'Create Venue', to: '/create-venue' },
+  { name: '??', to: '/' },
 ];
 
 export default function Header() {
@@ -53,7 +53,7 @@ export default function Header() {
             navigationHeaderLinks.map((item) => (
               <Link
                 key={item.name}
-                to={item.href}
+                to={item.to}
                 className="hover:bg-gray-700 text-white font-semibold text-sm py-2 px-4 rounded"
               >
                 {item.name}
@@ -137,7 +137,7 @@ export default function Header() {
                 {navigationHeaderLinks.map((item) => (
                   <Link
                     key={item.name}
-                    to={item.href}
+                    to={item.to}
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
                     onClick={() => setMobileMenuOpen(false)}
                   >

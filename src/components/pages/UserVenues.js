@@ -3,6 +3,7 @@ import { PROFILE_BASE_URL } from '../../api/api';
 import defaultVenueImg from '../../assets/default-venue-img.jpg';
 import getRatingStars from '../../utils/ratingStars';
 import { mapTime } from '../../utils/mapTime';
+import { formateDate } from '../../utils/dateFormatting';
 import { deleteData } from '../../utils/deleteData';
 import { VENUES_BASE_URL } from '../../api/api';
 
@@ -181,15 +182,28 @@ export default function UserProfileVenues() {
         )}
 
         {activeTab === 'bookings' && (
-          <div className="mx-auto mt-20 grid max-w-[1000px] grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:mx-0 lg:grid-cols-2">
-            {userProfileBookings.map((booking) => (
-              <div
-                key={booking.id}
-                className="bg-white shadow overflow-hidden sm:rounded-lg"
-              >
-                <p>{booking.name}</p>
-              </div>
-            ))}
+          <div className="mx-auto my-20 grid max-w-[1000px] grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:mx-0 lg:grid-cols-2">
+            {userProfileBookings.map(
+              ({ id, dateFrom, dateTo, guests, created }) => (
+                <div key={id}>
+                  <h2 className="mt-2 text-base leading-6 text-gray-900">
+                    Venue id: {id}
+                  </h2>
+                  <p className="mt-1 text-sm leading-6 text-gray-900">
+                    From: {formateDate(dateFrom)}
+                  </p>
+                  <p className="mt-1 text-sm leading-6 text-gray-900">
+                    Until: {formateDate(dateTo)}
+                  </p>
+                  <p className="mt-1 text-sm leading-6 text-gray-900">
+                    Guests: {guests}
+                  </p>
+                  <p className="mt-1 text-sm leading-6 text-gray-900">
+                    Booked {mapTime(created)} ago
+                  </p>
+                </div>
+              )
+            )}
           </div>
         )}
       </div>
