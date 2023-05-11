@@ -100,7 +100,7 @@ export default function SignUp() {
                   htmlFor="name"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Name
+                  Name <span className="text-red-500">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -129,7 +129,7 @@ export default function SignUp() {
                   htmlFor="email"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Email address
+                  Email address <span className="text-red-500">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -158,7 +158,7 @@ export default function SignUp() {
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Password
+                  Password <span className="text-red-500">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -193,7 +193,7 @@ export default function SignUp() {
                 <div className="mt-2">
                   <input
                     {...register('avatar', {
-                      required: 'Please provide your avatar image',
+                      // required: 'Please provide your avatar image',
                       pattern: {
                         value: /^.+\.((jpe?g)|(png))$/i,
                         message:

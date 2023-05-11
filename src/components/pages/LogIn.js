@@ -37,13 +37,22 @@ export default function LogIn() {
       } else {
         console.log('User logged in successfully');
         setErrorMessage(null);
-
-        // localStorage.setItem(key, JSON.stringify(value));
-        localStorage.setItem('user', json.name);
-        localStorage.setItem('email', json.email);
-        localStorage.setItem('token', json.accessToken);
-        window.location.replace('/');
       }
+
+      if (json.status === 'Not Found') {
+        console.log('Password or email is incorrect');
+        throw new Error('Password or email is incorrect'); // throw new Error() will trigger the catch block and handle the error
+        // json.errors[0].message is: Route POST:/api/v1/holidazelogin not found. Therefore I insert message manually
+      } else {
+        console.log('User logged in successfully');
+        setErrorMessage(null);
+      }
+
+      // localStorage.setItem(key, JSON.stringify(value));
+      localStorage.setItem('user', json.name);
+      localStorage.setItem('email', json.email);
+      localStorage.setItem('token', json.accessToken);
+      window.location.replace('/');
     } catch (error) {
       console.log('json error', error);
       setErrorMessage(error.message);
@@ -105,7 +114,7 @@ export default function LogIn() {
                   htmlFor="email"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Email address
+                  Email address <span className="text-red-500">*</span>
                 </label>
                 <div className="mt-2">
                   <input
@@ -134,7 +143,7 @@ export default function LogIn() {
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Password
+                  Password <span className="text-red-500">*</span>
                 </label>
                 <div className="mt-2">
                   <input
