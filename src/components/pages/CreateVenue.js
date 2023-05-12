@@ -4,7 +4,6 @@ import { VENUES_BASE_URL } from '../../api/api';
 
 export default function CreateVenue() {
   const token = localStorage.getItem('token');
-  // const userName = localStorage.getItem('user');
 
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -19,7 +18,7 @@ export default function CreateVenue() {
       media: [],
       price: 0,
       maxGuests: 0,
-      // rating: 0,
+      rating: 0,
       // meta: {
       //   wifi: false,
       //   parking: false,
@@ -40,24 +39,46 @@ export default function CreateVenue() {
 
   const onSubmitCreateVenue = async (data) => {
     try {
+      const formattedData = {
+        ...data,
+        price: parseFloat(data.price), // parseFloat() converts string to float (number)
+        maxGuests: parseInt(data.maxGuests), // parseInt() converts string to integer (number)
+        rating: parseFloat(data.rating), // parseFloat() converts string to float (number)
+        media: [data.media], // media is an array of strings, so we need to wrap data.media in square brackets to make it an array. API does not accept single string as a value for media
+      };
+      console.log('formattedData', formattedData);
+
       const response = await fetch(VENUES_BASE_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formattedData),
       });
 
-      const json = await response.json();
-      console.log('onSubmitCreateVenue', json);
+      console.log('Venue created successfully. Response: ', response);
 
-      if (json.status === 'Bad Request') {
-        throw new Error(json.errors[0].message); // throw new Error() will trigger the catch block and handle the error
+      if (response.status === 201) {
+        console.log(
+          'Venue created successfully. Response status: ',
+          response.status
+        );
+      }
+
+      // We are only interested in the response status,
+      // we do not need to access or display actual data from the response (ex. id, name ect.), so we do not need to convert it to JSON:
+      // const json = await response.json();
+
+      if (response.status === 'Bad Request') {
+        throw new Error(response.errors[0].message); // throw new Error() will trigger the catch block and handle the error
       } else {
         setErrorMessage(null);
       }
-    } catch (error) {}
+    } catch (error) {
+      setErrorMessage(error.message);
+      console.log('onSubmitCreateVenue error', error);
+    }
   };
 
   return (
@@ -191,6 +212,7 @@ export default function CreateVenue() {
                 </div>
                 {errors.media && (
                   <p className="mt-2 text-xs text-red-600">
+                    {/* error message is shown if user provides information, but not enough to make a POST request. This field is not required, but can guide user */}
                     {errors.media.message}
                   </p>
                 )}
@@ -253,6 +275,56 @@ export default function CreateVenue() {
                   </p>
                 )}
               </div>
+
+              {/* RATING INPUT */}
+              <div>
+                <label
+                  htmlFor="rating"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Rating
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register('rating', {
+                      min: {
+                        value: 1,
+                        message: 'Minimum rating is 0 stars',
+                      },
+                      max: {
+                        value: 5,
+                        message: 'Maximum rating is 5 stars',
+                      },
+                    })}
+                    id="rating"
+                    type="number"
+                    className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+                {errors.rating && (
+                  <p className="mt-2 text-xs text-red-600">
+                    {errors.rating.message}
+                  </p>
+                )}
+              </div>
+
+              {/*  INPUT */}
+              {/* <div>
+                <label
+                  htmlFor=""
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Mark this box to ...
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register('')}
+                    id=""
+                    type="checkbox"
+                    className="block rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div> */}
 
               {/* SUBMIT BUTTON */}
               <div>
