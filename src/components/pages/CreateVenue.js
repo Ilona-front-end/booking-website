@@ -19,12 +19,12 @@ export default function CreateVenue() {
       price: 0,
       maxGuests: 0,
       rating: 0,
-      // meta: {
-      //   wifi: false,
-      //   parking: false,
-      //   breakfast: false,
-      //   pets: false,
-      // },
+      meta: {
+        wifi: false,
+        parking: false,
+        breakfast: false,
+        pets: false,
+      },
       // location: {
       //   address: 'Unknown',
       //   city: 'Unknown',
@@ -40,11 +40,18 @@ export default function CreateVenue() {
   const onSubmitCreateVenue = async (data) => {
     try {
       const formattedData = {
-        ...data,
+        name: data.name,
+        description: data.description,
         price: parseFloat(data.price), // parseFloat() converts string to float (number)
         maxGuests: parseInt(data.maxGuests), // parseInt() converts string to integer (number)
         rating: parseFloat(data.rating), // parseFloat() converts string to float (number)
         media: [data.media], // media is an array of strings, so we need to wrap data.media in square brackets to make it an array. API does not accept single string as a value for media
+        meta: {
+          wifi: data.meta.wifi === 'true', // data.meta.wifi is a string, so we need to convert it to boolean. If data.meta.wifi is equal to 'true', then it will be converted to true, otherwise it will be converted to false
+          parking: data.meta.parking === 'true', // data.meta.parking is a string, so we need to convert it to boolean
+          breakfast: data.meta.breakfast === 'true', // data.meta.breakfast is a string, so we need to convert it to boolean.
+          pets: data.meta.pets === 'true', // data.meta.pets is a string, so we need to convert it to boolean
+        },
       };
       console.log('formattedData', formattedData);
 
@@ -308,23 +315,81 @@ export default function CreateVenue() {
                 )}
               </div>
 
-              {/*  INPUT */}
-              {/* <div>
+              {/* META: WIFI INPUT */}
+              <div>
                 <label
-                  htmlFor=""
+                  htmlFor="wifi"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Mark this box to ...
+                  Mark this box to if you provide wifi:
                 </label>
                 <div className="mt-2">
                   <input
-                    {...register('')}
-                    id=""
+                    {...register('meta.wifi')}
+                    id="wifi"
                     type="checkbox"
+                    value="true" // set value to true when checked
                     className="block rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
-              </div> */}
+              </div>
+
+              {/* META: PARKING INPUT */}
+              <div>
+                <label
+                  htmlFor="parking"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Mark this box to if you provide parking:
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register('meta.parking')}
+                    id="parking"
+                    type="checkbox"
+                    value="true" // set value to true when checked
+                    className="block rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              {/* META: BREAKFAST INPUT */}
+              <div>
+                <label
+                  htmlFor="breakfast"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Mark this box to if you provide breakfast:
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register('meta.breakfast')}
+                    id="breakfast"
+                    type="checkbox"
+                    value="true" // set value to true when checked
+                    className="block rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              {/* META: PETS INPUT */}
+              <div>
+                <label
+                  htmlFor="pets"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Mark this box to if you allow pets:
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register('meta.pets')}
+                    id="pets"
+                    type="checkbox"
+                    value="true" // set value to true when checked
+                    className="block rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
 
               {/* SUBMIT BUTTON */}
               <div>
