@@ -25,15 +25,15 @@ export default function CreateVenue() {
         breakfast: false,
         pets: false,
       },
-      // location: {
-      //   address: 'Unknown',
-      //   city: 'Unknown',
-      //   zip: 'Unknown',
-      //   country: 'Unknown',
-      //   continent: 'Unknown',
-      //   lat: 0,
-      //   lng: 0,
-      // },
+      location: {
+        address: '',
+        city: '',
+        zip: '',
+        country: '',
+        continent: '',
+        lat: 0,
+        lng: 0,
+      },
     },
   });
 
@@ -51,6 +51,15 @@ export default function CreateVenue() {
           parking: data.meta.parking === 'true', // data.meta.parking is a string, so we need to convert it to boolean
           breakfast: data.meta.breakfast === 'true', // data.meta.breakfast is a string, so we need to convert it to boolean.
           pets: data.meta.pets === 'true', // data.meta.pets is a string, so we need to convert it to boolean
+        },
+        location: {
+          address: data.location.address,
+          city: data.location.city,
+          zip: data.location.zip,
+          country: data.location.country,
+          continent: data.location.continent,
+          lat: parseFloat(data.location.lat), // parseFloat() converts string to float (number)
+          lng: parseFloat(data.location.lng), // parseFloat() converts string to float (number)
         },
       };
       console.log('formattedData', formattedData);
@@ -84,6 +93,7 @@ export default function CreateVenue() {
       }
     } catch (error) {
       setErrorMessage(error.message);
+      console.log('-- error message --', error.message);
       console.log('onSubmitCreateVenue error', error);
     }
   };
@@ -387,6 +397,159 @@ export default function CreateVenue() {
                     type="checkbox"
                     value="true" // set value to true when checked
                     className="block rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              {/* LOCATION: ADDRESS INPUT */}
+              <div>
+                <label
+                  htmlFor="address"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Address
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register('location.address', {
+                      minLength: {
+                        value: 3,
+                        message: 'Minimum length 3 characters',
+                      },
+                    })}
+                    id="address"
+                    type="text"
+                    className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              {/* LOCATION: CITY INPUT */}
+              <div>
+                <label
+                  htmlFor="city"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  City
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register('location.city', {
+                      minLength: {
+                        value: 3,
+                        message: 'Minimum length 3 characters',
+                      },
+                    })}
+                    id="city"
+                    type="text"
+                    className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              {/* LOCATION: ZIP INPUT */}
+              <div>
+                <label
+                  htmlFor="zip"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Zip
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register('location.zip', {
+                      minLength: {
+                        value: 3,
+                        message: 'Minimum length 3 characters',
+                      },
+                    })}
+                    id="zip"
+                    type="text"
+                    className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              {/* LOCATION: COUTRY INPUT */}
+              <div>
+                <label
+                  htmlFor="country"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Country
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register('location.country', {
+                      minLength: {
+                        value: 3,
+                        message: 'Minimum length 3 characters',
+                      },
+                    })}
+                    id="country"
+                    type="text"
+                    className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              {/* LOCATION: CONTINENT INPUT */}
+              <div>
+                <label
+                  htmlFor="continent"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Continent
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register('location.continent', {
+                      minLength: {
+                        value: 3,
+                        message: 'Minimum length 3 characters',
+                      },
+                    })}
+                    id="continent"
+                    type="text"
+                    className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              {/* LOCATION: LATITUDE INPUT */}
+              <div>
+                <label
+                  htmlFor="lat"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Latitude
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register('location.lat')}
+                    id="lat"
+                    type="number"
+                    step="any" // Allow decimal values for latitude
+                    className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              {/* LOCATION: LONGITUDE INPUT */}
+              <div>
+                <label
+                  htmlFor="lng"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Longitude
+                </label>
+                <div className="mt-2">
+                  <input
+                    {...register('location.lng')}
+                    id="lng"
+                    type="number"
+                    step="any" // Allow decimal values for longitude
+                    className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
               </div>
