@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { VENUES_BASE_URL } from '../../api/api';
+import { countCharacters } from '../../utils/charactersCount';
 
 export default function CreateVenue() {
   const token = localStorage.getItem('token');
 
   const [errorMessage, setErrorMessage] = useState(null);
+  const [desriptionCharactersNum, setDescriptionCharactersNum] = useState('');
 
   const {
     register,
@@ -73,7 +75,7 @@ export default function CreateVenue() {
         body: JSON.stringify(formattedData),
       });
 
-      console.log('Venue created successfully. Response: ', response);
+      console.log('Response after clicking submit: ', response);
 
       if (response.status === 201) {
         console.log(
@@ -82,19 +84,31 @@ export default function CreateVenue() {
         );
       }
 
-      // We are only interested in the response status,
-      // we do not need to access or display actual data from the response (ex. id, name ect.), so we do not need to convert it to JSON:
-      // const json = await response.json();
+      // If we are only interested in the response status,
+      // we do not need to access or display actual data from the response (ex. id, name, error message ect.), so we do not need to convert it to JSON: const json = await response.json();
+      // on the other hand to get error message we need to convert response to JSON
 
-      if (response.status === 'Bad Request') {
-        throw new Error(response.errors[0].message); // throw new Error() will trigger the catch block and handle the error
+      if (!response.ok) {
+        const responseDataJSON = await response.json();
+        const responseErrorMessage = responseDataJSON.errors[0].message;
+        console.log(
+          '!response.ok, responseErrorMessage:',
+          responseDataJSON.errors[0].message
+        );
+        console.log('!response.ok, status code: ', responseDataJSON.statusCode);
+        setErrorMessage(responseErrorMessage);
+        throw new Error(responseErrorMessage); // throw new Error() will trigger the catch block and handle the error
       } else {
         setErrorMessage(null);
       }
     } catch (error) {
       setErrorMessage(error.message);
-      console.log('-- error message --', error.message);
-      console.log('onSubmitCreateVenue error', error);
+      // console.log('catch -- errorMessage statusCode 400:' , errorMessage);
+      // console.log('catch - onSubmitCreateVenue error: --->', error);
+      console.log(
+        'catch - onSubmitCreateVenue error.message ---->: --->',
+        error.message
+      );
     }
   };
 
@@ -163,6 +177,10 @@ export default function CreateVenue() {
                         value: 3,
                         message: 'Minimum length 3 characters',
                       },
+                      maxLength: {
+                        value: 50,
+                        message: 'Maximum length 50 characters',
+                      },
                     })}
                     id="name"
                     type="text"
@@ -192,12 +210,25 @@ export default function CreateVenue() {
                         value: 10,
                         message: 'Minimum length 10 characters',
                       },
+                      maxLength: {
+                        value: 1000,
+                        message: 'Maximum length 1000 characters',
+                      },
                     })}
                     id="description"
                     type="text"
+                    rows="8"
+                    value={desriptionCharactersNum}
+                    onChange={(e) =>
+                      setDescriptionCharactersNum(e.target.value)
+                    }
                     className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
+                <p className="mt-2 text-xs text-gray-900">
+                  Characters left:{' '}
+                  {countCharacters(desriptionCharactersNum, 1000)}
+                </p>
                 {errors.description && (
                   <p className="mt-2 text-xs text-red-600">
                     {errors.description.message}
@@ -248,12 +279,12 @@ export default function CreateVenue() {
                     {...register('price', {
                       required: 'Please provide price',
                       min: {
-                        value: 1,
-                        message: 'Minimum price must be a positive number',
+                        value: /^[0-9]+([,.][0-9]*)?$/, // Regex pattern to allow whole numbers or decimal numbers with comma(,) or dot(.)
+                        message: 'Example: 100 or 100.50 or 100,50',
                       },
                     })}
                     id="price"
-                    type="number"
+                    type="text"
                     className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -278,7 +309,11 @@ export default function CreateVenue() {
                       required: 'Please provide max guests number',
                       min: {
                         value: 1,
-                        message: 'Value must be a positive number',
+                        message: 'Value must be a positive number an',
+                      },
+                      max: {
+                        value: 100,
+                        message: 'Value must be less than 100',
                       },
                     })}
                     id="maxGuests"
@@ -305,7 +340,7 @@ export default function CreateVenue() {
                   <input
                     {...register('rating', {
                       min: {
-                        value: 1,
+                        value: 0,
                         message: 'Minimum rating is 0 stars',
                       },
                       max: {
@@ -479,17 +514,67 @@ export default function CreateVenue() {
                   Country
                 </label>
                 <div className="mt-2">
-                  <input
-                    {...register('location.country', {
-                      minLength: {
-                        value: 3,
-                        message: 'Minimum length 3 characters',
-                      },
-                    })}
+                  <select
+                    {...register('location.country')}
                     id="country"
-                    type="text"
                     className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
-                  />
+                  >
+                    <option value="Norge">velg fra listen</option>
+                    <option value="">Norge</option>
+                    <option value="Sverige">Sverige</option>
+                    <option value="Australia">Australia</option>
+                    <option value="Østerrike">Østerrike</option>
+                    <option value="Belgia">Belgia</option>
+                    <option value="Brazil">Brazil</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Kina">Kina</option>
+                    <option value="Kroatia">Kroatia</option>
+                    <option value="Kypros">Kypros</option>
+                    <option value="Tsjekkia">Tsjekkia</option>
+                    <option value="Danmark">Danmark</option>
+                    <option value="Egypt">Egypt</option>
+                    <option value="Estland">Estland</option>
+                    <option value="Finland">Finland</option>
+                    <option value="Tyskland">Tyskland</option>
+                    <option value="Hellas">Hellas</option>
+                    <option value="Haiti">Haiti</option>
+                    <option value="Island">Island</option>
+                    <option value="India">India</option>
+                    <option value="Irland">Irland</option>
+                    <option value="Italia">Italia</option>
+                    <option value="Jamaica">Jamaica</option>
+                    <option value="Japan">Japan</option>
+                    <option value="Kenya">Kenya</option>
+                    <option value="Latvia">Latvia</option>
+                    <option value="Litauen">Litauen</option>
+                    <option value="Maldivene">Maldivene</option>
+                    <option value="Mexico">Mexico</option>
+                    <option value="Monaco">Monaco</option>
+                    <option value="Marokko">Marokko</option>
+                    <option value="Nepal">Nepal</option>
+                    <option value="Nederland">Nederland</option>
+                    <option value="New-Zealand">New Zealand</option>
+                    <option value="Nigeria">Nigeria</option>
+                    <option value="Nord-Korea">Nord-Korea</option>
+                    <option value="Filippinene">Filippinene</option>
+                    <option value="Polen">Polen</option>
+                    <option value="Portugal">Portugal</option>
+                    <option value="Russland">Russland</option>
+                    <option value="Serbia">Serbia</option>
+                    <option value="Slovakia">Slovakia</option>
+                    <option value="Somalia">Somalia</option>
+                    <option value="Spania">Spania</option>
+                    <option value="SwitSveitszerland">Sveits</option>
+                    <option value="Thailand">Thailand</option>
+                    <option value="Tyrkia">Tyrkia</option>
+                    <option value="Ukraina">Ukraina</option>
+                    <option value="Storbritannia">Storbritannia</option>
+                    <option value="USA">USA</option>
+                    <option value="Venezuela">Venezuela</option>
+                    <option value="Vietnam">Vietnam</option>
+                    <option value="Zambia">Zambia</option>
+                  </select>
                 </div>
               </div>
 
@@ -517,7 +602,7 @@ export default function CreateVenue() {
               </div>
 
               {/* LOCATION: LATITUDE INPUT */}
-              <div>
+              {/* <div>
                 <label
                   htmlFor="lat"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -526,17 +611,22 @@ export default function CreateVenue() {
                 </label>
                 <div className="mt-2">
                   <input
-                    {...register('location.lat')}
+                    {...register('location.lat', {
+                      pattern: {
+                        value: /^-?([0-9]|[1-9][0-9]|1[0-7][0-9]|180)(\.[0-9]{1,6})?$/, // Regex pattern to match longitude values
+                        message: 'Invalid latitude value. Example of longitude: 37.7749',
+                      },
+                    })}
                     id="lat"
                     type="number"
                     step="any" // Allow decimal values for latitude
                     className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
-              </div>
+              </div> */}
 
               {/* LOCATION: LONGITUDE INPUT */}
-              <div>
+              {/* <div>
                 <label
                   htmlFor="lng"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -545,14 +635,20 @@ export default function CreateVenue() {
                 </label>
                 <div className="mt-2">
                   <input
-                    {...register('location.lng')}
+                    {...register('location.lng', {
+                      pattern: {
+                        value: /^-?([0-9]|[1-9][0-9]|1[0-7][0-9]|180)(\.[0-9]{1,6})?$/, // Regex pattern to match longitude values
+                        message: 'Invalid longitude value. Example of longitude: -122.4194',
+                      },
+                      }
+                    )}
                     id="lng"
                     type="number"
                     step="any" // Allow decimal values for longitude
                     className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
                   />
                 </div>
-              </div>
+              </div> */}
 
               {/* SUBMIT BUTTON */}
               <div>
