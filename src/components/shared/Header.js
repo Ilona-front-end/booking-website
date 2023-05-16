@@ -69,7 +69,7 @@ export default function Header() {
             </Link>
           )}
         </div>
-        {/* Desktop navigation - last link */}
+        {/* Desktop navigation - links to: log in, sign up or profile and log out */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <div className="flex flex-center">
             {isLoggedIn ? (
@@ -107,7 +107,7 @@ export default function Header() {
           </div>
         </div>
       </nav>
-      {/* Mobile navigation - burger menu has been clicked */}
+      {/* Mobile navigation - when burger menu has been clicked */}
       <Dialog
         as="div"
         className="lg:hidden"
@@ -116,7 +116,7 @@ export default function Header() {
       >
         <div className="fixed inset-0 z-50" />
         <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 md:max-w-sm md:ring-1 md:ring-gray-900/10">
-          {/* Side menu */}
+          {/* Side menu on large screens */}
           <div className="flex items-center justify-between">
             <Link to="/" className="text-black text-xl font-bold">
               Holidaze
@@ -126,7 +126,7 @@ export default function Header() {
               className="-m-2.5 rounded-md p-2.5 text-gray-700"
               onClick={() => setMobileMenuOpen(false)}
             >
-              {/* Close header menu */}
+              {/* Close header menu button */}
               <span className="sr-only">Close menu</span>
               <AiOutlineClose className="h-6 w-6" aria-hidden="true" />
             </button>
@@ -134,16 +134,28 @@ export default function Header() {
           <div className="mt-6 flow-root">
             <div className="font-serif -my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                {navigationHeaderLinks.map((item) => (
+                {/* Side menu links on large screens */}
+                {isLoggedIn ? (
+                  navigationHeaderLinks.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.to}
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))
+                ) : (
                   <Link
-                    key={item.name}
-                    to={item.to}
+                    to="/venues"
+                    key="venues"
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {item.name}
+                    All Venues
                   </Link>
-                ))}
+                )}
               </div>
               {isLoggedIn ? (
                 <div className="py-6 flex flex-col">

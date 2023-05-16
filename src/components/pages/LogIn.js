@@ -64,38 +64,35 @@ export default function LogIn() {
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         {/* FORM HEADER */}
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 break-words">
             Log in to your account
           </h2>
         </div>
 
         {/* ERROR MESSAGE */}
         {errorMessage && (
-          <div className="sm:mx-auto sm:w-full sm:max-w-md mt-4 p-4 rounded-md bg-red-50">
+          <div className="py-8 px-4 shadow sm:mx-auto sm:max-w-[400px] md:mx-auto md:w-[400px] lg:mx-auto lg:w-[400px] mt-4 rounded-md bg-red-50">
             <div className="flex">
-              <div className="flex-shrink-0">
-                <svg
-                  className="h-5 w-5 text-red-400"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800">
-                  Did not managed to log in to account:
-                </h3>
-                <div className="mt-2 text-sm text-red-700">
-                  <div className="list-disc space-y-1 pl-5">
-                    <div>{errorMessage}</div>
-                  </div>
-                </div>
+              <svg
+                className="h-5 w-5 text-red-400"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"
+                  clipRule="evenodd"
+                />
+              </svg>
+
+              <h3 className="ml-2 text-sm font-medium text-red-800">
+                Log in to account failed:
+              </h3>
+            </div>
+            <div className="mt-2 text-sm text-red-700">
+              <div className="overflow-hidden">
+                <div className="break-words">{errorMessage}</div>
               </div>
             </div>
           </div>
