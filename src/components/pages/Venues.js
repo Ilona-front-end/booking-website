@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { FaRegMeh } from 'react-icons/fa';
 import { VENUES_BASE_URL } from '../../api/api';
 import getRatingStars from '../../utils/ratingStars';
 import { mapTime } from '../../utils/mapTime';
 import { Link } from 'react-router-dom';
 import defaultVenueImg from '../../assets/default-venue-img.jpg';
+import ErrorMessage from '../shared/ErrorMessage';
 
 function Venues() {
   const [venues, setVenues] = useState([]);
@@ -53,33 +53,14 @@ function Venues() {
     });
   }
 
-  if (venues.length === 0) {
-    return <div>No venues available</div>;
-  }
+  // This code unfortunately prevents from showing the error message when there is an error with the API
+  // if (venues.length === 0) {
+  //   return <div className='wrapper-max-width wrapper-padding-x py-4'>No venues available</div>;
+  // }
 
   // Error message
   if (error) {
-    return (
-      <>
-        <div className="rounded-md bg-red-50 py-6 wrapper-max-width wrapper-padding-x">
-          <div className="flex">
-            <div className="flex-shrink-0">
-              <FaRegMeh size={20} color="red" />
-            </div>
-            <div className="ml-3">
-              <h3 className="text-sm font-medium text-red-800">
-                Caution! Something went wrong:
-              </h3>
-              <div className="mt-2 text-sm text-red-700">
-                <div className="list-disc space-y-1 pl-5">
-                  <p>{error}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
+    return <ErrorMessage errorText={error} />;
   }
 
   return (

@@ -7,6 +7,7 @@ import { formateDate } from '../../utils/dateFormatting';
 import { deleteData } from '../../utils/deleteData';
 import { VENUES_BASE_URL } from '../../api/api';
 import AttentionMessage from '../shared/AttentionMessage';
+import ErrorMessage from '../shared/ErrorMessage';
 
 // React functional component that renders user's venues or bookings according to the tab that is active
 export default function UserProfileVenues() {
@@ -17,6 +18,7 @@ export default function UserProfileVenues() {
   const [userProfileVenues, setUserProfileVenues] = useState([]);
   const [userProfileBookings, setUserProfileBookings] = useState([]);
   const [activeTab, setActiveTab] = useState('venues');
+  const [errorMessage, setErrorMessage] = useState(null);
 
   // useCallback hooks - declaring two functions (fetchUserProfileVenues and fetchProfileBookings). Functions are memoized and passed to useEffect hook to prevent unnecessary re-renders
   // functions fetchUserProfileVenues and fetchProfileBookings are used to fetch user's venues or bookings from different APIs
@@ -31,14 +33,30 @@ export default function UserProfileVenues() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get information about venues from the API'); // throw new Error() will trigger the catch block and handle the error
+        const responseErrorJSON = await response.json();
+        const responseErrorMessage = responseErrorJSON.errors[0].message;
+        console.log(
+          '!response.ok, venues block responseErrorMessage:',
+          responseErrorJSON
+        );
+        console.log(
+          '!response.ok, venues block status code: ',
+          responseErrorJSON.statusCode
+        );
+        setErrorMessage(responseErrorMessage);
+        throw new Error(responseErrorMessage); // throw new Error() will trigger the catch block and handle the error
+      } else {
+        setErrorMessage(null);
+        const json = await response.json();
+        setUserProfileVenues(json);
+        console.log('fetchUserProfileVenues', json);
       }
 
-      const json = await response.json();
-      console.log('fetchUserProfileVenues', json);
-      setUserProfileVenues(json);
+      // const json = await response.json();
+      // console.log('fetchUserProfileVenues', json);
+      // setUserProfileVenues(json);
     } catch (error) {
-      console.error('Error message here: ', error);
+      console.error('Error message fetchUserProfileVenues (catch): ', error);
     }
   }, [userName, token]);
 
@@ -54,14 +72,30 @@ export default function UserProfileVenues() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get information about venues from the API'); // throw new Error() will trigger the catch block and handle the error
+        const responseErrorJSON = await response.json();
+        const responseErrorMessage = responseErrorJSON.errors[0].message;
+        console.log(
+          '!response.ok, venues block responseErrorMessage:',
+          responseErrorJSON
+        );
+        console.log(
+          '!response.ok, venues block status code: ',
+          responseErrorJSON.statusCode
+        );
+        setErrorMessage(responseErrorMessage);
+        throw new Error(responseErrorMessage); // throw new Error() will trigger the catch block and handle the error
+      } else {
+        setErrorMessage(null);
+        const json = await response.json();
+        setUserProfileBookings(json);
+        console.log('fetchProfileBookings', json);
       }
 
       const json = await response.json();
       console.log('UserProfileBookings', json);
       setUserProfileBookings(json);
     } catch (error) {
-      console.error('Error message here: ', error);
+      console.error('Error message fetchProfileBookings (catch): ', error);
     }
   }, [userName, token]);
 
@@ -109,13 +143,15 @@ export default function UserProfileVenues() {
         </button>
       </div>
       <div className="wrapper-max-width wrapper-padding-x">
-        {/* ERROR MESSAGE IF NEEDED */}
+        {/* ATTENTION MESSAGE IF NEEDED */}
         {!token && (
           <AttentionMessage
             heading="Atention!"
             text="You need to log in to be able to manage your venues and bookings"
           />
         )}
+        {/* API ERROR MESSAGE */}
+        {errorMessage && <ErrorMessage errorText={errorMessage} />}
       </div>
       <div className="wrapper-max-width wrapper-padding-x">
         {activeTab === 'venues' && (

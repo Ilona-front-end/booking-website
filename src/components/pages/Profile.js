@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PROFILE_BASE_URL } from '../../api/api';
+import AttentionMessage from '../shared/AttentionMessage';
 
 function Profile() {
   const token = localStorage.getItem('token');
@@ -239,7 +240,10 @@ function Profile() {
             </div>
           </>
         ) : (
-          <div>Log in to see your Profile Details</div>
+          <AttentionMessage
+            heading="Atention!"
+            text="You need to log in to be able to see your Profile details"
+          />
         )}
       </div>
     </>
