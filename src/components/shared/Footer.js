@@ -1,6 +1,6 @@
 import React from 'react';
 
-const navigation = {
+const navigationHeaderLinks = {
   solutions: [
     { name: 'Marketing', href: '#' },
     { name: 'Analytics', href: '#' },
@@ -41,7 +41,7 @@ export default function Footer() {
                 Solutions
               </h3>
               <div className="mt-6 space-y-4">
-                {navigation.solutions.map((item) => (
+                {navigationHeaderLinks.solutions.map((item) => (
                   <div key={item.name}>
                     <a
                       href={item.href}
@@ -58,7 +58,7 @@ export default function Footer() {
                 Support
               </h3>
               <div className="mt-6 space-y-4">
-                {navigation.support.map((item) => (
+                {navigationHeaderLinks.support.map((item) => (
                   <div key={item.name}>
                     <a
                       href={item.href}
@@ -77,7 +77,7 @@ export default function Footer() {
                 Company
               </h3>
               <div className="mt-6 space-y-4">
-                {navigation.company.map((item) => (
+                {navigationHeaderLinks.company.map((item) => (
                   <div key={item.name}>
                     <a
                       href={item.href}
@@ -94,7 +94,7 @@ export default function Footer() {
                 Legal
               </h3>
               <div className="mt-6 space-y-4">
-                {navigation.legal.map((item) => (
+                {navigationHeaderLinks.legal.map((item) => (
                   <div key={item.name}>
                     <a
                       href={item.href}
