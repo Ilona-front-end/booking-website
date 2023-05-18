@@ -5,7 +5,7 @@ const AttentionMessage = ({ heading, text }) => {
     <div className="py-8 px-4 shadow max-w-[400px] mx-auto md:w-[400px] lg:w-[400px] my-4 rounded-md bg-yellow-50">
       <div className="flex">
         <svg
-          class="h-5 w-5 text-yellow-400"
+          className="h-5 w-5 text-yellow-400"
           viewBox="0 0 20 20"
           fill="currentColor"
           aria-hidden="true"

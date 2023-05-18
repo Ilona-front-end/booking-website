@@ -4,8 +4,10 @@ import { VENUES_BASE_URL } from '../../api/api';
 import { countCharacters } from '../../utils/charactersCount';
 import AttentionMessage from '../shared/AttentionMessage';
 import ErrorMessage from '../shared/ErrorMessage';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateVenue() {
+  const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
   const [errorMessage, setErrorMessage] = useState(null);
@@ -80,10 +82,7 @@ export default function CreateVenue() {
       console.log('Response after clicking submit: ', response);
 
       if (response.status === 201) {
-        console.log(
-          'Venue created successfully. Response status: ',
-          response.status
-        );
+        navigate('/user-venues');
       }
 
       // If we are only interested in the response status,

@@ -91,9 +91,9 @@ export default function UserProfileVenues() {
         console.log('fetchProfileBookings', json);
       }
 
-      const json = await response.json();
-      console.log('UserProfileBookings', json);
-      setUserProfileBookings(json);
+      // const json = await response.json();
+      // console.log('UserProfileBookings', json);
+      // setUserProfileBookings(json);
     } catch (error) {
       console.error('Error message fetchProfileBookings (catch): ', error);
     }
@@ -155,7 +155,7 @@ export default function UserProfileVenues() {
       </div>
       <div className="wrapper-max-width wrapper-padding-x">
         {activeTab === 'venues' && (
-          <div className="mx-auto my-20 grid max-w-[1000px] grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:mx-0 lg:grid-cols-2">
+          <ul className="mx-auto my-20 grid max-w-[1000px] grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:mx-0 lg:grid-cols-2">
             {userProfileVenues.map(
               ({
                 id,
@@ -167,7 +167,7 @@ export default function UserProfileVenues() {
                 maxGuests,
                 created,
               }) => (
-                <div key={id}>
+                <li key={id}>
                   {media && media.length > 0 ? (
                     <img
                       className="aspect-[3/2] w-full rounded-2xl object-cover"
@@ -221,35 +221,44 @@ export default function UserProfileVenues() {
                       Delete
                     </button>
                   </div>
-                </div>
+                </li>
               )
             )}
-          </div>
+          </ul>
         )}
 
         {activeTab === 'bookings' && (
-          <div className="mx-auto my-20 grid max-w-[1000px] grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:mx-0 lg:grid-cols-2">
-            {userProfileBookings.map(
-              ({ id, dateFrom, dateTo, guests, created }) => (
-                <div key={id}>
-                  <h2 className="mt-2 text-base leading-6 text-gray-900">
-                    Venue id: {id}
-                  </h2>
-                  <p className="mt-1 text-sm leading-6 text-gray-900">
-                    From: {formateDate(dateFrom)}
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-gray-900">
-                    Until: {formateDate(dateTo)}
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-gray-900">
-                    Guests: {guests}
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-gray-900">
-                    Booked {mapTime(created)} ago
-                  </p>
-                </div>
-              )
+          <div>
+            {/* ATTENTION MESSAGE IF NEEDED */}
+            {userProfileBookings.length === 0 && (
+              <AttentionMessage
+                heading="Ups!"
+                text="You don't have any bookings yet"
+              />
             )}
+            <ul className="mx-auto my-20 grid max-w-[1000px] grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:mx-0 lg:grid-cols-2">
+              {userProfileBookings.map(
+                ({ id, dateFrom, dateTo, guests, created }) => (
+                  <li key={id}>
+                    <h2 className="mt-2 text-base leading-6 text-gray-900">
+                      Booking id: {id}
+                    </h2>
+                    <p className="mt-1 text-sm leading-6 text-gray-500">
+                      From: {formateDate(dateFrom)}
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-gray-500">
+                      Until: {formateDate(dateTo)}
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-gray-500">
+                      Guests: {guests}
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-gray-500">
+                      Booked {mapTime(created)} ago
+                    </p>
+                  </li>
+                )
+              )}
+            </ul>
           </div>
         )}
       </div>

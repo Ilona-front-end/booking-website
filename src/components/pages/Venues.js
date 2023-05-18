@@ -68,7 +68,7 @@ function Venues() {
       <h2 className="py-6 text-3xl font-bold text-gray-900 md:text-4xl lg:text-4xl">
         All Venues
       </h2>
-      <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <ul className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {venues
           .slice(0, displayedVenuesCount)
           .map(
@@ -82,7 +82,7 @@ function Venues() {
               maxGuests,
               created,
             }) => (
-              <div key={id}>
+              <li key={id}>
                 <Link to={`/venues/${id}`}>
                   <div>
                     <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg shadow-lg bg-gray-200">
@@ -160,10 +160,10 @@ function Venues() {
                     </div>
                   </div>
                 </Link>
-              </div>
+              </li>
             )
           )}
-      </div>
+      </ul>
       {displayedVenuesCount < venues.length && (
         <div className="flex justify-center mt-8">
           <button
