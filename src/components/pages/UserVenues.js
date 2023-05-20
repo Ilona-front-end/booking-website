@@ -8,6 +8,9 @@ import { deleteData } from '../../utils/deleteData';
 import { VENUES_BASE_URL } from '../../api/api';
 import AttentionMessage from '../shared/AttentionMessage';
 import ErrorMessage from '../shared/ErrorMessage';
+import { BOOKINGS_BASE_URL } from '../../api/api';
+import { FiCheckSquare } from 'react-icons/fi';
+import { TbSquare } from 'react-icons/tb';
 
 // React functional component that renders user's venues or bookings according to the tab that is active
 export default function UserProfileVenues() {
@@ -19,6 +22,7 @@ export default function UserProfileVenues() {
   const [userProfileBookings, setUserProfileBookings] = useState([]);
   const [activeTab, setActiveTab] = useState('venues');
   const [errorMessage, setErrorMessage] = useState(null);
+  const [bookingDetails, setBookingDetails] = useState({});
 
   // useCallback hooks - declaring two functions (fetchUserProfileVenues and fetchProfileBookings). Functions are memoized and passed to useEffect hook to prevent unnecessary re-renders
   // functions fetchUserProfileVenues and fetchProfileBookings are used to fetch user's venues or bookings from different APIs
@@ -86,14 +90,11 @@ export default function UserProfileVenues() {
         throw new Error(responseErrorMessage); // throw new Error() will trigger the catch block and handle the error
       } else {
         setErrorMessage(null);
-        const json = await response.json();
-        setUserProfileBookings(json);
-        console.log('fetchProfileBookings', json);
+        const bookings = await response.json(); // JSON data will be used in fetchBookingDetails function
+        setUserProfileBookings(bookings);
+        console.log('fetchProfileBookings', bookings);
+        fetchBookingDetails(bookings);
       }
-
-      // const json = await response.json();
-      // console.log('UserProfileBookings', json);
-      // setUserProfileBookings(json);
     } catch (error) {
       console.error('Error message fetchProfileBookings (catch): ', error);
     }
@@ -110,6 +111,13 @@ export default function UserProfileVenues() {
     }
   };
 
+  // handleTabClick with ternary operator
+  // const handleTabClick = (tab) => {
+  //   setActiveTab(tab);
+  //   const fetchFunction = tab === 'venues' ? fetchUserProfileVenues : fetchProfileBookings;
+  //   fetchFunction();
+  // };
+
   // useEffect hook - it will run when the component first mounts and when activeTab state changes
   // activeTab state is set to "venues" by default
   // function fetchUserProfileVenues is called when activeTab state is set to "venues"
@@ -122,9 +130,37 @@ export default function UserProfileVenues() {
     }
   }, [activeTab, fetchUserProfileVenues, fetchProfileBookings]);
 
+  // We get bookings from fetchProfileBookings function and then we fetch booking details for each booking
+  const fetchBookingDetails = async (bookings) => {
+    try {
+      const bookingIds = bookings.map((booking) => booking.id);
+      const fetchPromises = bookingIds.map((id) =>
+        fetch(`${BOOKINGS_BASE_URL}${id}?_customer=true&_venue=true`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((bookingDetail) => {
+            console.log('Booking Details: ', bookingDetail);
+            setBookingDetails((prevDetails) => ({
+              ...prevDetails,
+              [id]: bookingDetail,
+            }));
+          })
+      );
+      await Promise.all(fetchPromises);
+    } catch (error) {
+      console.error('Error message fetchBookingDetails (catch): ', error);
+    }
+  };
+
   return (
     <>
       <div className="wrapper-max-width wrapper-padding-x bg-gray-300">
+        {/* TABS */}
         <button
           className={`font-serif text-gray-600 hover:text-gray-800 shadow-sm hover:ring-1 hover:ring-inset hover:ring-gray-300 rounded-md px-3 py-2 m-4 text-sm font-medium ${
             activeTab === 'venues' ? 'bg-white' : 'bg-gray-200'
@@ -150,6 +186,7 @@ export default function UserProfileVenues() {
             text="You need to log in to be able to manage your venues and bookings"
           />
         )}
+
         {/* API ERROR MESSAGE */}
         {errorMessage && <ErrorMessage errorText={errorMessage} />}
       </div>
@@ -236,28 +273,107 @@ export default function UserProfileVenues() {
                 text="You don't have any bookings yet"
               />
             )}
+
             <ul className="mx-auto my-20 grid max-w-[1000px] grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:mx-0 lg:grid-cols-2">
-              {userProfileBookings.map(
-                ({ id, dateFrom, dateTo, guests, created }) => (
-                  <li key={id}>
-                    <h2 className="mt-2 text-base leading-6 text-gray-900">
-                      Booking id: {id}
+              {Object.values(bookingDetails).map((bookingDetail) => (
+                <li key={bookingDetail.id}>
+                  <div>
+                    {bookingDetail.venue.media &&
+                    bookingDetail.venue.media.length > 0 ? (
+                      <img
+                        className="aspect-[3/2] w-full rounded-2xl object-cover"
+                        src={bookingDetail.venue.media[0]}
+                        alt={bookingDetail.venue.name}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = defaultVenueImg;
+                        }}
+                      />
+                    ) : (
+                      <img
+                        className="aspect-[3/2] w-full rounded-2xl object-cover"
+                        src={defaultVenueImg}
+                        alt="Default"
+                      />
+                    )}
+                    <h2 className="my-4 pl-4 text-lg leading-6 text-gray-900">
+                      {bookingDetail.venue.name}
                     </h2>
-                    <p className="mt-1 text-sm leading-6 text-gray-500">
-                      From: {formateDate(dateFrom)}
-                    </p>
-                    <p className="mt-1 text-sm leading-6 text-gray-500">
-                      Until: {formateDate(dateTo)}
-                    </p>
-                    <p className="mt-1 text-sm leading-6 text-gray-500">
-                      Guests: {guests}
-                    </p>
-                    <p className="mt-1 text-sm leading-6 text-gray-500">
-                      Booked {mapTime(created)} ago
-                    </p>
-                  </li>
-                )
-              )}
+                    <div className="bg-blue-200 p-4 rounded-md mb-4">
+                      <p className="mt-1 text-sm leading-6 text-blue-800">
+                        Booked: {formateDate(bookingDetail.dateFrom)} -{' '}
+                        {formateDate(bookingDetail.dateTo)}
+                      </p>
+                      <p className="mt-1 text-sm leading-6 text-blue-800">
+                        Guests expected: {bookingDetail.guests}
+                      </p>
+                      <p className="mt-1 text-sm leading-6 text-blue-800">
+                        City: {bookingDetail.venue.location.city}, Country{' '}
+                        {bookingDetail.venue.location.country}
+                      </p>
+                      <p className="mt-1 text-sm leading-6 text-blue-800">
+                        Price:{' '}
+                        <span className="mt-1 text-lg">
+                          {bookingDetail.venue.price} NOK
+                        </span>
+                      </p>
+                    </div>
+                    <div className="mt-1 pl-4 text-sm leading-6 text-gray-500">
+                      About venue: {bookingDetail.venue.description}
+                    </div>
+                    <div className="mt-4">
+                      <p className="mt-1 pl-4 flex items-center text-sm leading-6 text-gray-900">
+                        Wifi:{' '}
+                        {bookingDetail.venue.meta.wifi ? (
+                          <span className="pl-2">
+                            <FiCheckSquare />
+                          </span>
+                        ) : (
+                          <span className="pl-2">
+                            <TbSquare />
+                          </span>
+                        )}
+                      </p>
+                      <p className="mt-1 pl-4 flex items-center text-sm leading-6 text-gray-900">
+                        Parking:{' '}
+                        {bookingDetail.venue.meta.parking ? (
+                          <span className="pl-2">
+                            <FiCheckSquare />
+                          </span>
+                        ) : (
+                          <span className="pl-2">
+                            <TbSquare />
+                          </span>
+                        )}
+                      </p>
+                      <p className="mt-1 pl-4 flex items-center text-sm leading-6 text-gray-900">
+                        Breakfast:{' '}
+                        {bookingDetail.venue.meta.breakfast ? (
+                          <span className="pl-2">
+                            <FiCheckSquare />
+                          </span>
+                        ) : (
+                          <span className="pl-2">
+                            <TbSquare />
+                          </span>
+                        )}
+                      </p>
+                      <p className="mt-1 pl-4 flex items-center text-sm leading-6 text-gray-900">
+                        Pets:{' '}
+                        {bookingDetail.venue.meta.pets ? (
+                          <span className="pl-2">
+                            <FiCheckSquare />
+                          </span>
+                        ) : (
+                          <span className="pl-2">
+                            <TbSquare />
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              ))}
             </ul>
           </div>
         )}
