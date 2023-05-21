@@ -31,7 +31,7 @@ export default function Header() {
       <nav className="font-serif flex flex-row xs:flex-col items-center justify-between bg-gray-800 py-4 wrapper-max-width wrapper-padding-x">
         {/* Holidaze logo */}
         <div className="flex lg:flex-1">
-          <Link to="/" className="text-white text-xl font-bold ">
+          <Link to="/" className="text-white text-xl font-bold">
             Holidaze
           </Link>
         </div>
@@ -118,7 +118,11 @@ export default function Header() {
         <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 md:max-w-sm md:ring-1 md:ring-gray-900/10">
           {/* Side menu on large screens */}
           <div className="flex items-center justify-between">
-            <Link to="/" className="text-black text-xl font-bold">
+            <Link
+              to="/"
+              className="text-black text-xl font-bold"
+              onClick={() => setMobileMenuOpen(false)}
+            >
               Holidaze
             </Link>
             <button
