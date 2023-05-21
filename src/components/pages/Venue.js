@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { VENUES_BASE_URL } from '../../api/api';
 import ErrorMessage from '../shared/ErrorMessage';
 import RenderStars from '../../utils/renderStars';
+import { FiCheckSquare } from 'react-icons/fi';
+import { TbSquare } from 'react-icons/tb';
 
 export default function Venue() {
   // useParams() hook from React Router library allows to get the id from the URL, route is configured as '/venues/:id' that allows to retrieve the id from the URL
@@ -42,7 +44,7 @@ export default function Venue() {
   //   return <ErrorMessage errorText={error} />;
   // }
 
-  const { name, price, rating } = venue;
+  const { name, price, rating, media, description, meta } = venue;
 
   return (
     <div className="wrapper-max-width wrapper-padding-x">
@@ -74,6 +76,114 @@ export default function Venue() {
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* <!-- Image gallery --> */}
+            <div className="mt-8 lg:col-span-7 lg:col-start-1 lg:row-span-3 lg:row-start-1 lg:mt-0">
+              <h2 className="sr-only">Images</h2>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 lg:gap-8">
+                {media && media.length > 0 && (
+                  <>
+                    <img
+                      src={media[0]}
+                      alt=""
+                      className="lg:col-span-2 lg:row-span-2 rounded-lg"
+                    />
+                    {media.length >= 2 && (
+                      <img
+                        src={media[1]}
+                        alt=""
+                        class="hidden lg:block rounded-lg"
+                      />
+                    )}
+                    {media.length >= 3 && (
+                      <img
+                        src={media[2]}
+                        alt=""
+                        class="hidden lg:block rounded-lg"
+                      />
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div class="mt-8 lg:col-span-5">
+              {/* <!-- Venue details --> */}
+              <div class="mt-10">
+                <h2 class="text-sm font-medium text-gray-900">Description</h2>
+
+                <div class="text-sm mt-4 text-gray-500">
+                  <p>{description}</p>
+                </div>
+              </div>
+
+              <div class="mt-8 border-t border-gray-200 pt-8">
+                <h2 class="text-sm font-medium text-gray-900">Details</h2>
+
+                <div class="text-sm mt-4 text-gray-500">
+                  <div>
+                    <p className="mt-1 flex items-center text-sm leading-6 text-gray-900">
+                      Wifi:
+                      {meta?.wifi ? (
+                        <span className="pl-2">
+                          <FiCheckSquare />
+                        </span>
+                      ) : (
+                        <span className="pl-2">
+                          <TbSquare />
+                        </span>
+                      )}
+                    </p>
+                    <p className="mt-1 flex items-center text-sm leading-6 text-gray-900">
+                      Parking:
+                      {meta?.parking ? (
+                        <span className="pl-2">
+                          <FiCheckSquare />
+                        </span>
+                      ) : (
+                        <span className="pl-2">
+                          <TbSquare />
+                        </span>
+                      )}
+                    </p>
+                    <p className="mt-1 flex items-center text-sm leading-6 text-gray-900">
+                      Breakfast:
+                      {meta?.breakfast ? (
+                        <span className="pl-2">
+                          <FiCheckSquare />
+                        </span>
+                      ) : (
+                        <span className="pl-2">
+                          <TbSquare />
+                        </span>
+                      )}
+                    </p>
+                    <p className="mt-1 flex items-center text-sm leading-6 text-gray-900">
+                      Pets:
+                      {meta?.pets ? (
+                        <span className="pl-2">
+                          <FiCheckSquare />
+                        </span>
+                      ) : (
+                        <span className="pl-2">
+                          <TbSquare />
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <form>
+                <button
+                  type="submit"
+                  class="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
+                  Add to cart
+                </button>
+              </form>
             </div>
           </div>
         </div>
