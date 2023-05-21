@@ -5,6 +5,7 @@ import { mapTime } from '../../utils/mapTime';
 import { Link } from 'react-router-dom';
 import defaultVenueImg from '../../assets/default-venue-img.jpg';
 import ErrorMessage from '../shared/ErrorMessage';
+import { FaUserCircle } from 'react-icons/fa';
 
 function Venues() {
   const [venues, setVenues] = useState([]);
@@ -14,12 +15,15 @@ function Venues() {
 
   async function fetchVenues() {
     try {
-      const response = await fetch(`${VENUES_BASE_URL}?sort=created`); // Fetch API data and show newest venues first
+      const response = await fetch(
+        `${VENUES_BASE_URL}?sort=created&_owner=true&_bookings=true`
+      ); // Fetch API data and show newest venues first
       if (!response.ok) {
         throw new Error('Failed to get information about venues from the API'); // throw new Error() will trigger the catch block and handle the error
       }
       const json = await response.json(); // Wait for the response to be converted to JSON
       setVenues(json); // We received API data, setting our venues state
+      console.log('Venues information is fetched', json);
       setError(null);
     } catch (error) {
       setError(error.message); // We received an error, setting our error state
@@ -81,6 +85,8 @@ function Venues() {
               rating,
               maxGuests,
               created,
+              owner,
+              bookings,
             }) => (
               <li key={id}>
                 <Link to={`/venues/${id}`}>
@@ -167,6 +173,25 @@ function Venues() {
                     <div className="text-sm text-gray-700">
                       Posted: {mapTime(created)} ago
                     </div>
+                  </div>
+                  <div className="text-sm text-gray-700 mt-4 flex items-center">
+                    Owner: {owner.name}
+                    <span>
+                      {owner.avatar ? (
+                        <img
+                          className="rounded-full w-6 h-6 ml-3"
+                          src={owner.avatar}
+                          alt={owner.name}
+                        />
+                      ) : (
+                        <FaUserCircle className="w-6 h-6 ml-3" />
+                      )}
+                    </span>
+                  </div>
+                  <div className="text-sm text-gray-700">
+                    {bookings.length === 0
+                      ? null
+                      : `Booked ${bookings.length} times`}
                   </div>
                 </Link>
               </li>
