@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { PROFILE_BASE_URL } from '../../api/api';
+import {
+  PROFILE_BASE_URL,
+  VENUES_BASE_URL,
+  BOOKINGS_BASE_URL,
+} from '../../api/api';
 import defaultVenueImg from '../../assets/default-venue-img.jpg';
 import getRatingStars from '../../utils/ratingStars';
 import { mapTime } from '../../utils/mapTime';
 import { formateDate } from '../../utils/dateFormatting';
 import { deleteData } from '../../utils/deleteData';
-import { VENUES_BASE_URL } from '../../api/api';
+// import { VENUES_BASE_URL } from '../../api/api';
 import AttentionMessage from '../shared/AttentionMessage';
 import ErrorMessage from '../shared/ErrorMessage';
-import { BOOKINGS_BASE_URL } from '../../api/api';
+// import { BOOKINGS_BASE_URL } from '../../api/api';
 import { FiCheckSquare } from 'react-icons/fi';
 import { TbSquare } from 'react-icons/tb';
 
@@ -64,7 +68,38 @@ export default function UserProfileVenues() {
     }
   }, [userName, token]);
 
-  // useCallback hook - described above (line 14)
+  // We get bookings from fetchProfileBookings function and then we fetch booking details (fetchBookingDetails) for each booking
+  const fetchBookingDetails = useCallback(
+    async (bookings) => {
+      try {
+        const bookingIds = bookings.map((booking) => booking.id);
+        const fetchPromises = bookingIds.map((id) =>
+          fetch(`${BOOKINGS_BASE_URL}${id}?_customer=true&_venue=true`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          })
+            .then((response) => response.json())
+            .then((bookingDetail) => {
+              console.log('Booking Details: ', bookingDetail);
+              setBookingDetails((prevDetails) => ({
+                ...prevDetails,
+                [id]: bookingDetail,
+              }));
+            })
+        );
+        await Promise.all(fetchPromises);
+      } catch (error) {
+        console.error('Error message fetchBookingDetails (catch): ', error);
+      }
+    },
+    [setBookingDetails, token]
+  );
+
+  // useCallback hooks - declaring two functions (fetchUserProfileVenues and fetchProfileBookings). Functions are memoized and passed to useEffect hook to prevent unnecessary re-renders
+  // functions fetchUserProfileVenues and fetchProfileBookings are used to fetch user's venues or bookings from different APIs
   const fetchProfileBookings = useCallback(async () => {
     try {
       const response = await fetch(`${PROFILE_BASE_URL}${userName}/bookings`, {
@@ -98,7 +133,7 @@ export default function UserProfileVenues() {
     } catch (error) {
       console.error('Error message fetchProfileBookings (catch): ', error);
     }
-  }, [userName, token]);
+  }, [userName, token, fetchBookingDetails]);
 
   // function handleTabClick is called when tab button is clicked
   // function handleTabClick sets activeTab state and calls weather function fetchUserProfileVenues weather fetchProfileBookings
@@ -129,33 +164,6 @@ export default function UserProfileVenues() {
       fetchProfileBookings();
     }
   }, [activeTab, fetchUserProfileVenues, fetchProfileBookings]);
-
-  // We get bookings from fetchProfileBookings function and then we fetch booking details for each booking
-  const fetchBookingDetails = async (bookings) => {
-    try {
-      const bookingIds = bookings.map((booking) => booking.id);
-      const fetchPromises = bookingIds.map((id) =>
-        fetch(`${BOOKINGS_BASE_URL}${id}?_customer=true&_venue=true`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then((response) => response.json())
-          .then((bookingDetail) => {
-            console.log('Booking Details: ', bookingDetail);
-            setBookingDetails((prevDetails) => ({
-              ...prevDetails,
-              [id]: bookingDetail,
-            }));
-          })
-      );
-      await Promise.all(fetchPromises);
-    } catch (error) {
-      console.error('Error message fetchBookingDetails (catch): ', error);
-    }
-  };
 
   return (
     <>
@@ -323,7 +331,7 @@ export default function UserProfileVenues() {
                     </div>
                     <div className="mt-4">
                       <p className="mt-1 pl-4 flex items-center text-sm leading-6 text-gray-900">
-                        Wifi:{' '}
+                        Wifi:
                         {bookingDetail.venue.meta.wifi ? (
                           <span className="pl-2">
                             <FiCheckSquare />
@@ -335,7 +343,7 @@ export default function UserProfileVenues() {
                         )}
                       </p>
                       <p className="mt-1 pl-4 flex items-center text-sm leading-6 text-gray-900">
-                        Parking:{' '}
+                        Parking:
                         {bookingDetail.venue.meta.parking ? (
                           <span className="pl-2">
                             <FiCheckSquare />
@@ -347,7 +355,7 @@ export default function UserProfileVenues() {
                         )}
                       </p>
                       <p className="mt-1 pl-4 flex items-center text-sm leading-6 text-gray-900">
-                        Breakfast:{' '}
+                        Breakfast:
                         {bookingDetail.venue.meta.breakfast ? (
                           <span className="pl-2">
                             <FiCheckSquare />
@@ -359,7 +367,7 @@ export default function UserProfileVenues() {
                         )}
                       </p>
                       <p className="mt-1 pl-4 flex items-center text-sm leading-6 text-gray-900">
-                        Pets:{' '}
+                        Pets:
                         {bookingDetail.venue.meta.pets ? (
                           <span className="pl-2">
                             <FiCheckSquare />

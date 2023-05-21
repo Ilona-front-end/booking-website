@@ -108,15 +108,20 @@ function Venues() {
                     <div className="mt-2 flex flex-col md:flex-row md:items-center md:justify-between lg:flex-row lg:items-center lg:justify-between">
                       <h2 className="text-base font-medium text-gray-900">
                         {[
-                          'test',
                           'tes',
-                          'Testing',
-                          'tester',
-                          'some test house',
+                          'test',
                           'string',
-                          'Test post',
-                          'testingtesting',
-                        ].includes(name)
+                          'adassd',
+                          'sddsa',
+                          'saas',
+                          'sdasd',
+                          'dsf',
+                          '2323',
+                          'update',
+                          'hohoho',
+                          'haha',
+                          'car',
+                        ].some((word) => name.toLowerCase().includes(word))
                           ? 'Accommodation'
                           : name}
                       </h2>
@@ -127,6 +132,7 @@ function Venues() {
                     </div>
                     <div>
                       {location.city !== 'Unknown' &&
+                        location.city !== 'unknown' &&
                         location.city !== 'string' &&
                         location.city !== '' &&
                         location.city !== 'test' && (
@@ -135,14 +141,17 @@ function Venues() {
                           </span>
                         )}
                       {location.city !== 'Unknown' &&
+                        location.city !== 'unknown' &&
                         location.city !== 'string' &&
                         location.city !== '' &&
                         location.city !== 'test' &&
                         location.country !== 'Unknown' &&
+                        location.country !== 'unknown' &&
                         location.country !== 'string' &&
                         location.country !== '' &&
                         location.country !== 'test' && <span>, </span>}
                       {location.country !== 'Unknown' &&
+                        location.country !== 'unknown' &&
                         location.country !== 'string' &&
                         location.country !== '' &&
                         location.country !== 'test' && (
