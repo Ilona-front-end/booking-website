@@ -33,13 +33,16 @@ export default function UserProfileVenues() {
   const fetchUserProfileVenues = useCallback(async () => {
     try {
       setIsLoading(true); // set isLoading state to true before the fetch request
-      const response = await fetch(`${PROFILE_BASE_URL}${userName}/venues`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${PROFILE_BASE_URL}${userName}/venues?_owner=true&_bookings=true`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!response.ok) {
         const responseErrorJSON = await response.json();
@@ -229,6 +232,7 @@ export default function UserProfileVenues() {
                 location,
                 maxGuests,
                 created,
+                bookings,
               }) => (
                 <li key={id}>
                   {media && media.length > 0 ? (
@@ -266,6 +270,45 @@ export default function UserProfileVenues() {
                   <p className="mt-1 text-sm leading-6 text-gray-900">
                     Posted: {mapTime(created)} ago
                   </p>
+                  {/* Booking history */}
+                  <div className="my-8 border-t border-gray-200 pt-8">
+                    <p className="text-sm font-medium text-gray-900">
+                      Booking history
+                    </p>
+
+                    <div className="text-sm text-gray-700 mt-4">
+                      Total number: {bookings.length}
+                    </div>
+                    <div className="text-sm text-gray-700 mt-2">
+                      <div className="space-y-6">
+                        {bookings.map((booking) => (
+                          <div className="relative flex gap-x-4">
+                            <div className="absolute left-0 top-0 flex w-6 justify-center -bottom-6">
+                              <div className="w-px bg-gray-200"></div>
+                            </div>
+                            <div className="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
+                              <div className="h-1.5 w-1.5 rounded-full bg-gray-100 ring-1 ring-gray-300"></div>
+                            </div>
+                            <p className="flex-auto py-0.5 text-xs leading-5 text-gray-500">
+                              <span className="font-medium text-gray-900">
+                                User:{' '}
+                              </span>
+                              <span>
+                                {formateDate(booking.dateFrom)} {'-'}{' '}
+                                {formateDate(booking.dateTo)}
+                              </span>
+                              <span> ( </span>
+                              {booking.guests} guests<span> ) </span>
+                            </p>
+                            <span className="flex-none py-0.5 text-xs leading-5 text-gray-500">
+                              {mapTime(booking.created)} ago
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mt-6">
                     <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto">
                       Update

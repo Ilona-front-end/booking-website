@@ -289,9 +289,9 @@ export default function Venue() {
                           {formateDate(booking.dateFrom)} {'-'}{' '}
                           {formateDate(booking.dateTo)}
                         </p>
-                        <time className="flex-none py-0.5 text-xs leading-5 text-gray-500">
+                        <span className="flex-none py-0.5 text-xs leading-5 text-gray-500">
                           {mapTime(booking.created)} ago
-                        </time>
+                        </span>
                       </div>
                     ))}
                   </div>
