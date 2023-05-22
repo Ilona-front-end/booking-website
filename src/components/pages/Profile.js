@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { PROFILE_BASE_URL } from '../../api/api';
 import AttentionMessage from '../shared/AttentionMessage';
+import LoaderCircle from '../shared/Loader';
 
 function Profile() {
   const token = localStorage.getItem('token');
   const userName = localStorage.getItem('user');
 
+  const [isLoading, setIsLoading] = useState(true);
   const [userProfile, setProfile] = useState(null);
   const [newAvatarUrl, setNewAvatarUrl] = useState('');
   const [showOptionToChangeAvatar, setShowOptionToChangeAvatar] =
@@ -14,6 +16,7 @@ function Profile() {
   useEffect(() => {
     async function getUserProfile() {
       try {
+        setIsLoading(true); // set isLoading state to true before the fetch request
         const response = await fetch(PROFILE_BASE_URL + userName, {
           method: 'GET',
           headers: {
@@ -25,6 +28,8 @@ function Profile() {
         setProfile(json);
       } catch {
         console.log('error');
+      } finally {
+        setIsLoading(false); // set isLoading state to false after the fetch request is finished
       }
     }
 
@@ -64,6 +69,10 @@ function Profile() {
       console.log('error');
     }
   };
+
+  if (isLoading) {
+    return <LoaderCircle />;
+  }
 
   return (
     <>

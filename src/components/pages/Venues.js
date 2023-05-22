@@ -6,15 +6,18 @@ import { Link } from 'react-router-dom';
 import defaultVenueImg from '../../assets/default-venue-img.jpg';
 import ErrorMessage from '../shared/ErrorMessage';
 import { FaUserCircle } from 'react-icons/fa';
+import LoaderCircle from '../shared/Loader';
 
 function Venues() {
   const [venues, setVenues] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [displayedVenuesCount, setDisplayedVenuesCount] = useState(20);
   const [showScrollToTopButton, setShowScrollToTopButton] = useState(false);
 
   async function fetchVenues() {
     try {
+      setIsLoading(true); // set isLoading state to true before the fetch request
       const response = await fetch(
         `${VENUES_BASE_URL}?sort=created&_owner=true&_bookings=true`
       ); // Fetch API data and show newest venues first
@@ -29,6 +32,8 @@ function Venues() {
       setError(error.message); // We received an error, setting our error state
       console.error('Error message here: ', error);
       console.error('Error here: ', error.message);
+    } finally {
+      setIsLoading(false); // set isLoading state to false after the fetch request is finished
     }
   }
 
@@ -62,6 +67,10 @@ function Venues() {
   // if (venues.length === 0) {
   //   return <div className='wrapper-max-width wrapper-padding-x py-4'>No venues available</div>;
   // }
+
+  if (isLoading) {
+    return <LoaderCircle />;
+  }
 
   // Error message
   if (error) {

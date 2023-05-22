@@ -9,12 +9,11 @@ import getRatingStars from '../../utils/ratingStars';
 import { mapTime } from '../../utils/mapTime';
 import { formateDate } from '../../utils/dateFormatting';
 import { deleteData } from '../../utils/deleteData';
-// import { VENUES_BASE_URL } from '../../api/api';
 import AttentionMessage from '../shared/AttentionMessage';
 import ErrorMessage from '../shared/ErrorMessage';
-// import { BOOKINGS_BASE_URL } from '../../api/api';
 import { FiCheckSquare } from 'react-icons/fi';
 import { TbSquare } from 'react-icons/tb';
+import LoaderCircle from '../shared/Loader';
 
 // React functional component that renders user's venues or bookings according to the tab that is active
 export default function UserProfileVenues() {
@@ -25,6 +24,7 @@ export default function UserProfileVenues() {
   const [userProfileVenues, setUserProfileVenues] = useState([]);
   const [userProfileBookings, setUserProfileBookings] = useState([]);
   const [activeTab, setActiveTab] = useState('venues');
+  const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const [bookingDetails, setBookingDetails] = useState({});
 
@@ -32,6 +32,7 @@ export default function UserProfileVenues() {
   // functions fetchUserProfileVenues and fetchProfileBookings are used to fetch user's venues or bookings from different APIs
   const fetchUserProfileVenues = useCallback(async () => {
     try {
+      setIsLoading(true); // set isLoading state to true before the fetch request
       const response = await fetch(`${PROFILE_BASE_URL}${userName}/venues`, {
         method: 'GET',
         headers: {
@@ -65,6 +66,8 @@ export default function UserProfileVenues() {
       // setUserProfileVenues(json);
     } catch (error) {
       console.error('Error message fetchUserProfileVenues (catch): ', error);
+    } finally {
+      setIsLoading(false); // set isLoading state to false after the fetch request is finished
     }
   }, [userName, token]);
 
@@ -72,6 +75,7 @@ export default function UserProfileVenues() {
   const fetchBookingDetails = useCallback(
     async (bookings) => {
       try {
+        setIsLoading(true); // set isLoading state to true before the fetch request
         const bookingIds = bookings.map((booking) => booking.id);
         const fetchPromises = bookingIds.map((id) =>
           fetch(`${BOOKINGS_BASE_URL}${id}?_customer=true&_venue=true`, {
@@ -93,6 +97,8 @@ export default function UserProfileVenues() {
         await Promise.all(fetchPromises);
       } catch (error) {
         console.error('Error message fetchBookingDetails (catch): ', error);
+      } finally {
+        setIsLoading(false); // set isLoading state to false after the fetch request is finished
       }
     },
     [setBookingDetails, token]
@@ -102,6 +108,7 @@ export default function UserProfileVenues() {
   // functions fetchUserProfileVenues and fetchProfileBookings are used to fetch user's venues or bookings from different APIs
   const fetchProfileBookings = useCallback(async () => {
     try {
+      setIsLoading(true); // set isLoading state to true before the fetch request
       const response = await fetch(`${PROFILE_BASE_URL}${userName}/bookings`, {
         method: 'GET',
         headers: {
@@ -132,6 +139,8 @@ export default function UserProfileVenues() {
       }
     } catch (error) {
       console.error('Error message fetchProfileBookings (catch): ', error);
+    } finally {
+      setIsLoading(false); // set isLoading state to false after the fetch request is finished
     }
   }, [userName, token, fetchBookingDetails]);
 
@@ -164,6 +173,15 @@ export default function UserProfileVenues() {
       fetchProfileBookings();
     }
   }, [activeTab, fetchUserProfileVenues, fetchProfileBookings]);
+
+  if (isLoading) {
+    return <LoaderCircle />;
+  }
+
+  // Error message
+  // if (error) {
+  //   return <ErrorMessage errorText={error} />;
+  // }
 
   return (
     <>

@@ -8,6 +8,7 @@ import { TbSquare } from 'react-icons/tb';
 import { FaUserCircle } from 'react-icons/fa';
 import { mapTime } from '../../utils/mapTime';
 import { formateDate } from '../../utils/dateFormatting';
+import LoaderCircle from '../shared/Loader';
 
 export default function Venue() {
   // useParams() hook from React Router library allows to get the id from the URL, route is configured as '/venues/:id' that allows to retrieve the id from the URL
@@ -19,6 +20,7 @@ export default function Venue() {
 
   async function fetchVenue() {
     try {
+      setIsLoading(true); // set isLoading state to true before the fetch request
       const response = await fetch(
         `${VENUES_BASE_URL}/${id}?_owner=true&_bookings=true`
       );
@@ -46,13 +48,13 @@ export default function Venue() {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoaderCircle />;
   }
 
   // Error message
-  // if (error) {
-  //   return <ErrorMessage errorText={error} />;
-  // }
+  if (error) {
+    return <ErrorMessage errorText={error} />;
+  }
 
   console.log('Venue information is fetched venue', venue);
   const {
