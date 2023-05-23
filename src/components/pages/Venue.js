@@ -67,6 +67,7 @@ export default function Venue() {
     meta,
     owner,
     bookings,
+    maxGuests,
   } = venue;
 
   return (
@@ -173,10 +174,19 @@ export default function Venue() {
                       </span>
                     )}
                 </div>
-
+                {/*  Description */}
                 <p className="text-sm font-medium text-gray-900">Description</p>
                 <div className="text-sm mt-4 text-gray-500">
                   <p>{description}</p>
+                </div>
+                {/*  Max guests */}
+                <div className="mt-4 flex items-center leading-6">
+                  <span className="text-sm font-medium text-gray-900">
+                    Max guests
+                  </span>
+                  <span className="ml-2 text-sm text-gray-700">
+                    {maxGuests}
+                  </span>
                 </div>
               </div>
 

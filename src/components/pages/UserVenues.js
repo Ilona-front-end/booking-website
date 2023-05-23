@@ -227,6 +227,7 @@ export default function UserProfileVenues() {
                 id,
                 media,
                 name,
+                price,
                 rating,
                 description,
                 location,
@@ -252,18 +253,28 @@ export default function UserProfileVenues() {
                       alt="Default"
                     />
                   )}
-                  <h2 className="mt-2 text-base leading-6 text-gray-900">
-                    {name}
-                  </h2>
+                  <div className="mt-4 flex items-center justify-between">
+                    <h2 className="text-lg font-medium leading-6 text-gray-900">
+                      {name}
+                    </h2>
+                    <span className="text-lg font-medium leading-6 text-blue-800">
+                      {price} NOK
+                    </span>
+                  </div>
                   <p className="mt-1 text-sm leading-6 text-gray-900">
                     {getRatingStars(rating)}
                   </p>
-                  <p className="mt-1 text-sm leading-6 text-gray-500">
+                  <p className="my-4 text-sm leading-6 text-gray-500">
                     {description}
                   </p>
                   <p className="mt-1 text-sm leading-6 text-gray-900">
                     City: {location.city}
                   </p>
+                  {location.country && (
+                    <p className="mt-1 text-sm leading-6 text-gray-900">
+                      Country: {location.country}
+                    </p>
+                  )}
                   <p className="mt-1 text-sm leading-6 text-gray-900">
                     Max guests: {maxGuests}
                   </p>
@@ -365,7 +376,7 @@ export default function UserProfileVenues() {
                         alt="Default"
                       />
                     )}
-                    <h2 className="my-4 pl-4 text-lg leading-6 text-gray-900">
+                    <h2 className="my-4 pl-4 font-medium text-lg leading-6 text-gray-900">
                       {bookingDetail.venue.name}
                     </h2>
                     <div className="bg-blue-200 p-4 rounded-md mb-4">
@@ -377,7 +388,7 @@ export default function UserProfileVenues() {
                         Guests expected: {bookingDetail.guests}
                       </p>
                       <p className="mt-1 text-sm leading-6 text-blue-800">
-                        City: {bookingDetail.venue.location.city}, Country{' '}
+                        City: {bookingDetail.venue.location.city}, Country:{' '}
                         {bookingDetail.venue.location.country}
                       </p>
                       <p className="mt-1 text-sm leading-6 text-blue-800">
