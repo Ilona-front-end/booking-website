@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PROFILE_BASE_URL } from '../../api/api';
 import AttentionMessage from '../shared/AttentionMessage';
 import LoaderCircle from '../shared/Loader';
+import defaultUserImg from '../../assets/defaultUserImg.jpg';
 
 function Profile() {
   const token = localStorage.getItem('token');
@@ -93,6 +94,10 @@ function Profile() {
                       src={userProfile?.avatar}
                       alt={userProfile?.name}
                       className="h-24 w-24 rounded-full"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = defaultUserImg;
+                      }}
                     />
                   </dt>
                   <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">

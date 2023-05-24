@@ -220,7 +220,7 @@ export default function UserProfileVenues() {
         {errorMessage && <ErrorMessage errorText={errorMessage} />}
       </div>
       <div className="wrapper-max-width wrapper-padding-x">
-        {activeTab === 'venues' && (
+        {activeTab === 'venues' && userProfileVenues.length > 0 ? (
           <ul className="mx-auto my-20 grid max-w-[1000px] grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:mx-0 lg:grid-cols-2">
             {userProfileVenues.map(
               ({
@@ -342,6 +342,11 @@ export default function UserProfileVenues() {
               )
             )}
           </ul>
+        ) : (
+          <AttentionMessage
+            heading="Attention!"
+            text="You don't have any venues yet. Go to Create Venue page to add your first venue."
+          />
         )}
 
         {activeTab === 'bookings' && (

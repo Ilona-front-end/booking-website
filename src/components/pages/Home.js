@@ -71,6 +71,7 @@ function Homepage() {
       setFilteredVenues(filteredVenuesList);
       console.log('filteredVenues array (if)', filteredVenues);
     }
+    // eslint-disable-next-line
   }, [formData]);
 
   return (
