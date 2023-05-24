@@ -4,7 +4,7 @@ import {
   VENUES_BASE_URL,
   BOOKINGS_BASE_URL,
 } from '../../api/api';
-import defaultVenueImg from '../../assets/default-venue-img.jpg';
+import defaultVenueImg from '../../assets/defaultVenueImg.jpg';
 import getRatingStars from '../../utils/ratingStars';
 import { mapTime } from '../../utils/mapTime';
 import { formateDate } from '../../utils/dateFormatting';

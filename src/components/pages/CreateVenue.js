@@ -507,6 +507,7 @@ export default function CreateVenue() {
                       <option value="Egypt">Egypt</option>
                       <option value="Estonia">Estonia</option>
                       <option value="Finland">Finland</option>
+                      <option value="France">France</option>
                       <option value="Germany">Germany</option>
                       <option value="Greece">Greece</option>
                       <option value="Haiti">Haiti</option>

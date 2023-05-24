@@ -10,6 +10,7 @@ import Profile from '../components/pages/Profile';
 import SignUp from '../components/pages/SignUp';
 import UserVenues from '../components/pages/UserVenues';
 import CreateVenue from '../components/pages/CreateVenue';
+import BookSingleVenue from '../components/pages/BookSingleVenue';
 
 function Router() {
   return (
@@ -18,6 +19,7 @@ function Router() {
         <Route exact path="/" element={<Home />} />
         <Route path="/venues" element={<Venues />} />
         <Route path="/venues/:id" element={<Venue />} />
+        <Route path="/venues/book-venue/:id" element={<BookSingleVenue />} />
         <Route path="/user-venues" element={<UserVenues />} />
         <Route path="/create-venue" element={<CreateVenue />} />
         <Route path="/login" element={<LogIn />} />

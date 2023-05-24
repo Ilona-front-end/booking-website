@@ -9,6 +9,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import { mapTime } from '../../utils/mapTime';
 import { formateDate } from '../../utils/dateFormatting';
 import LoaderCircle from '../shared/Loader';
+import { Link } from 'react-router-dom';
 
 export default function Venue() {
   // useParams() hook from React Router library allows to get the id from the URL, route is configured as '/venues/:id' that allows to retrieve the id from the URL
@@ -191,14 +192,12 @@ export default function Venue() {
                 </div>
               </div>
 
-              <form>
-                <button
-                  type="submit"
-                  className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  Book venue
-                </button>
-              </form>
+              <Link
+                to={`/venues/book-venue/${id}`}
+                className="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                Book venue
+              </Link>
 
               <div className="mt-8 border-t border-gray-200 pt-8">
                 <p className="text-sm font-medium text-gray-900">Details</p>

@@ -3,7 +3,7 @@ import { VENUES_BASE_URL } from '../../api/api';
 import getRatingStars from '../../utils/ratingStars';
 import { mapTime } from '../../utils/mapTime';
 import { Link } from 'react-router-dom';
-import defaultVenueImg from '../../assets/default-venue-img.jpg';
+import defaultVenueImg from '../../assets/defaultVenueImg.jpg';
 import ErrorMessage from '../shared/ErrorMessage';
 import { FaUserCircle } from 'react-icons/fa';
 import LoaderCircle from '../shared/Loader';
