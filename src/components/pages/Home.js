@@ -74,6 +74,13 @@ function Homepage() {
     // eslint-disable-next-line
   }, [formData]);
 
+  useEffect(() => {
+    return () => {
+      // cleanup function is called when component unmounts - user leaves to other page
+      setIsFormSubmitted(false); // reset the isFormSubmitted state to false
+    };
+  }, []);
+
   return (
     <>
       <div className="bg-gray-200 wrapper-max-width wrapper-padding-x">
@@ -221,136 +228,144 @@ function Homepage() {
         {/* Display filtered venues */}
         <div className="py-8 bg-white">
           <ul className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {isFormSubmitted && filteredVenues.length > 0 ? (
-              filteredVenues.map(
-                ({
-                  id,
-                  name,
-                  media,
-                  price,
-                  location,
-                  rating,
-                  maxGuests,
-                  created,
-                  owner,
-                  bookings,
-                }) => (
-                  <li key={id}>
-                    <Link to={`/venues/${id}`}>
-                      <div>
-                        <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg shadow-lg bg-gray-200">
-                          {media && media.length > 0 ? (
-                            <img
-                              className="object-cover w-full h-full"
-                              src={media[0]}
-                              alt={name}
-                              onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = defaultVenueImg;
-                              }}
-                            />
-                          ) : (
-                            <img
-                              className="object-cover w-full h-full"
-                              src={defaultVenueImg}
-                              alt="Default"
-                            />
-                          )}
-                        </div>
-                        {/* <img src={venue.media[0]} alt={venue.name} onError={(e) => { console.log(`Error loading image: ${venue.media}`, e); }} /> */}
-                        <div className="mt-2 flex flex-col md:flex-row md:items-center md:justify-between lg:flex-row lg:items-center lg:justify-between">
-                          <h2 className="text-base font-medium text-gray-900">
-                            {[
-                              'tes',
-                              'test',
-                              'string',
-                              'adassd',
-                              'sddsa',
-                              'saas',
-                              'sdasd',
-                              'dsf',
-                              '2323',
-                              'update',
-                              'hohoho',
-                              'haha',
-                              'car',
-                            ].some((word) => name.toLowerCase().includes(word))
-                              ? 'Accommodation'
-                              : name}
-                          </h2>
-                          <p className="text-base font-medium text-blue-800">
-                            {price}
-                            <span> NOK</span>
-                          </p>
-                        </div>
+            {isFormSubmitted && filteredVenues.length > 0
+              ? filteredVenues.map(
+                  ({
+                    id,
+                    name,
+                    media,
+                    price,
+                    location,
+                    rating,
+                    maxGuests,
+                    created,
+                    owner,
+                    bookings,
+                  }) => (
+                    <li key={id}>
+                      <Link to={`/venues/${id}`}>
                         <div>
-                          {location.city !== 'Unknown' &&
-                            location.city !== 'unknown' &&
-                            location.city !== 'string' &&
-                            location.city !== '' &&
-                            location.city !== 'test' && (
-                              <span className="text-sm text-gray-700">
-                                {location.city}
-                              </span>
+                          <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg shadow-lg bg-gray-200">
+                            {media && media.length > 0 ? (
+                              <img
+                                className="object-cover w-full h-full"
+                                src={media[0]}
+                                alt={name}
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = defaultVenueImg;
+                                }}
+                              />
+                            ) : (
+                              <img
+                                className="object-cover w-full h-full"
+                                src={defaultVenueImg}
+                                alt="Default"
+                              />
                             )}
-                          {location.city !== 'Unknown' &&
-                            location.city !== 'unknown' &&
-                            location.city !== 'string' &&
-                            location.city !== '' &&
-                            location.city !== 'test' &&
-                            location.country !== 'Unknown' &&
-                            location.country !== 'unknown' &&
-                            location.country !== 'string' &&
-                            location.country !== '' &&
-                            location.country !== 'test' && <span>, </span>}
-                          {location.country !== 'Unknown' &&
-                            location.country !== 'unknown' &&
-                            location.country !== 'string' &&
-                            location.country !== '' &&
-                            location.country !== 'test' && (
-                              <span className="text-sm text-gray-700">
-                                {location.country}
-                              </span>
+                          </div>
+                          {/* <img src={venue.media[0]} alt={venue.name} onError={(e) => { console.log(`Error loading image: ${venue.media}`, e); }} /> */}
+                          <div className="mt-2 flex flex-col md:flex-row md:items-center md:justify-between lg:flex-row lg:items-center lg:justify-between">
+                            <h2 className="text-base font-medium text-gray-900">
+                              {[
+                                'tes',
+                                'test',
+                                'string',
+                                'adassd',
+                                'sddsa',
+                                'saas',
+                                'sdasd',
+                                'dsf',
+                                '2323',
+                                'update',
+                                'hohoho',
+                                'haha',
+                                'car',
+                              ].some((word) =>
+                                name.toLowerCase().includes(word)
+                              )
+                                ? 'Accommodation'
+                                : name}
+                            </h2>
+                            <p className="text-base font-medium text-blue-800">
+                              {price}
+                              <span> NOK</span>
+                            </p>
+                          </div>
+                          <div>
+                            {location.city !== 'Unknown' &&
+                              location.city !== 'unknown' &&
+                              location.city !== 'string' &&
+                              location.city !== '' &&
+                              location.city !== 'test' && (
+                                <span className="text-sm text-gray-700">
+                                  {location.city}
+                                </span>
+                              )}
+                            {location.city !== 'Unknown' &&
+                              location.city !== 'unknown' &&
+                              location.city !== 'string' &&
+                              location.city !== '' &&
+                              location.city !== 'test' &&
+                              location.country !== 'Unknown' &&
+                              location.country !== 'unknown' &&
+                              location.country !== 'string' &&
+                              location.country !== '' &&
+                              location.country !== 'test' && <span>, </span>}
+                            {location.country !== 'Unknown' &&
+                              location.country !== 'unknown' &&
+                              location.country !== 'string' &&
+                              location.country !== '' &&
+                              location.country !== 'test' && (
+                                <span className="text-sm text-gray-700">
+                                  {location.country}
+                                </span>
+                              )}
+                          </div>
+                          <div>{getRatingStars(rating)}</div>
+                          <div className="text-sm text-gray-700">
+                            Max guests: {maxGuests}
+                          </div>
+                          <div className="text-sm text-gray-700">
+                            Posted: {mapTime(created)} ago
+                          </div>
+                        </div>
+                        <div className="text-sm text-gray-700 mt-4 flex items-center">
+                          Owner: {owner.name}
+                          <span>
+                            {owner.avatar ? (
+                              <img
+                                className="rounded-full w-6 h-6 ml-3"
+                                src={owner.avatar}
+                                alt={owner.name}
+                              />
+                            ) : (
+                              <FaUserCircle className="w-6 h-6 ml-3" />
                             )}
-                        </div>
-                        <div>{getRatingStars(rating)}</div>
-                        <div className="text-sm text-gray-700">
-                          Max guests: {maxGuests}
+                          </span>
                         </div>
                         <div className="text-sm text-gray-700">
-                          Posted: {mapTime(created)} ago
+                          {bookings.length === 0
+                            ? null
+                            : `Booked ${bookings.length} times`}
                         </div>
-                      </div>
-                      <div className="text-sm text-gray-700 mt-4 flex items-center">
-                        Owner: {owner.name}
-                        <span>
-                          {owner.avatar ? (
-                            <img
-                              className="rounded-full w-6 h-6 ml-3"
-                              src={owner.avatar}
-                              alt={owner.name}
-                            />
-                          ) : (
-                            <FaUserCircle className="w-6 h-6 ml-3" />
-                          )}
-                        </span>
-                      </div>
-                      <div className="text-sm text-gray-700">
-                        {bookings.length === 0
-                          ? null
-                          : `Booked ${bookings.length} times`}
-                      </div>
-                    </Link>
-                  </li>
+                      </Link>
+                    </li>
+                  )
                 )
-              )
-            ) : (
-              <AttentionMessage
-                heading="No venues found!"
-                text="Please try again with different search criteria."
-              />
-            )}
+              : null
+                // <AttentionMessage
+                //   heading="No venues found!"
+                //   text="Please try again with different search criteria."
+                // />
+            }
           </ul>
+          {isFormSubmitted && filteredVenues.length === 0 && (
+            <AttentionMessage
+              heading="No venues found!"
+              text="Please try again with different search criteria."
+            />
+          )}
         </div>
       </div>
     </>
