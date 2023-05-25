@@ -14,8 +14,13 @@ function UpdateVenue() {
   const [isLoading, setIsLoading] = useState(true); // We will use this state to show a loading indicator
   const [error, setError] = useState(null);
   const [venue, setVenue] = useState({});
-  const [showEditBtn, setShowEditBtn] = useState(false);
+  // const [showEditBtn, setShowEditBtn] = useState(false);
   const [updatedVenue, setUpdatedVenue] = useState({});
+
+  const [editName, setEditName] = useState(false);
+  const [editDescription, setEditDescription] = useState(false);
+  const [editPrice, setEditPrice] = useState(false);
+  const [editMaxGuests, setEditMaxGuests] = useState(false);
 
   useEffect(() => {
     const fetchVenue = async () => {
@@ -57,19 +62,61 @@ function UpdateVenue() {
     return <ErrorMessage errorText={error} />;
   }
 
-  const handleEditField = () => {
-    setShowEditBtn(true);
+  // CLICK BUTTON 'UPDATE' TO DISPLAY INPUT FIELD
+  const handleEditField = (fieldName) => {
+    if (fieldName === 'name') {
+      setEditName(true);
+      setEditDescription(false);
+      setEditPrice(false);
+      setEditMaxGuests(false);
+    } else if (fieldName === 'description') {
+      setEditName(false);
+      setEditDescription(true);
+      setEditPrice(false);
+      setEditMaxGuests(false);
+    } else if (fieldName === 'price') {
+      setEditName(false);
+      setEditDescription(false);
+      setEditPrice(true);
+      setEditMaxGuests(false);
+    } else if (fieldName === 'maxGuests') {
+      setEditName(false);
+      setEditDescription(false);
+      setEditPrice(false);
+      setEditMaxGuests(true);
+    }
+    // setShowEditBtn(true);
   };
 
+  // CLICK BUTTON 'CANCEL' TO HIDE INPUT FIELD
   const handleCancelField = () => {
-    setShowEditBtn(false);
+    // setShowEditBtn(false);
+    setEditName(false);
+    setEditDescription(false);
+    setEditPrice(false);
+    setEditMaxGuests(false);
+
     setUpdatedVenue(venue); // Reset updatedVenue state to the original venue data
   };
 
-  const handleSaveField = () => {
-    setShowEditBtn(false);
+  // CLICK BUTTON 'SAVE' TO UPDATE VENUE PROPERTY
+  const handleSaveField = (fieldName) => {
+    if (fieldName === 'name') {
+      setEditName(false);
+      updateVenuePropertyApiRequest('name', updatedVenue.name);
+    } else if (fieldName === 'description') {
+      setEditDescription(false);
+      updateVenuePropertyApiRequest('description', updatedVenue.description);
+    } else if (fieldName === 'price') {
+      setEditPrice(false);
+      updateVenuePropertyApiRequest('price', updatedVenue.price);
+    } else if (fieldName === 'maxGuests') {
+      setEditMaxGuests(false);
+      updateVenuePropertyApiRequest('maxGuests', updatedVenue.maxGuests);
+    }
+    // setShowEditBtn(false);
     console.log('updatedVenue after button Save click: ', updatedVenue);
-    updateVenueProperty('name', updatedVenue.name);
+    // updateVenuePropertyApiRequest('name', updatedVenue.name);
   };
 
   // const handleNameChange = (event) => {
@@ -86,7 +133,7 @@ function UpdateVenue() {
     }));
   };
 
-  const updateVenueProperty = async (propertyName, propertyValue) => {
+  const updateVenuePropertyApiRequest = async (propertyName, propertyValue) => {
     try {
       const response = await fetch(`${VENUES_BASE_URL}/${id}`, {
         method: 'PUT',
@@ -103,13 +150,22 @@ function UpdateVenue() {
         throw new Error(`Failed to update ${propertyName} field`);
       }
       console.log(`updated successfully ${propertyName} field`);
+
+      const updatedVenueResponse = await response.json();
+
+      setVenue(updatedVenueResponse);
+      setUpdatedVenue(updatedVenueResponse);
+      setError(null);
+      console.log('Updated Venue: ', updatedVenueResponse);
     } catch (error) {
       console.error('Error:', error);
       setError(error.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const { name, description } = updatedVenue;
+  const { name, description, price, maxGuests } = updatedVenue;
 
   return (
     <>
@@ -131,11 +187,12 @@ function UpdateVenue() {
                   <span className="mr-2 text-sm font-medium leading-6 text-gray-900">
                     Name:
                   </span>
-                  {!showEditBtn && <span>{name}</span>}
+                  {!editName && <span>{name}</span>}
                 </div>
+
                 {/* NAME INPUT FIELD */}
                 <div>
-                  {showEditBtn ? (
+                  {editName ? (
                     <>
                       <div className="mb-4">
                         <label htmlFor="name">
@@ -152,7 +209,7 @@ function UpdateVenue() {
                       <button
                         type="button"
                         className="rounded-md bg-white py-2 px-4 font-medium text-indigo-600 hover:text-indigo-500 shadow-sm ring-1 ring-inset ring-indigo-200 hover:bg-indigo-50"
-                        onClick={handleSaveField}
+                        onClick={() => handleSaveField('name')}
                       >
                         Save
                       </button>
@@ -167,7 +224,7 @@ function UpdateVenue() {
                   ) : (
                     <button
                       className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto"
-                      onClick={handleEditField}
+                      onClick={() => handleEditField('name')}
                     >
                       Edit
                     </button>
@@ -181,11 +238,12 @@ function UpdateVenue() {
                   <span className="mr-2 text-sm font-medium leading-6 text-gray-900">
                     Description:
                   </span>
-                  {!showEditBtn && <p>{description}</p>}
+                  {!editDescription && <p>{description}</p>}
                 </div>
+
                 {/* DESCRIPTION INPUT FIELD */}
                 <div>
-                  {showEditBtn ? (
+                  {editDescription ? (
                     <>
                       <div className="mb-4">
                         <label htmlFor="description">
@@ -203,7 +261,7 @@ function UpdateVenue() {
                       <button
                         type="button"
                         className="rounded-md bg-white py-2 px-4 font-medium text-indigo-600 hover:text-indigo-500 shadow-sm ring-1 ring-inset ring-indigo-200 hover:bg-indigo-50"
-                        onClick={handleSaveField}
+                        onClick={() => handleSaveField('description')}
                       >
                         Save
                       </button>
@@ -218,7 +276,114 @@ function UpdateVenue() {
                   ) : (
                     <button
                       className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto"
-                      onClick={handleEditField}
+                      onClick={() => handleEditField('description')}
+                    >
+                      Edit
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-x-6 space-y-4 mb-4">
+                {/* PRICE */}
+                <div>
+                  <span className="mr-2 text-sm font-medium leading-6 text-gray-900">
+                    Price:
+                  </span>
+                  {!editPrice && (
+                    <span>
+                      {price}
+                      <span className="pl-2">NOK</span>
+                    </span>
+                  )}
+                </div>
+
+                {/* PRICE INPUT FIELD */}
+                <div>
+                  {editPrice ? (
+                    <>
+                      <div className="mb-4">
+                        <label htmlFor="price">
+                          <input
+                            type="number"
+                            name="price"
+                            id="price"
+                            className="bg-white p-2 rounded"
+                            value={updatedVenue.price}
+                            onChange={handleInputChange}
+                          />
+                        </label>
+                      </div>
+                      <button
+                        type="button"
+                        className="rounded-md bg-white py-2 px-4 font-medium text-indigo-600 hover:text-indigo-500 shadow-sm ring-1 ring-inset ring-indigo-200 hover:bg-indigo-50"
+                        onClick={() => handleSaveField('price')}
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        className="ml-3 rounded-md bg-white py-2 px-4 font-medium text-gray-500 hover:text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        onClick={handleCancelField}
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto"
+                      onClick={() => handleEditField('price')}
+                    >
+                      Edit
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-x-6 space-y-4 mb-4">
+                {/* MAX GUESTS */}
+                <div>
+                  <span className="mr-2 text-sm font-medium leading-6 text-gray-900">
+                    Max guests:
+                  </span>
+                  {!editMaxGuests && <span>{maxGuests}</span>}
+                </div>
+
+                {/* MAX GUESTS INPUT FIELD */}
+                <div>
+                  {editMaxGuests ? (
+                    <>
+                      <div className="mb-4">
+                        <label htmlFor="maxGuests">
+                          <input
+                            type="number"
+                            name="maxGuests"
+                            id="maxGuests"
+                            className="bg-white p-2 rounded"
+                            value={updatedVenue.maxGuests}
+                            onChange={handleInputChange}
+                          />
+                        </label>
+                      </div>
+                      <button
+                        type="button"
+                        className="rounded-md bg-white py-2 px-4 font-medium text-indigo-600 hover:text-indigo-500 shadow-sm ring-1 ring-inset ring-indigo-200 hover:bg-indigo-50"
+                        onClick={() => handleSaveField('maxGuests')}
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        className="ml-3 rounded-md bg-white py-2 px-4 font-medium text-gray-500 hover:text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        onClick={handleCancelField}
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto"
+                      onClick={() => handleEditField('maxGuests')}
                     >
                       Edit
                     </button>
