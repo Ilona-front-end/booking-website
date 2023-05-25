@@ -14,6 +14,7 @@ import ErrorMessage from '../shared/ErrorMessage';
 import { FiCheckSquare } from 'react-icons/fi';
 import { TbSquare } from 'react-icons/tb';
 import LoaderCircle from '../shared/Loader';
+import { Link } from 'react-router-dom';
 
 // React functional component that renders user's venues or bookings according to the tab that is active
 export default function UserProfileVenues() {
@@ -321,9 +322,12 @@ export default function UserProfileVenues() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mt-6">
-                    <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto">
+                    <Link
+                      to={`/user-venues/update-venue/${id}`}
+                      className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto"
+                    >
                       Update
-                    </button>
+                    </Link>
                     <button
                       className="rounded-md bg-red-600 px-3 py-2 mt-4 md:mt-0 lg:mt-0 text-sm font-semibold text-white shadow-sm hover:bg-red-700 ring-1 ring-inset ring-red-600 hover:ring-gray-200 w-[180px] mx-auto"
                       onClick={() =>

@@ -11,6 +11,7 @@ import SignUp from '../components/pages/SignUp';
 import UserVenues from '../components/pages/UserVenues';
 import CreateVenue from '../components/pages/CreateVenue';
 import BookSingleVenue from '../components/pages/BookSingleVenue';
+import UpdateVenue from '../components/pages/UpdateVenue';
 
 function Router() {
   return (
@@ -21,6 +22,7 @@ function Router() {
         <Route path="/venues/:id" element={<Venue />} />
         <Route path="/venues/book-venue/:id" element={<BookSingleVenue />} />
         <Route path="/user-venues" element={<UserVenues />} />
+        <Route path="/user-venues/update-venue/:id" element={<UpdateVenue />} />
         <Route path="/create-venue" element={<CreateVenue />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
