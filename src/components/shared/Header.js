@@ -9,7 +9,7 @@ const navigationHeaderLinks = [
   { name: 'All Venues', to: '/venues' },
   { name: 'My Activity', to: '/user-venues' },
   { name: 'Create Venue', to: '/create-venue' },
-  { name: '??', to: '/' },
+  // { name: '??', to: '/' },
 ];
 
 export default function Header() {

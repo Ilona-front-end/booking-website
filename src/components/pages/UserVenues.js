@@ -324,7 +324,7 @@ export default function UserProfileVenues() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mt-6">
                     <Link
                       to={`/user-venues/update-venue/${id}`}
-                      className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto"
+                      className="flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto"
                     >
                       Update
                     </Link>
