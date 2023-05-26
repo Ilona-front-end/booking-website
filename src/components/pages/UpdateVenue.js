@@ -21,6 +21,8 @@ function UpdateVenue() {
   const [editDescription, setEditDescription] = useState(false);
   const [editPrice, setEditPrice] = useState(false);
   const [editMaxGuests, setEditMaxGuests] = useState(false);
+  const [editRating, setEditRating] = useState(false);
+  const [editMedia, setEditMedia] = useState(false);
 
   useEffect(() => {
     const fetchVenue = async () => {
@@ -69,21 +71,43 @@ function UpdateVenue() {
       setEditDescription(false);
       setEditPrice(false);
       setEditMaxGuests(false);
+      setEditRating(false);
+      setEditMedia(false);
     } else if (fieldName === 'description') {
       setEditName(false);
       setEditDescription(true);
       setEditPrice(false);
       setEditMaxGuests(false);
+      setEditRating(false);
+      setEditMedia(false);
     } else if (fieldName === 'price') {
       setEditName(false);
       setEditDescription(false);
       setEditPrice(true);
       setEditMaxGuests(false);
+      setEditRating(false);
+      setEditMedia(false);
     } else if (fieldName === 'maxGuests') {
       setEditName(false);
       setEditDescription(false);
       setEditPrice(false);
       setEditMaxGuests(true);
+      setEditRating(false);
+      setEditMedia(false);
+    } else if (fieldName === 'rating') {
+      setEditName(false);
+      setEditDescription(false);
+      setEditPrice(false);
+      setEditMaxGuests(false);
+      setEditRating(true);
+      setEditMedia(false);
+    } else if (fieldName === 'media') {
+      setEditName(false);
+      setEditDescription(false);
+      setEditPrice(false);
+      setEditMaxGuests(false);
+      setEditRating(false);
+      setEditMedia(true);
     }
     // setShowEditBtn(true);
   };
@@ -95,6 +119,8 @@ function UpdateVenue() {
     setEditDescription(false);
     setEditPrice(false);
     setEditMaxGuests(false);
+    setEditRating(false);
+    setEditMedia(false);
 
     setUpdatedVenue(venue); // Reset updatedVenue state to the original venue data
   };
@@ -109,10 +135,20 @@ function UpdateVenue() {
       updateVenuePropertyApiRequest('description', updatedVenue.description);
     } else if (fieldName === 'price') {
       setEditPrice(false);
-      updateVenuePropertyApiRequest('price', updatedVenue.price);
+      updateVenuePropertyApiRequest('price', parseFloat(updatedVenue.price));
     } else if (fieldName === 'maxGuests') {
       setEditMaxGuests(false);
-      updateVenuePropertyApiRequest('maxGuests', updatedVenue.maxGuests);
+      updateVenuePropertyApiRequest(
+        'maxGuests',
+        parseInt(updatedVenue.maxGuests)
+      );
+    } else if (fieldName === 'rating') {
+      setEditRating(false);
+      updateVenuePropertyApiRequest('rating', parseFloat(updatedVenue.rating));
+    } else if (fieldName === 'media') {
+      setEditMedia(false);
+      // only adds 1 picture
+      updateVenuePropertyApiRequest('media', [updatedVenue.media]); //Pass array as parameter
     }
     // setShowEditBtn(false);
     console.log('updatedVenue after button Save click: ', updatedVenue);
@@ -165,7 +201,7 @@ function UpdateVenue() {
     }
   };
 
-  const { name, description, price, maxGuests } = updatedVenue;
+  const { name, description, price, maxGuests, rating, media } = updatedVenue;
 
   return (
     <>
@@ -181,7 +217,7 @@ function UpdateVenue() {
           {/* DATA TO UPDATE SECTION */}
           <div className="mt-8 mb-8">
             <div className="bg-gray-100 py-8 px-4 shadow mx-auto max-w-[400px]">
-              <div className="space-x-6 space-y-4 mb-4">
+              <div className="space-x-6 space-y-4 mb-8">
                 {/* NAME */}
                 <div>
                   <span className="mr-2 text-sm font-medium leading-6 text-gray-900">
@@ -200,7 +236,7 @@ function UpdateVenue() {
                             type="text"
                             name="name"
                             id="name"
-                            className="bg-white p-2 rounded"
+                            className="bg-white py-2 px-4 rounded w-full max-w-[250px]"
                             value={updatedVenue.name}
                             onChange={handleInputChange}
                           />
@@ -232,9 +268,10 @@ function UpdateVenue() {
                 </div>
               </div>
 
-              <div className="space-x-6 space-y-4 mb-4">
+              <div className="space-x-6 space-y-4 mb-8">
                 {/* DESCRIPTION */}
                 <div>
+                  <div className="mb-8 border-t border-gray-300"></div>
                   <span className="mr-2 text-sm font-medium leading-6 text-gray-900">
                     Description:
                   </span>
@@ -252,7 +289,7 @@ function UpdateVenue() {
                             rows="10"
                             name="description"
                             id="description"
-                            className="bg-white p-2 rounded"
+                            className="bg-white py-2 px-4 rounded w-full max-w-[250px]"
                             value={updatedVenue.description}
                             onChange={handleInputChange}
                           />
@@ -284,9 +321,10 @@ function UpdateVenue() {
                 </div>
               </div>
 
-              <div className="space-x-6 space-y-4 mb-4">
+              <div className="space-x-6 space-y-4 mb-8">
                 {/* PRICE */}
                 <div>
+                  <div className="mb-8 border-t border-gray-300"></div>
                   <span className="mr-2 text-sm font-medium leading-6 text-gray-900">
                     Price:
                   </span>
@@ -308,7 +346,7 @@ function UpdateVenue() {
                             type="number"
                             name="price"
                             id="price"
-                            className="bg-white p-2 rounded"
+                            className="bg-white py-2 px-4 rounded w-full max-w-[250px]"
                             value={updatedVenue.price}
                             onChange={handleInputChange}
                           />
@@ -340,9 +378,10 @@ function UpdateVenue() {
                 </div>
               </div>
 
-              <div className="space-x-6 space-y-4 mb-4">
+              <div className="space-x-6 space-y-4 mb-8">
                 {/* MAX GUESTS */}
                 <div>
+                  <div className="mb-8 border-t border-gray-300"></div>
                   <span className="mr-2 text-sm font-medium leading-6 text-gray-900">
                     Max guests:
                   </span>
@@ -359,7 +398,9 @@ function UpdateVenue() {
                             type="number"
                             name="maxGuests"
                             id="maxGuests"
-                            className="bg-white p-2 rounded"
+                            min={1}
+                            max={50}
+                            className="bg-white py-2 px-4 rounded w-full max-w-[250px]"
                             value={updatedVenue.maxGuests}
                             onChange={handleInputChange}
                           />
@@ -384,6 +425,143 @@ function UpdateVenue() {
                     <button
                       className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto"
                       onClick={() => handleEditField('maxGuests')}
+                    >
+                      Edit
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-x-6 space-y-4 mb-8">
+                {/* RATING */}
+                <div>
+                  <div className="mb-8 border-t border-gray-300"></div>
+                  <span className="mr-2 text-sm font-medium leading-6 text-gray-900">
+                    Rating:
+                  </span>
+                  {!editRating && (
+                    <span>
+                      {rating}
+                      <span className="pl-2">stars</span>
+                    </span>
+                  )}
+                </div>
+
+                {/* RATING INPUT FIELD */}
+                <div>
+                  {editRating ? (
+                    <>
+                      <div className="mb-4">
+                        <label htmlFor="rating">
+                          <input
+                            type="number"
+                            name="rating"
+                            id="rating"
+                            className="bg-white py-2 px-4 rounded w-full max-w-[250px]"
+                            value={updatedVenue.rating}
+                            min={0}
+                            max={5}
+                            onChange={handleInputChange}
+                          />
+                        </label>
+                      </div>
+                      <button
+                        type="button"
+                        className="rounded-md bg-white py-2 px-4 font-medium text-indigo-600 hover:text-indigo-500 shadow-sm ring-1 ring-inset ring-indigo-200 hover:bg-indigo-50"
+                        onClick={() => handleSaveField('rating')}
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        className="ml-3 rounded-md bg-white py-2 px-4 font-medium text-gray-500 hover:text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        onClick={handleCancelField}
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto"
+                      onClick={() => handleEditField('rating')}
+                    >
+                      Edit
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-x-6 space-y-4 mb-8">
+                {/* MEDIA */}
+                <div>
+                  <div className="mb-8 border-t border-gray-300"></div>
+                  <span className="mr-2 text-sm font-medium leading-6 text-gray-900">
+                    Image(s):
+                  </span>
+                  {!editMedia && (
+                    <div className="mt-4">
+                      {media && media.length > 0 && (
+                        <>
+                          <img
+                            src={media[0]}
+                            alt=""
+                            className="aspect-[3/2] w-full rounded-xl object-cover"
+                          />
+                          {media.length >= 2 && (
+                            <img
+                              src={media[1]}
+                              alt=""
+                              className="aspect-[3/2] w-full rounded-xl object-cover mt-4"
+                            />
+                          )}
+                          {media.length >= 3 && (
+                            <img
+                              src={media[2]}
+                              alt=""
+                              className="aspect-[3/2] w-full rounded-xl object-cover"
+                            />
+                          )}
+                        </>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* MEDIA INPUT FIELD */}
+                <div>
+                  {editMedia ? (
+                    <>
+                      <div className="mb-4">
+                        <label htmlFor="media">
+                          <input
+                            type="text"
+                            name="media"
+                            id="media"
+                            className="bg-white py-2 px-4 rounded w-full max-w-[250px]"
+                            value={updatedVenue.media}
+                            onChange={handleInputChange}
+                          />
+                        </label>
+                      </div>
+                      <button
+                        type="button"
+                        className="rounded-md bg-white py-2 px-4 font-medium text-indigo-600 hover:text-indigo-500 shadow-sm ring-1 ring-inset ring-indigo-200 hover:bg-indigo-50"
+                        onClick={() => handleSaveField('media')}
+                      >
+                        Save
+                      </button>
+                      <button
+                        type="button"
+                        className="ml-3 rounded-md bg-white py-2 px-4 font-medium text-gray-500 hover:text-gray-400 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                        onClick={handleCancelField}
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto"
+                      onClick={() => handleEditField('media')}
                     >
                       Edit
                     </button>
