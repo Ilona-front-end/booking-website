@@ -630,7 +630,7 @@ export default function CreateVenue() {
                 <div>
                   <button
                     type="submit"
-                    className="flex w-full justify-center rounded-md bg-indigo-700 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset ring-indigo-600 hover:ring-gray-200"
+                    className="flex w-full justify-center rounded-md bg-indigo-600 py-3 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset ring-indigo-600 hover:ring-gray-200"
                   >
                     Submit
                   </button>
