@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'; // handles form validation before sen
 import { USER_LOG_IN_URL } from '../../api/api';
 import { Link } from 'react-router-dom';
 import ErrorMessage from '../shared/ErrorMessage';
+import ScrollToTop from '../../utils/ScrollToTop';
 
 export default function LogIn() {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -62,6 +63,7 @@ export default function LogIn() {
 
   return (
     <>
+      <ScrollToTop />
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         {/* FORM HEADER */}
         <div className="sm:mx-auto sm:w-full sm:max-w-md">

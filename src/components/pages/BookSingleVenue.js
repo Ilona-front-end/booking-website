@@ -5,6 +5,7 @@ import { BOOKINGS_BASE_URL } from '../../api/api';
 import AttentionMessage from '../shared/AttentionMessage';
 import ErrorMessage from '../shared/ErrorMessage';
 import { useNavigate } from 'react-router-dom';
+import ScrollToTop from '../../utils/ScrollToTop';
 
 const BookSingleVenue = () => {
   const { id } = useParams();
@@ -81,6 +82,7 @@ const BookSingleVenue = () => {
 
   return (
     <>
+      <ScrollToTop />
       {token ? (
         <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
           {/* FORM HEADER */}

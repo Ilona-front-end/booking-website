@@ -5,6 +5,7 @@ import LoaderCircle from '../shared/Loader';
 import defaultUserImg from '../../assets/defaultUserImg.jpg';
 import { Link } from 'react-router-dom';
 import { GoLink } from 'react-icons/go';
+import ScrollToTop from '../../utils/ScrollToTop';
 
 function Profile() {
   const token = localStorage.getItem('token');
@@ -80,6 +81,7 @@ function Profile() {
 
   return (
     <>
+      <ScrollToTop />
       {/*   Profile details  */}
       <div className="mt-6 pt-6 mx-auto max-w-xl px-5 lg:px-8">
         {token ? (

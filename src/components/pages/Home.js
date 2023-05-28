@@ -8,6 +8,7 @@ import getRatingStars from '../../utils/ratingStars';
 import { mapTime } from '../../utils/mapTime';
 import { FaUserCircle } from 'react-icons/fa';
 import AttentionMessage from '../shared/AttentionMessage';
+import ScrollToTop from '../../utils/ScrollToTop';
 
 function Homepage() {
   const [venues, setVenues] = useState([]);
@@ -83,6 +84,7 @@ function Homepage() {
 
   return (
     <>
+      <ScrollToTop />
       <div className="bg-gray-200 wrapper-max-width wrapper-padding-x">
         <div className="px-8 md:px-0 lg:px-0">
           <form onSubmit={handleHomepageVenueSearch}>

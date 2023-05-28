@@ -5,6 +5,7 @@ import { countCharacters } from '../../utils/charactersCount';
 import AttentionMessage from '../shared/AttentionMessage';
 import ErrorMessage from '../shared/ErrorMessage';
 import { useNavigate } from 'react-router-dom';
+import ScrollToTop from '../../utils/ScrollToTop';
 
 export default function CreateVenue() {
   const navigate = useNavigate();
@@ -115,6 +116,7 @@ export default function CreateVenue() {
 
   return (
     <>
+      <ScrollToTop />
       {token ? (
         <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
           {/* FORM HEADER */}

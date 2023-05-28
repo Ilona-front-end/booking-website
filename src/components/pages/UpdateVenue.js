@@ -4,6 +4,7 @@ import { VENUES_BASE_URL } from '../../api/api';
 import LoaderCircle from '../shared/Loader';
 import ErrorMessage from '../shared/ErrorMessage';
 import AttentionMessage from '../shared/AttentionMessage';
+import ScrollToTop from '../../utils/ScrollToTop';
 
 function UpdateVenue() {
   const token = localStorage.getItem('token');
@@ -205,6 +206,7 @@ function UpdateVenue() {
 
   return (
     <>
+      <ScrollToTop />
       {token ? (
         <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
           {/* HEADER */}

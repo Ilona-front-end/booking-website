@@ -16,6 +16,7 @@ import { TbSquare } from 'react-icons/tb';
 import LoaderCircle from '../shared/Loader';
 import { Link } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
+import ScrollToTop from '../../utils/ScrollToTop';
 
 // React functional component that renders user's venues or bookings according to the tab that is active
 export default function UserProfileVenues() {
@@ -198,6 +199,7 @@ export default function UserProfileVenues() {
 
   return (
     <>
+      <ScrollToTop />
       <div className="wrapper-max-width wrapper-padding-x bg-gray-300">
         {/* TABS */}
         <button

@@ -7,6 +7,7 @@ import defaultVenueImg from '../../assets/defaultVenueImg.jpg';
 import ErrorMessage from '../shared/ErrorMessage';
 import { FaUserCircle } from 'react-icons/fa';
 import LoaderCircle from '../shared/Loader';
+import ScrollToTop from '../../utils/ScrollToTop';
 
 function Venues() {
   const [venues, setVenues] = useState([]);
@@ -78,157 +79,160 @@ function Venues() {
   }
 
   return (
-    <div className="wrapper-max-width wrapper-padding-x">
-      <h2 className="py-6 text-3xl font-bold text-gray-900 md:text-4xl lg:text-4xl">
-        All Venues
-      </h2>
-      <ul className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {venues
-          .slice(0, displayedVenuesCount)
-          .map(
-            ({
-              id,
-              name,
-              media,
-              price,
-              location,
-              rating,
-              maxGuests,
-              created,
-              owner,
-              bookings,
-            }) => (
-              <li key={id}>
-                <Link to={`/venues/${id}`}>
-                  <div>
-                    <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg shadow-lg bg-gray-200">
-                      {media && media.length > 0 ? (
-                        <img
-                          className="object-cover w-full h-full"
-                          src={media[0]}
-                          alt={name}
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = defaultVenueImg;
-                          }}
-                        />
-                      ) : (
-                        <img
-                          className="object-cover w-full h-full"
-                          src={defaultVenueImg}
-                          alt="Default"
-                        />
-                      )}
-                    </div>
-                    {/* <img src={venue.media[0]} alt={venue.name} onError={(e) => { console.log(`Error loading image: ${venue.media}`, e); }} /> */}
-                    <div className="mt-2 flex flex-col md:flex-row md:items-center md:justify-between lg:flex-row lg:items-center lg:justify-between">
-                      <h2 className="text-base font-medium text-gray-900">
-                        {[
-                          'tes',
-                          'test',
-                          'string',
-                          'adassd',
-                          'sddsa',
-                          'saas',
-                          'sdasd',
-                          'dsf',
-                          '2323',
-                          'update',
-                          'hohoho',
-                          'haha',
-                          'car',
-                        ].some((word) => name.toLowerCase().includes(word))
-                          ? 'Accommodation'
-                          : name}
-                      </h2>
-                      <p className="text-base font-medium text-blue-800">
-                        {price}
-                        <span> NOK</span>
-                      </p>
-                    </div>
+    <>
+      <ScrollToTop />
+      <div className="wrapper-max-width wrapper-padding-x">
+        <h2 className="py-6 text-3xl font-bold text-gray-900 md:text-4xl lg:text-4xl">
+          All Venues
+        </h2>
+        <ul className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {venues
+            .slice(0, displayedVenuesCount)
+            .map(
+              ({
+                id,
+                name,
+                media,
+                price,
+                location,
+                rating,
+                maxGuests,
+                created,
+                owner,
+                bookings,
+              }) => (
+                <li key={id}>
+                  <Link to={`/venues/${id}`}>
                     <div>
-                      {location.city !== 'Unknown' &&
-                        location.city !== 'unknown' &&
-                        location.city !== 'string' &&
-                        location.city !== '' &&
-                        location.city !== 'test' && (
-                          <span className="text-sm text-gray-700">
-                            {location.city}
-                          </span>
+                      <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg shadow-lg bg-gray-200">
+                        {media && media.length > 0 ? (
+                          <img
+                            className="object-cover w-full h-full"
+                            src={media[0]}
+                            alt={name}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = defaultVenueImg;
+                            }}
+                          />
+                        ) : (
+                          <img
+                            className="object-cover w-full h-full"
+                            src={defaultVenueImg}
+                            alt="Default"
+                          />
                         )}
-                      {location.city !== 'Unknown' &&
-                        location.city !== 'unknown' &&
-                        location.city !== 'string' &&
-                        location.city !== '' &&
-                        location.city !== 'test' &&
-                        location.country !== 'Unknown' &&
-                        location.country !== 'unknown' &&
-                        location.country !== 'string' &&
-                        location.country !== '' &&
-                        location.country !== 'test' && <span>, </span>}
-                      {location.country !== 'Unknown' &&
-                        location.country !== 'unknown' &&
-                        location.country !== 'string' &&
-                        location.country !== '' &&
-                        location.country !== 'test' && (
-                          <span className="text-sm text-gray-700">
-                            {location.country}
-                          </span>
+                      </div>
+                      {/* <img src={venue.media[0]} alt={venue.name} onError={(e) => { console.log(`Error loading image: ${venue.media}`, e); }} /> */}
+                      <div className="mt-2 flex flex-col md:flex-row md:items-center md:justify-between lg:flex-row lg:items-center lg:justify-between">
+                        <h2 className="text-base font-medium text-gray-900">
+                          {[
+                            'tes',
+                            'test',
+                            'string',
+                            'adassd',
+                            'sddsa',
+                            'saas',
+                            'sdasd',
+                            'dsf',
+                            '2323',
+                            'update',
+                            'hohoho',
+                            'haha',
+                            'car',
+                          ].some((word) => name.toLowerCase().includes(word))
+                            ? 'Accommodation'
+                            : name}
+                        </h2>
+                        <p className="text-base font-medium text-blue-800">
+                          {price}
+                          <span> NOK</span>
+                        </p>
+                      </div>
+                      <div>
+                        {location.city !== 'Unknown' &&
+                          location.city !== 'unknown' &&
+                          location.city !== 'string' &&
+                          location.city !== '' &&
+                          location.city !== 'test' && (
+                            <span className="text-sm text-gray-700">
+                              {location.city}
+                            </span>
+                          )}
+                        {location.city !== 'Unknown' &&
+                          location.city !== 'unknown' &&
+                          location.city !== 'string' &&
+                          location.city !== '' &&
+                          location.city !== 'test' &&
+                          location.country !== 'Unknown' &&
+                          location.country !== 'unknown' &&
+                          location.country !== 'string' &&
+                          location.country !== '' &&
+                          location.country !== 'test' && <span>, </span>}
+                        {location.country !== 'Unknown' &&
+                          location.country !== 'unknown' &&
+                          location.country !== 'string' &&
+                          location.country !== '' &&
+                          location.country !== 'test' && (
+                            <span className="text-sm text-gray-700">
+                              {location.country}
+                            </span>
+                          )}
+                      </div>
+                      <div>{getRatingStars(rating)}</div>
+                      <div className="text-sm text-gray-700">
+                        Max guests: {maxGuests}
+                      </div>
+                      <div className="text-sm text-gray-700">
+                        Posted: {mapTime(created)} ago
+                      </div>
+                    </div>
+                    <div className="text-sm text-gray-700 mt-4 flex items-center">
+                      Owner: {owner.name}
+                      <span>
+                        {owner.avatar ? (
+                          <img
+                            className="rounded-full w-6 h-6 ml-3"
+                            src={owner.avatar}
+                            alt={owner.name}
+                          />
+                        ) : (
+                          <FaUserCircle className="w-6 h-6 ml-3" />
                         )}
-                    </div>
-                    <div>{getRatingStars(rating)}</div>
-                    <div className="text-sm text-gray-700">
-                      Max guests: {maxGuests}
+                      </span>
                     </div>
                     <div className="text-sm text-gray-700">
-                      Posted: {mapTime(created)} ago
+                      {bookings.length === 0
+                        ? null
+                        : `Booked ${bookings.length} times`}
                     </div>
-                  </div>
-                  <div className="text-sm text-gray-700 mt-4 flex items-center">
-                    Owner: {owner.name}
-                    <span>
-                      {owner.avatar ? (
-                        <img
-                          className="rounded-full w-6 h-6 ml-3"
-                          src={owner.avatar}
-                          alt={owner.name}
-                        />
-                      ) : (
-                        <FaUserCircle className="w-6 h-6 ml-3" />
-                      )}
-                    </span>
-                  </div>
-                  <div className="text-sm text-gray-700">
-                    {bookings.length === 0
-                      ? null
-                      : `Booked ${bookings.length} times`}
-                  </div>
-                </Link>
-              </li>
-            )
-          )}
-      </ul>
-      {displayedVenuesCount < venues.length && (
-        <div className="flex justify-center mt-8">
-          <button
-            className="rounded-md bg-indigo-50 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-100 mb-8"
-            onClick={getMoreVenues}
-          >
-            Load more
-          </button>
-        </div>
-      )}
-      {showScrollToTopButton ? (
-        <div className="flex justify-center mt-8">
-          <button
-            className="rounded-md bg-indigo-50 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-100 mb-8"
-            onClick={handleScrollToTop}
-          >
-            Scroll to top
-          </button>
-        </div>
-      ) : null}
-    </div>
+                  </Link>
+                </li>
+              )
+            )}
+        </ul>
+        {displayedVenuesCount < venues.length && (
+          <div className="flex justify-center mt-8">
+            <button
+              className="rounded-md bg-indigo-50 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-100 mb-8"
+              onClick={getMoreVenues}
+            >
+              Load more
+            </button>
+          </div>
+        )}
+        {showScrollToTopButton ? (
+          <div className="flex justify-center mt-8">
+            <button
+              className="rounded-md bg-indigo-50 px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-100 mb-8"
+              onClick={handleScrollToTop}
+            >
+              Scroll to top
+            </button>
+          </div>
+        ) : null}
+      </div>
+    </>
   );
 }
 

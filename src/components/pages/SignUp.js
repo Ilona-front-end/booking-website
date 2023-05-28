@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { CREATE_USER_URL } from '../../api/api';
 import ErrorMessage from '../shared/ErrorMessage';
+import ScrollToTop from '../../utils/ScrollToTop';
 
 export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -48,6 +49,7 @@ export default function SignUp() {
 
   return (
     <>
+      <ScrollToTop />
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         {/* FORM HEADER */}
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
