@@ -3,6 +3,8 @@ import { PROFILE_BASE_URL } from '../../api/api';
 import AttentionMessage from '../shared/AttentionMessage';
 import LoaderCircle from '../shared/Loader';
 import defaultUserImg from '../../assets/defaultUserImg.jpg';
+import { Link } from 'react-router-dom';
+import { GoLink } from 'react-icons/go';
 
 function Profile() {
   const token = localStorage.getItem('token');
@@ -19,6 +21,7 @@ function Profile() {
       try {
         setIsLoading(true); // set isLoading state to true before the fetch request
         const response = await fetch(PROFILE_BASE_URL + userName, {
+          //more details by fetching - https://nf-api.onrender.com/api/v1/holidaze/profiles/${userName}?_bookings=true&_venues=true
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -231,8 +234,15 @@ function Profile() {
                   </dd>
                 </div>
                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                  <dt className="text-sm font-medium text-gray-500">
-                    Bookings
+                  <dt className="text-sm font-medium text-gray-500 hover:text-indigo-600">
+                    <Link to="/user-venues?tab=bookings">
+                      <div className="flex items-center">
+                        <span>Bookings</span>
+                        <span className="ml-2">
+                          <GoLink />
+                        </span>
+                      </div>
+                    </Link>
                   </dt>
                   <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     <span className="flex-grow">
@@ -242,7 +252,16 @@ function Profile() {
                   </dd>
                 </div>
                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5">
-                  <dt className="text-sm font-medium text-gray-500">Venues</dt>
+                  <dt className="text-sm font-medium text-gray-500 hover:text-indigo-600">
+                    <Link to="/user-venues?tab=venues">
+                      <div className="flex items-center">
+                        <span>Venues</span>
+                        <span className="ml-2">
+                          <GoLink />
+                        </span>
+                      </div>
+                    </Link>
+                  </dt>
                   <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     <span className="flex-grow">
                       {userProfile?._count?.venues}

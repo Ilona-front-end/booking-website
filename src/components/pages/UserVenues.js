@@ -15,19 +15,27 @@ import { FiCheckSquare } from 'react-icons/fi';
 import { TbSquare } from 'react-icons/tb';
 import LoaderCircle from '../shared/Loader';
 import { Link } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // React functional component that renders user's venues or bookings according to the tab that is active
 export default function UserProfileVenues() {
   const token = localStorage.getItem('token');
   const userName = localStorage.getItem('user');
 
+  const location = useLocation();
+  const serchParams = new URLSearchParams(location.search);
+  const tabParam = serchParams.get('tab') || 'venues';
+
   // useState hooks - declaring state variables and initial values
   const [userProfileVenues, setUserProfileVenues] = useState([]);
   const [userProfileBookings, setUserProfileBookings] = useState([]);
-  const [activeTab, setActiveTab] = useState('venues');
+  const [activeTab, setActiveTab] = useState(tabParam);
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const [bookingDetails, setBookingDetails] = useState({});
+
+  // useHistory hook
+  const navigate = useNavigate(); // get navigate function
 
   // useCallback hooks - declaring two functions (fetchUserProfileVenues and fetchProfileBookings). Functions are memoized and passed to useEffect hook to prevent unnecessary re-renders
   // functions fetchUserProfileVenues and fetchProfileBookings are used to fetch user's venues or bookings from different APIs
@@ -157,6 +165,7 @@ export default function UserProfileVenues() {
     } else if (tab === 'bookings') {
       fetchProfileBookings();
     }
+    navigate(`/user-venues?tab=${tab}`); // update url with new tab parameter
   };
 
   // handleTabClick with ternary operator
