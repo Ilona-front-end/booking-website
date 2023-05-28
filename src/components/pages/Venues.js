@@ -8,6 +8,7 @@ import ErrorMessage from '../shared/ErrorMessage';
 import { FaUserCircle } from 'react-icons/fa';
 import LoaderCircle from '../shared/Loader';
 import ScrollToTop from '../../utils/ScrollToTop';
+import { CiLocationOn } from 'react-icons/ci';
 
 function Venues() {
   const [venues, setVenues] = useState([]);
@@ -125,7 +126,7 @@ function Venues() {
                       </div>
                       {/* <img src={venue.media[0]} alt={venue.name} onError={(e) => { console.log(`Error loading image: ${venue.media}`, e); }} /> */}
                       <div className="mt-2 flex flex-col md:flex-row md:items-center md:justify-between lg:flex-row lg:items-center lg:justify-between">
-                        <h2 className="text-base font-medium text-gray-900">
+                        <h2 className="text-base font-medium line-clamp-1 text-gray-900">
                           {[
                             'tes',
                             'test',
@@ -149,7 +150,11 @@ function Venues() {
                           <span> NOK</span>
                         </p>
                       </div>
-                      <div>
+                      <div className="flex items-center">
+                        <span className="pr-1">
+                          <CiLocationOn />
+                        </span>
+
                         {location.city !== 'Unknown' &&
                           location.city !== 'unknown' &&
                           location.city !== 'string' &&
@@ -174,7 +179,7 @@ function Venues() {
                           location.country !== 'string' &&
                           location.country !== '' &&
                           location.country !== 'test' && (
-                            <span className="text-sm text-gray-700">
+                            <span className="text-sm text-gray-700 pl-1">
                               {location.country}
                             </span>
                           )}

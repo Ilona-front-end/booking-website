@@ -11,6 +11,7 @@ import { formateDate } from '../../utils/dateFormatting';
 import LoaderCircle from '../shared/Loader';
 import { Link } from 'react-router-dom';
 import ScrollToTop from '../../utils/ScrollToTop';
+import { CiLocationOn } from 'react-icons/ci';
 
 export default function Venue() {
   // useParams() hook from React Router library allows to get the id from the URL, route is configured as '/venues/:id' that allows to retrieve the id from the URL
@@ -143,7 +144,10 @@ export default function Venue() {
                 {/*  Venue details */}
                 <div className="mt-10">
                   {/*  Location */}
-                  <div className="mb-2">
+                  <div className="mb-2 flex items-center">
+                    <span className="pr-1">
+                      <CiLocationOn />
+                    </span>
                     {location &&
                       location.city &&
                       location.country &&
@@ -176,7 +180,7 @@ export default function Venue() {
                       location.country !== 'string' &&
                       location.country !== '' &&
                       location.country !== 'test' && (
-                        <span className="text-sm text-gray-700">
+                        <span className="text-sm text-gray-700 pl-1">
                           {location.country}
                         </span>
                       )}

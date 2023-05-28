@@ -9,6 +9,7 @@ import { mapTime } from '../../utils/mapTime';
 import { FaUserCircle } from 'react-icons/fa';
 import AttentionMessage from '../shared/AttentionMessage';
 import ScrollToTop from '../../utils/ScrollToTop';
+import { CiLocationOn } from 'react-icons/ci';
 
 function Homepage() {
   const [venues, setVenues] = useState([]);
@@ -229,7 +230,7 @@ function Homepage() {
       </div>
       <div className="wrapper-max-width wrapper-padding-x">
         {/* Display filtered venues */}
-        <div className="py-8 bg-white">
+        <div className="bg-white">
           <ul className="grid grid-cols-1 gap-x-4 gap-y-14 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {
               isFormSubmitted && filteredVenues.length > 0
@@ -372,9 +373,78 @@ function Homepage() {
           )}
         </div>
       </div>
-      <div className="wrapper-max-width wrapper-padding-x mb-6">
+      <div className="wrapper-max-width wrapper-padding-x">
+        {/* 3 new added venues */}
+
+        <div className="bg-white py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl lg:mx-0">
+              <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                New venues added
+              </h2>
+              <p className="mt-2 text-lg leading-8 text-gray-600">
+                These are the latest venues added to our website. We are
+                constantly adding new venues to our website. Check back often to
+                see what's new.
+              </p>
+            </div>
+            <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+              {venues.slice(0, 3).map((venue) => (
+                <article
+                  key={venue.id}
+                  className="flex max-w-xl flex-col items-start justify-between"
+                >
+                  <div className="flex items-center gap-x-5 text-xs">
+                    <time dateTime={venue.created} className="text-gray-500">
+                      {mapTime(venue.created)} ago
+                    </time>
+                    <span className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-indigo-600">
+                      {venue.price}
+                      <span className="pl-2">NOK</span>
+                    </span>
+                  </div>
+                  <div className="group relative">
+                    <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                      <Link to={`/venues/${venue.id}`}>
+                        <span className="absolute inset-0" />
+                        {venue.name}
+                      </Link>
+                    </h3>
+                    <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
+                      {venue.description}
+                    </p>
+                    <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 flex items-center">
+                      <span className="pr-1">
+                        <CiLocationOn />
+                      </span>
+                      {venue.location.city}
+                    </p>
+                  </div>
+                  <div className="relative mt-8 flex items-center gap-x-4">
+                    <img
+                      src={venue.owner.avatar}
+                      alt={venue.owner.name}
+                      className="h-10 w-10 rounded-full bg-gray-50"
+                    />
+                    <div className="text-sm leading-6">
+                      <p className="font-semibold text-gray-900">
+                        <span className="absolute inset-0" />
+                        {venue.owner.name}
+                      </p>
+                      <p className="text-gray-600 text-xs">
+                        {venue.owner.email}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="wrapper-max-width mb-6">
         <div className="relative isolate overflow-hidden bg-gray-900">
-          <div className="py-24 sm:py-32">
+          <div className="py-24 sm:py-32 px-4 sm:px-6">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 Summer is around the corner.
@@ -389,13 +459,13 @@ function Homepage() {
               <div className="mt-10 flex items-center justify-center gap-x-6">
                 <Link
                   to="/venues"
-                  className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-200 ring-1 ring-inset ring-white hover:ring-indigo-700"
                 >
                   Browse all venues
                 </Link>
                 <Link
                   to="/create-venue"
-                  className="text-sm font-semibold leading-6 text-white"
+                  className="text-sm font-semibold leading-6 text-white hover:underline"
                 >
                   Or add a venue as a manager <span aria-hidden="true">→</span>
                 </Link>
