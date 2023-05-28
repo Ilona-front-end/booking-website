@@ -28,12 +28,9 @@ function Venues() {
       }
       const json = await response.json(); // Wait for the response to be converted to JSON
       setVenues(json); // We received API data, setting our venues state
-      console.log('Venues information is fetched', json);
       setError(null);
     } catch (error) {
       setError(error.message); // We received an error, setting our error state
-      console.error('Error message here: ', error);
-      console.error('Error here: ', error.message);
     } finally {
       setIsLoading(false); // set isLoading state to false after the fetch request is finished
     }

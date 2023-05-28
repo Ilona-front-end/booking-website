@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CREATE_USER_URL } from '../../api/api';
 import ErrorMessage from '../shared/ErrorMessage';
 import ScrollToTop from '../../utils/ScrollToTop';
 
 export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState(null);
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -33,16 +35,15 @@ export default function SignUp() {
       });
 
       const json = await response.json();
-      // console.log('Response called json:', json);
 
       if (json.status === 'Bad Request') {
         throw new Error(json.errors[0].message); // throw new Error() will trigger the catch block and handle the error
       } else {
         setErrorMessage(null);
-        window.location.replace('/login');
+        // window.location.replace('/login'); this code is useful for redirecting to external pages, causes full page reload
+        navigate('/login'); // this code is useful for redirecting to internal pages
       }
     } catch (error) {
-      // console.log('Catch errors while signing up: ', error);
       setErrorMessage(error.message);
     }
   };
@@ -208,7 +209,7 @@ export default function SignUp() {
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-500 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                  className="flex w-full justify-center rounded-md bg-indigo-600 py-3 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset ring-indigo-600 hover:ring-gray-200"
                 >
                   Submit
                 </button>

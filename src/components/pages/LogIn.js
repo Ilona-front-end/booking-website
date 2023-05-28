@@ -31,22 +31,17 @@ export default function LogIn() {
       });
 
       const json = await response.json();
-      console.log('response json', json);
 
       if (json.status === 'Unauthorized') {
-        console.log('Unauthorized log in');
         throw new Error(json.errors[0].message); // throw new Error() will trigger the catch block and handle the error
       } else {
-        console.log('User logged in successfully');
         setErrorMessage(null);
       }
 
       if (json.status === 'Not Found') {
-        console.log('Password or email is incorrect');
         throw new Error('Password or email is incorrect'); // throw new Error() will trigger the catch block and handle the error
         // json.errors[0].message is: Route POST:/api/v1/holidazelogin not found. Therefore I insert message manually
       } else {
-        console.log('User logged in successfully');
         setErrorMessage(null);
       }
 
@@ -56,7 +51,6 @@ export default function LogIn() {
       localStorage.setItem('token', json.accessToken);
       window.location.replace('/');
     } catch (error) {
-      console.log('json error', error);
       setErrorMessage(error.message);
     }
   };
@@ -145,7 +139,7 @@ export default function LogIn() {
               <div>
                 <button
                   type="submit"
-                  className="flex w-full justify-center rounded-md bg-indigo-500 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                  className="flex w-full justify-center rounded-md bg-indigo-600 py-3 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset ring-indigo-600 hover:ring-gray-200"
                 >
                   Submit
                 </button>

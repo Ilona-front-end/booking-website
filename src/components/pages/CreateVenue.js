@@ -69,7 +69,6 @@ export default function CreateVenue() {
           lng: parseFloat(data.location.lng), // parseFloat() converts string to float (number)
         },
       };
-      console.log('formattedData', formattedData);
 
       const response = await fetch(VENUES_BASE_URL, {
         method: 'POST',
@@ -80,24 +79,13 @@ export default function CreateVenue() {
         body: JSON.stringify(formattedData),
       });
 
-      console.log('Response after clicking submit: ', response);
-
       if (response.status === 201) {
         navigate('/user-venues');
       }
 
-      // If we are only interested in the response status,
-      // we do not need to access or display actual data from the response (ex. id, name, error message ect.), so we do not need to convert it to JSON: const json = await response.json();
-      // on the other hand to get error message we need to convert response to JSON
-
       if (!response.ok) {
         const responseDataJSON = await response.json();
         const responseErrorMessage = responseDataJSON.errors[0].message;
-        console.log(
-          '!response.ok, responseErrorMessage:',
-          responseDataJSON.errors[0].message
-        );
-        console.log('!response.ok, status code: ', responseDataJSON.statusCode);
         setErrorMessage(responseErrorMessage);
         throw new Error(responseErrorMessage); // throw new Error() will trigger the catch block and handle the error
       } else {
@@ -105,12 +93,6 @@ export default function CreateVenue() {
       }
     } catch (error) {
       setErrorMessage(error.message);
-      // console.log('catch -- errorMessage statusCode 400:' , errorMessage);
-      // console.log('catch - onSubmitCreateVenue error: --->', error);
-      console.log(
-        'catch - onSubmitCreateVenue error.message ---->:',
-        error.message
-      );
     }
   };
 
@@ -578,55 +560,6 @@ export default function CreateVenue() {
                     />
                   </div>
                 </div>
-
-                {/* LOCATION: LATITUDE INPUT */}
-                {/* <div>
-                <label
-                  htmlFor="lat"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Latitude
-                </label>
-                <div className="mt-2">
-                  <input
-                    {...register('location.lat', {
-                      pattern: {
-                        value: /^-?([0-9]|[1-9][0-9]|1[0-7][0-9]|180)(\.[0-9]{1,6})?$/, // Regex pattern to match longitude values
-                        message: 'Invalid latitude value. Example of longitude: 37.7749',
-                      },
-                    })}
-                    id="lat"
-                    type="number"
-                    step="any" // Allow decimal values for latitude
-                    className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div> */}
-
-                {/* LOCATION: LONGITUDE INPUT */}
-                {/* <div>
-                <label
-                  htmlFor="lng"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Longitude
-                </label>
-                <div className="mt-2">
-                  <input
-                    {...register('location.lng', {
-                      pattern: {
-                        value: /^-?([0-9]|[1-9][0-9]|1[0-7][0-9]|180)(\.[0-9]{1,6})?$/, // Regex pattern to match longitude values
-                        message: 'Invalid longitude value. Example of longitude: -122.4194',
-                      },
-                      }
-                    )}
-                    id="lng"
-                    type="number"
-                    step="any" // Allow decimal values for longitude
-                    className="block w-full rounded-md border-0 bg-gray-50 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div> */}
 
                 {/* SUBMIT BUTTON */}
                 <div>

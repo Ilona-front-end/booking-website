@@ -8,14 +8,12 @@ import ScrollToTop from '../../utils/ScrollToTop';
 
 function UpdateVenue() {
   const token = localStorage.getItem('token');
-  // const userName = localStorage.getItem('user');
 
   // useParams() hook from React Router library allows to get the id from the URL, route is configured as `/user-venues/update-venue/${id}` that allows to retrieve the id from the URL
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true); // We will use this state to show a loading indicator
   const [error, setError] = useState(null);
   const [venue, setVenue] = useState({});
-  // const [showEditBtn, setShowEditBtn] = useState(false);
   const [updatedVenue, setUpdatedVenue] = useState({});
 
   const [editName, setEditName] = useState(false);
@@ -42,12 +40,8 @@ function UpdateVenue() {
         setVenue(json);
         setUpdatedVenue(json); // Initialize updatedVenue state with fetched venue data
         setError(null);
-        console.log('Venue information is fetched', json);
-        console.log('venue structure', venue);
-        console.log('updated venue structure', updatedVenue);
       } catch (error) {
         setError(error.message);
-        console.error('Error:', error);
       } finally {
         setIsLoading(false); // set isLoading state to false after the fetch request is finished
       }
@@ -110,12 +104,10 @@ function UpdateVenue() {
       setEditRating(false);
       setEditMedia(true);
     }
-    // setShowEditBtn(true);
   };
 
   // CLICK BUTTON 'CANCEL' TO HIDE INPUT FIELD
   const handleCancelField = () => {
-    // setShowEditBtn(false);
     setEditName(false);
     setEditDescription(false);
     setEditPrice(false);
@@ -151,16 +143,7 @@ function UpdateVenue() {
       // only adds 1 picture
       updateVenuePropertyApiRequest('media', [updatedVenue.media]); //Pass array as parameter
     }
-    // setShowEditBtn(false);
-    console.log('updatedVenue after button Save click: ', updatedVenue);
-    // updateVenuePropertyApiRequest('name', updatedVenue.name);
   };
-
-  // const handleNameChange = (event) => {
-  //   setUpdatedVenue((prevVenue) => ({
-  //     ...prevVenue,
-  //     name: event.target.value,
-  //   }));
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -186,16 +169,13 @@ function UpdateVenue() {
       if (!response.ok) {
         throw new Error(`Failed to update ${propertyName} field`);
       }
-      console.log(`updated successfully ${propertyName} field`);
 
       const updatedVenueResponse = await response.json();
 
       setVenue(updatedVenueResponse);
       setUpdatedVenue(updatedVenueResponse);
       setError(null);
-      console.log('Updated Venue: ', updatedVenueResponse);
     } catch (error) {
-      console.error('Error:', error);
       setError(error.message);
     } finally {
       setIsLoading(false);

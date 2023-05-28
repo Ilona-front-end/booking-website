@@ -14,8 +14,7 @@ import ErrorMessage from '../shared/ErrorMessage';
 import { FiCheckSquare } from 'react-icons/fi';
 import { TbSquare } from 'react-icons/tb';
 import LoaderCircle from '../shared/Loader';
-import { Link } from 'react-router-dom';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import ScrollToTop from '../../utils/ScrollToTop';
 
 // React functional component that renders user's venues or bookings according to the tab that is active
@@ -57,28 +56,15 @@ export default function UserProfileVenues() {
       if (!response.ok) {
         const responseErrorJSON = await response.json();
         const responseErrorMessage = responseErrorJSON.errors[0].message;
-        console.log(
-          '!response.ok, venues block responseErrorMessage:',
-          responseErrorJSON
-        );
-        console.log(
-          '!response.ok, venues block status code: ',
-          responseErrorJSON.statusCode
-        );
         setErrorMessage(responseErrorMessage);
         throw new Error(responseErrorMessage); // throw new Error() will trigger the catch block and handle the error
       } else {
         setErrorMessage(null);
         const json = await response.json();
         setUserProfileVenues(json);
-        console.log('fetchUserProfileVenues', json);
       }
-
-      // const json = await response.json();
-      // console.log('fetchUserProfileVenues', json);
-      // setUserProfileVenues(json);
     } catch (error) {
-      console.error('Error message fetchUserProfileVenues (catch): ', error);
+      setErrorMessage(error.message);
     } finally {
       setIsLoading(false); // set isLoading state to false after the fetch request is finished
     }
@@ -100,7 +86,6 @@ export default function UserProfileVenues() {
           })
             .then((response) => response.json())
             .then((bookingDetail) => {
-              console.log('Booking Details: ', bookingDetail);
               setBookingDetails((prevDetails) => ({
                 ...prevDetails,
                 [id]: bookingDetail,
@@ -109,7 +94,7 @@ export default function UserProfileVenues() {
         );
         await Promise.all(fetchPromises);
       } catch (error) {
-        console.error('Error message fetchBookingDetails (catch): ', error);
+        setErrorMessage(error.message);
       } finally {
         setIsLoading(false); // set isLoading state to false after the fetch request is finished
       }
@@ -133,25 +118,16 @@ export default function UserProfileVenues() {
       if (!response.ok) {
         const responseErrorJSON = await response.json();
         const responseErrorMessage = responseErrorJSON.errors[0].message;
-        console.log(
-          '!response.ok, venues block responseErrorMessage:',
-          responseErrorJSON
-        );
-        console.log(
-          '!response.ok, venues block status code: ',
-          responseErrorJSON.statusCode
-        );
         setErrorMessage(responseErrorMessage);
         throw new Error(responseErrorMessage); // throw new Error() will trigger the catch block and handle the error
       } else {
         setErrorMessage(null);
         const bookings = await response.json(); // JSON data will be used in fetchBookingDetails function
         setUserProfileBookings(bookings);
-        console.log('fetchProfileBookings', bookings);
         fetchBookingDetails(bookings);
       }
     } catch (error) {
-      console.error('Error message fetchProfileBookings (catch): ', error);
+      setErrorMessage(error.message);
     } finally {
       setIsLoading(false); // set isLoading state to false after the fetch request is finished
     }
@@ -169,7 +145,7 @@ export default function UserProfileVenues() {
     navigate(`/user-venues?tab=${tab}`); // update url with new tab parameter
   };
 
-  // handleTabClick with ternary operator
+  // handleTabClick with ternary operator but harder to read
   // const handleTabClick = (tab) => {
   //   setActiveTab(tab);
   //   const fetchFunction = tab === 'venues' ? fetchUserProfileVenues : fetchProfileBookings;
@@ -191,11 +167,6 @@ export default function UserProfileVenues() {
   if (isLoading) {
     return <LoaderCircle />;
   }
-
-  // Error message
-  // if (error) {
-  //   return <ErrorMessage errorText={error} />;
-  // }
 
   return (
     <>

@@ -32,7 +32,6 @@ function Profile() {
         const json = await response.json();
         setProfile(json);
       } catch {
-        console.log('error');
       } finally {
         setIsLoading(false); // set isLoading state to false after the fetch request is finished
       }
@@ -70,9 +69,7 @@ function Profile() {
       const json = await response.json();
       setProfile(json);
       setShowOptionToChangeAvatar(false);
-    } catch {
-      console.log('error');
-    }
+    } catch {}
   };
 
   if (isLoading) {

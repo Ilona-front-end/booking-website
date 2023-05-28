@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { BOOKINGS_BASE_URL } from '../../api/api';
 import AttentionMessage from '../shared/AttentionMessage';
 import ErrorMessage from '../shared/ErrorMessage';
-import { useNavigate } from 'react-router-dom';
 import ScrollToTop from '../../utils/ScrollToTop';
 
 const BookSingleVenue = () => {
@@ -36,7 +35,6 @@ const BookSingleVenue = () => {
         guests: parseInt(data.guests), // parseInt() converts string to integer (number)
         venueId: id,
       };
-      console.log('formattedData', formattedData);
 
       // Sending data to the API
       const response = await fetch(BOOKINGS_BASE_URL, {
@@ -48,8 +46,6 @@ const BookSingleVenue = () => {
         body: JSON.stringify(formattedData),
       });
 
-      console.log('Response after clicking submit: ', response);
-
       // Navigate user to user-venues page if the response is ok
       if (response.status === 201) {
         navigate('/user-venues');
@@ -59,11 +55,6 @@ const BookSingleVenue = () => {
       if (!response.ok) {
         const responseDataJSON = await response.json();
         const responseErrorMessage = responseDataJSON.errors[0].message;
-        console.log(
-          '!response.ok, responseErrorMessage:',
-          responseDataJSON.errors[0].message
-        );
-        console.log('!response.ok, status code: ', responseDataJSON.statusCode);
         setErrorMessage(responseErrorMessage);
         throw new Error(responseErrorMessage); // throw new Error() will trigger the catch block and handle the error
       } else {
@@ -71,12 +62,6 @@ const BookSingleVenue = () => {
       }
     } catch (error) {
       setErrorMessage(error.message);
-      // console.log('catch -- errorMessage statusCode 400:' , errorMessage);
-      // console.log('catch - onSubmitBookSingleVenue error: --->', error);
-      console.log(
-        'catch - onSubmitBookSingleVenue error.message ---->:',
-        error.message
-      );
     }
   };
 

@@ -2,28 +2,28 @@ import React from 'react';
 
 const navigationHeaderLinks = {
   solutions: [
-    { name: 'Marketing', href: '#' },
-    { name: 'Analytics', href: '#' },
-    { name: 'Commerce', href: '#' },
-    { name: 'Insights', href: '#' },
+    { name: 'Marketing', to: '/' },
+    { name: 'Analytics', to: '/' },
+    { name: 'Commerce', to: '/' },
+    { name: 'Insights', to: '/' },
   ],
   support: [
-    { name: 'Pricing', href: '#' },
-    { name: 'Documentation', href: '#' },
-    { name: 'Guides', href: '#' },
-    { name: 'API Status', href: '#' },
+    { name: 'Pricing', to: '/' },
+    { name: 'Documentation', to: '/' },
+    { name: 'Guides', to: '/' },
+    { name: 'API Status', to: '/' },
   ],
   company: [
-    { name: 'About', href: '#' },
-    { name: 'Blog', href: '#' },
-    { name: 'Jobs', href: '#' },
-    { name: 'Press', href: '#' },
-    { name: 'Partners', href: '#' },
+    { name: 'About', to: '/' },
+    { name: 'Blog', to: '/' },
+    { name: 'Jobs', to: '/' },
+    { name: 'Press', to: '/' },
+    { name: 'Partners', to: '/' },
   ],
   legal: [
-    { name: 'Claim', href: '#' },
-    { name: 'Privacy', href: '#' },
-    { name: 'Terms', href: '#' },
+    { name: 'Claim', to: '/' },
+    { name: 'Privacy', to: '/' },
+    { name: 'Terms', to: '/' },
   ],
 };
 

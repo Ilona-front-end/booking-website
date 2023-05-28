@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { VENUES_BASE_URL } from '../../api/api';
 import ErrorMessage from '../shared/ErrorMessage';
 import RenderStars from '../../utils/renderStars';
@@ -9,7 +9,6 @@ import { FaUserCircle } from 'react-icons/fa';
 import { mapTime } from '../../utils/mapTime';
 import { formateDate } from '../../utils/dateFormatting';
 import LoaderCircle from '../shared/Loader';
-import { Link } from 'react-router-dom';
 import ScrollToTop from '../../utils/ScrollToTop';
 import { CiLocationOn } from 'react-icons/ci';
 
@@ -34,12 +33,9 @@ export default function Venue() {
       }
       const venueResponse = await response.json();
       setVenue(venueResponse);
-      console.log('Venue information is fetched venueResponse', venueResponse);
       setError(null);
     } catch (error) {
       setError(error.message);
-      console.error('Error message here: ', error);
-      console.error('Error here: ', error.message); // "error.message":"Invalid uuid" not helpful for user
     } finally {
       setIsLoading(false); // We are done with the request, no matter if we got an error or not
     }
@@ -60,7 +56,6 @@ export default function Venue() {
     return <ErrorMessage errorText={error} />;
   }
 
-  console.log('Venue information is fetched venue', venue);
   const {
     name,
     price,
