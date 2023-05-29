@@ -203,137 +203,140 @@ export default function UserProfileVenues() {
         {errorMessage && <ErrorMessage errorText={errorMessage} />}
       </div>
       <div className="wrapper-max-width wrapper-padding-x">
-        {activeTab === 'venues' && userProfileVenues.length > 0 ? (
-          <ul className="mx-auto my-20 grid max-w-[1000px] grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:mx-0 lg:grid-cols-2">
-            {userProfileVenues.map(
-              ({
-                id,
-                media,
-                name,
-                price,
-                rating,
-                description,
-                location,
-                maxGuests,
-                created,
-                bookings,
-              }) => (
-                <li key={id}>
-                  {media && media.length > 0 ? (
-                    <img
-                      className="aspect-[3/2] w-full rounded-2xl object-cover"
-                      src={media[0]}
-                      alt={name}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = defaultVenueImg;
-                      }}
-                    />
-                  ) : (
-                    <img
-                      className="aspect-[3/2] w-full rounded-2xl object-cover"
-                      src={defaultVenueImg}
-                      alt="Default"
-                    />
-                  )}
-                  <div className="mt-4 flex items-center justify-between">
-                    <h2 className="text-lg font-medium leading-6 text-gray-900">
-                      {name}
-                    </h2>
-                    <span className="text-lg font-medium leading-6 text-blue-800">
-                      {price} NOK
-                    </span>
-                  </div>
-                  <p className="mt-1 text-sm leading-6 text-gray-900">
-                    {getRatingStars(rating)}
-                  </p>
-                  <p className="my-4 text-sm leading-6 text-gray-500">
-                    {description}
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-gray-900">
-                    City: {location.city}
-                  </p>
-                  {location.country && (
-                    <p className="mt-1 text-sm leading-6 text-gray-900">
-                      Country: {location.country}
-                    </p>
-                  )}
-                  <p className="mt-1 text-sm leading-6 text-gray-900">
-                    Max guests: {maxGuests}
-                  </p>
-                  <p className="mt-1 text-sm leading-6 text-gray-900">
-                    Posted: {mapTime(created)} ago
-                  </p>
-                  {/* Booking history */}
-                  <div className="my-8 border-t border-gray-200 pt-8">
-                    <p className="text-sm font-medium text-gray-900">
-                      Booking history
-                    </p>
-
-                    <div className="text-sm text-gray-700 mt-4">
-                      Total number: {bookings.length}
+        {
+          activeTab === 'venues' && userProfileVenues.length > 0 && (
+            <ul className="mx-auto my-20 grid max-w-[1000px] grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2 lg:mx-0 lg:grid-cols-2">
+              {userProfileVenues.map(
+                ({
+                  id,
+                  media,
+                  name,
+                  price,
+                  rating,
+                  description,
+                  location,
+                  maxGuests,
+                  created,
+                  bookings,
+                }) => (
+                  <li key={id}>
+                    {media && media.length > 0 ? (
+                      <img
+                        className="aspect-[3/2] w-full rounded-2xl object-cover"
+                        src={media[0]}
+                        alt={name}
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = defaultVenueImg;
+                        }}
+                      />
+                    ) : (
+                      <img
+                        className="aspect-[3/2] w-full rounded-2xl object-cover"
+                        src={defaultVenueImg}
+                        alt="Default"
+                      />
+                    )}
+                    <div className="mt-4 flex items-center justify-between">
+                      <h2 className="text-lg font-medium leading-6 text-gray-900">
+                        {name}
+                      </h2>
+                      <span className="text-lg font-medium leading-6 text-blue-800">
+                        {price} NOK
+                      </span>
                     </div>
-                    <div className="text-sm text-gray-700 mt-2">
-                      <div className="space-y-6">
-                        {bookings.map((booking) => (
-                          <div className="relative flex gap-x-4">
-                            <div className="absolute left-0 top-0 flex w-6 justify-center -bottom-6">
-                              <div className="w-px bg-gray-200"></div>
-                            </div>
-                            <div className="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
-                              <div className="h-1.5 w-1.5 rounded-full bg-gray-100 ring-1 ring-gray-300"></div>
-                            </div>
-                            <p className="flex-auto py-0.5 text-xs leading-5 text-gray-500">
-                              <span className="font-medium text-gray-900">
-                                User:{' '}
+                    <p className="mt-1 text-sm leading-6 text-gray-900">
+                      {getRatingStars(rating)}
+                    </p>
+                    <p className="my-4 text-sm leading-6 text-gray-500">
+                      {description}
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-gray-900">
+                      City: {location.city}
+                    </p>
+                    {location.country && (
+                      <p className="mt-1 text-sm leading-6 text-gray-900">
+                        Country: {location.country}
+                      </p>
+                    )}
+                    <p className="mt-1 text-sm leading-6 text-gray-900">
+                      Max guests: {maxGuests}
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-gray-900">
+                      Posted: {mapTime(created)} ago
+                    </p>
+                    {/* Booking history */}
+                    <div className="my-8 border-t border-gray-200 pt-8">
+                      <p className="text-sm font-medium text-gray-900">
+                        Booking history
+                      </p>
+
+                      <div className="text-sm text-gray-700 mt-4">
+                        Total number: {bookings.length}
+                      </div>
+                      <div className="text-sm text-gray-700 mt-2">
+                        <div className="space-y-6">
+                          {bookings.map((booking) => (
+                            <div className="relative flex gap-x-4">
+                              <div className="absolute left-0 top-0 flex w-6 justify-center -bottom-6">
+                                <div className="w-px bg-gray-200"></div>
+                              </div>
+                              <div className="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
+                                <div className="h-1.5 w-1.5 rounded-full bg-gray-100 ring-1 ring-gray-300"></div>
+                              </div>
+                              <p className="flex-auto py-0.5 text-xs leading-5 text-gray-500">
+                                <span className="font-medium text-gray-900">
+                                  User:{' '}
+                                </span>
+                                <span>
+                                  {formateDate(booking.dateFrom)} {'-'}{' '}
+                                  {formateDate(booking.dateTo)}
+                                </span>
+                                <span> ( </span>
+                                {booking.guests} guests<span> ) </span>
+                              </p>
+                              <span className="flex-none py-0.5 text-xs leading-5 text-gray-500">
+                                {mapTime(booking.created)} ago
                               </span>
-                              <span>
-                                {formateDate(booking.dateFrom)} {'-'}{' '}
-                                {formateDate(booking.dateTo)}
-                              </span>
-                              <span> ( </span>
-                              {booking.guests} guests<span> ) </span>
-                            </p>
-                            <span className="flex-none py-0.5 text-xs leading-5 text-gray-500">
-                              {mapTime(booking.created)} ago
-                            </span>
-                          </div>
-                        ))}
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mt-6">
-                    <Link
-                      to={`/user-venues/update-venue/${id}`}
-                      className="flex items-center justify-center rounded-md bg-indigo-600 px-3 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto"
-                    >
-                      Update
-                    </Link>
-                    <button
-                      className="rounded-md bg-red-600 px-3 py-3 mt-4 md:mt-0 lg:mt-0 text-sm font-semibold text-white shadow-sm hover:bg-red-700 ring-1 ring-inset ring-red-600 hover:ring-gray-200 w-[180px] mx-auto"
-                      onClick={() =>
-                        deleteData(
-                          VENUES_BASE_URL,
-                          id,
-                          token,
-                          setUserProfileVenues
-                        )
-                      }
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </li>
-              )
-            )}
-          </ul>
-        ) : (
-          <AttentionMessage
-            heading="Attention!"
-            text="You don't have any venues yet. Go to Create Venue page to add your first venue."
-          />
-        )}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 mt-6">
+                      <Link
+                        to={`/user-venues/update-venue/${id}`}
+                        className="flex items-center justify-center rounded-md bg-indigo-600 px-3 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-700 ring-1 ring-inset hover:ring-gray-200 w-[180px] mx-auto"
+                      >
+                        Update
+                      </Link>
+                      <button
+                        className="rounded-md bg-red-600 px-3 py-3 mt-4 md:mt-0 lg:mt-0 text-sm font-semibold text-white shadow-sm hover:bg-red-700 ring-1 ring-inset ring-red-600 hover:ring-gray-200 w-[180px] mx-auto"
+                        onClick={() =>
+                          deleteData(
+                            VENUES_BASE_URL,
+                            id,
+                            token,
+                            setUserProfileVenues
+                          )
+                        }
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </li>
+                )
+              )}
+            </ul>
+          )
+          //  : (
+          //   <AttentionMessage
+          //     heading="Attention!"
+          //     text="You don't have any venues yet. Go to Create Venue page to add your first venue."
+          //   />
+          // )
+        }
 
         {activeTab === 'bookings' && (
           <div>
