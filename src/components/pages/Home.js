@@ -102,7 +102,7 @@ function Homepage() {
                   htmlFor="dateTo"
                   className="block text-base leading-6 text-gray-900"
                 >
-                  Date from:
+                  Date to:
                 </label>
                 <div className="mt-2">
                   <DatePicker
@@ -393,9 +393,18 @@ function Homepage() {
                       {venue.description}
                     </p>
                     <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 flex items-center">
-                      <span className="pr-1">
-                        <CiLocationOn />
-                      </span>
+                      {venue.location &&
+                        venue.location.city &&
+                        venue.location.country &&
+                        venue.location.city !== 'Unknown' &&
+                        venue.location.city !== 'unknown' &&
+                        venue.location.city !== 'string' &&
+                        venue.location.city !== '' &&
+                        venue.location.city !== 'test' && (
+                          <span className="pr-1">
+                            <CiLocationOn />
+                          </span>
+                        )}
                       {venue.location.city}
                     </p>
                   </div>
