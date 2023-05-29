@@ -148,10 +148,18 @@ function Venues() {
                         </p>
                       </div>
                       <div className="flex items-center">
-                        <span className="pr-1">
-                          <CiLocationOn />
-                        </span>
-
+                        {location &&
+                          location.city &&
+                          location.country &&
+                          location.city !== 'Unknown' &&
+                          location.city !== 'unknown' &&
+                          location.city !== 'string' &&
+                          location.city !== '' &&
+                          location.city !== 'test' && (
+                            <span className="pr-1">
+                              <CiLocationOn />
+                            </span>
+                          )}
                         {location.city !== 'Unknown' &&
                           location.city !== 'unknown' &&
                           location.city !== 'string' &&
